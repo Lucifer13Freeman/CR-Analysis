@@ -1,0 +1,23 @@
+<div class="data-container">
+    <div class="buttons-container"> 
+        <ng-container *ngIf="!isManual">
+            <button mat-raised-button color="primary" (click)="manualDataInput()">Manual Input</button>
+        </ng-container>
+        <ng-container *ngIf="isManual">
+            <button mat-raised-button color="primary" (click)="fileDataInput()">Send File</button>
+        </ng-container>
+    </div>
+    <div>
+        <ng-container *ngIf="!isManual">
+            <app-file-reader></app-file-reader> 
+        </ng-container>
+        <!-- <div> -->
+        <app-data-table 
+            [tableData]="tableData"
+            [tableType]="inputTableType"
+            [isPageble]="true"
+            [withToolbar]="true"
+        ></app-data-table>
+        <!-- </div> -->
+    </div>
+</div>

@@ -19,8 +19,9 @@
     "target": "es2017",
     "module": "es2020",
     "lib": [
-      "es2020",
-      "dom"
+      "es2021",
+      "dom",
+      "dom.iterable"
     ]
   },
   "angularCompilerOptions": {

@@ -1,0 +1,69 @@
+<!-- <div class="card highlight-card card-small"> -->
+<!-- <div class="data-container"> -->
+    <div class="buttons-container"> 
+        <!-- <ng-container *ngIf="!isManual">
+            <button mat-button class="button-input" (click)="manualDataInput()">Manual Input</button>
+        </ng-container>
+        <ng-container *ngIf="isManual">
+            <button mat-button class="button-input" (click)="fileDataInput()">Send File</button>
+        </ng-container> -->
+        <!-- <button mat-button>Analyze</button> -->
+    </div>
+    <ng-container *ngIf="isVisible">
+        <div class="data-container">
+            <div class="table">
+                <app-data-table 
+                    [tableData]="getAanalysisData.calcTableData"
+                    [tableType]="outputCalcTableType"
+                ></app-data-table>
+            </div>
+            <div class="download">
+                <app-file-writer
+                    [tableData]="getAanalysisData.calcTableData"
+                ></app-file-writer> 
+            </div>
+        </div>
+        <div class="data-container">
+            <div class="table">
+                <app-data-table 
+                    [tableData]="getAanalysisData.rangTableData"
+                    [tableType]="outputRangTableType"
+                ></app-data-table>
+            </div>
+            <div class="download">
+                <app-file-writer
+                    [tableData]="getAanalysisData.rangTableData"
+                ></app-file-writer> 
+            </div>
+        </div>
+
+        <div class="data-container">
+            <div class="table">
+                <app-data-table 
+                    [tableData]="analysisData.tableData"
+                    [tableType]="outputExtCalcTableType"
+                ></app-data-table>
+            </div>
+            <div class="download">
+                <app-file-writer
+                    [tableData]="analysisData.tableData"
+                ></app-file-writer> 
+            </div>
+        </div>
+        <div class="data-container">
+            <div class="params">
+                <app-analysis-params
+                    [getAanalysisData]="getAanalysisData"
+                    [analysisParams]="analysisData.params"
+                ></app-analysis-params>
+            </div>
+        </div>
+        <div>
+            <app-chart
+                [analysisData]="analysisData"
+                [getAanalysisData]="getAanalysisData"
+                [chartData]="analysisData.chartData"
+            ></app-chart>
+        </div>
+    </ng-container>
+<!-- </div> -->

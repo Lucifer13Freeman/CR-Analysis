@@ -1,0 +1,88 @@
+<mat-card>
+  <mat-card-title>Параметры анализа</mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+    <br/>
+    <h4>{{analysisParams.meanSqrOffX.name}}: {{analysisParams.meanSqrOffX.value}}</h4>
+    <h4>{{analysisParams.meanSqrOffY.name}}: {{analysisParams.meanSqrOffY.value}}</h4>
+    <br/>
+    <h4>{{analysisParams.linearCorrCoef.name}}: {{analysisParams.linearCorrCoef.value}}</h4>
+    <h4>{{analysisParams.avgCorrCoefErr.name}}: {{analysisParams.avgCorrCoefErr.value}}</h4>
+    <h4>{{analysisParams.coefCorrSignCheck.name}}: {{analysisParams.coefCorrSignCheck.value}}</h4>
+    <br/>
+    <h4>{{analysisParams.signLvlSelectVal.name}}: 
+        <mat-form-field appearance="fill">
+            <mat-label>Значение</mat-label>
+            <mat-select 
+                (selectionChange)="editData()"
+                [(value)]="selectedSignLvlVal"
+            >
+                <mat-option 
+                    [value]="option.value" 
+                    *ngFor="let option of signLvlValues"
+                >
+                    {{ option.viewValue  }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </h4>
+    <h4>{{analysisParams.tTable.name}}: {{analysisParams.tTable.value}}</h4>
+    <br/>
+    <h4>{{analysisParams.relXY.name}}: {{analysisParams.relXY.value}}</h4>
+    <h4>{{analysisParams.coefCorrSign.name}}: {{analysisParams.coefCorrSign.value}}</h4>
+    <br/>
+    <h4>{{analysisParams.spearmanCoeff.name}}: {{analysisParams.spearmanCoeff.value}}</h4>
+    <h4>{{analysisParams.elasticity.name}}: {{analysisParams.elasticity.value}}</h4>
+    <br/>
+    <h4>{{analysisParams.avgApproxErr.name}}: {{analysisParams.avgApproxErr.value}}</h4>
+    <h4>{{analysisParams.totalDispersion.name}}: {{analysisParams.totalDispersion.value}}</h4>
+    <h4>{{analysisParams.factorDispersion.name}}: {{analysisParams.factorDispersion.value}}</h4>
+    <h4>{{analysisParams.residualDispersion.name}}: {{analysisParams.residualDispersion.value}}</h4>
+    <h4>{{analysisParams.totalDispersionCheck.name}}: {{analysisParams.totalDispersionCheck.value}}</h4>
+    <br/>
+    <h4>{{analysisParams.theorCoefDeterm.name}}: {{analysisParams.theorCoefDeterm.value}}</h4>
+    <h4>{{analysisParams.theorCorrRel.name}}: {{analysisParams.theorCorrRel.value}}</h4>
+    <br/>
+    <h4>{{analysisParams.avgA0Err.name}}: {{analysisParams.avgA0Err.value}}</h4>
+    <h4>{{analysisParams.avgA1Err.name}}: {{analysisParams.avgA1Err.value}}</h4>
+    <h4>{{analysisParams.tA0.name}}: {{analysisParams.tA0.value}} - {{analysisParams.tA0Check.value}}</h4>
+    <h4>{{analysisParams.tA1.name}}: {{analysisParams.tA1.value}} - {{analysisParams.tA1Check.value}}</h4>
+    <br/>
+    <h4>{{analysisParams.fisherCrit.name}}: {{analysisParams.fisherCrit.value}}</h4>
+    <h4>{{analysisParams.fTableValLvl.name}}: 
+        <!-- {{analysisParams.fTableValLvlSelectVal.value}} -->
+        <mat-form-field appearance="fill">
+            <mat-label>Значение</mat-label>
+            <mat-select 
+                (selectionChange)="editData()"
+                [(value)]="selectedFTableValLvlVal"
+            >
+                <mat-option 
+                    [value]="option.value" 
+                    *ngFor="let option of fTableValues"
+                >
+                    {{ option.viewValue  }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        {{analysisParams.fTableValLvl.value}}
+    </h4>
+    <h4>{{analysisParams.fTableValLvlCheck.value}}</h4>
+    </mat-card-content>
+    <mat-card-actions>
+        <button 
+            mat-raised-button 
+            color="primary"
+            (click)="downloadDoc(wordExt)"
+        >
+            Скачать Word
+        </button> 
+        <button 
+            mat-raised-button 
+            color="primary"
+            (click)="downloadDoc(pdfExt)"
+        >
+            Скачать PDF
+        </button> 
+    </mat-card-actions>
+</mat-card>

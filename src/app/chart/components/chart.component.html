@@ -1,0 +1,39 @@
+<mat-card>
+    <mat-card-title>График</mat-card-title>
+    <mat-card-subtitle>
+        <br/>
+        <mat-form-field appearance="fill">
+            <mat-label>Значение</mat-label>
+            <mat-select 
+                (selectionChange)="selectFuncType()"
+                [(value)]="selectedFuncType"
+            >
+                <mat-option 
+                    [value]="option.value" 
+                    *ngFor="let option of funcTypeValues"
+                >
+                    {{ option.viewValue  }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-card-subtitle>
+    <mat-card-content>
+        <canvas #chart id="chart"></canvas>
+    </mat-card-content>
+    <mat-card-actions>
+        <button 
+            mat-raised-button 
+            color="primary"
+            (click)="downloadImage(pngExt)"
+        >
+            Скачать PNG
+        </button>  
+        <button 
+            mat-raised-button 
+            color="primary"
+            (click)="downloadImage(jpgExt)"
+        >
+            Скачать JPG
+        </button>  
+    </mat-card-actions>
+</mat-card>

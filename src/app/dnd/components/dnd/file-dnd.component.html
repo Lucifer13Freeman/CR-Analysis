@@ -1,0 +1,50 @@
+<div class="container" appFileDnd (fileDropped)="onFileDropped($event)">
+
+    <div *ngIf="isMultiple; then thenBlock else elseBlock"></div>
+
+    <ng-template #thenBlock>
+        <input 
+            type="file" 
+            #fileDropRef 
+            id="fileDropRef" 
+            multiple
+            (change)="fileBrowseHandler($event)"
+            accept=".csv,application/vnd.ms-excel,.xlt,application/vnd.ms-excel,.xla,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xltx,application/vnd.openxmlformats-officedocument.spreadsheetml.template,.xlsm,application/vnd.ms-excel.sheet.macroEnabled.12,.xltm,application/vnd.ms-excel.template.macroEnabled.12,.xlam,application/vnd.ms-excel.addin.macroEnabled.12,.xlsb,application/vnd.ms-excel.sheet.binary.macroEnabled.12"
+        />
+        </ng-template>
+    <ng-template #elseBlock>
+        <input 
+            type="file" 
+            #fileDropRef 
+            id="fileDropRef" 
+            (change)="fileBrowseHandler($event)"
+            accept=".csv,application/vnd.ms-excel,.xlt,application/vnd.ms-excel,.xla,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xltx,application/vnd.openxmlformats-officedocument.spreadsheetml.template,.xlsm,application/vnd.ms-excel.sheet.macroEnabled.12,.xltm,application/vnd.ms-excel.template.macroEnabled.12,.xlam,application/vnd.ms-excel.addin.macroEnabled.12,.xlsb,application/vnd.ms-excel.sheet.binary.macroEnabled.12"
+        />
+    </ng-template>
+    
+    <img [ngClass]="{'light-img': !isDark}" src="assets/img/dnd/icon-upload-file.svg" alt=""/> 
+    <h3>Drag and drop file here</h3>
+    <h3>or</h3>
+    <label for="fileDropRef">Browse for file</label>
+</div>
+<div class="files-list">
+    <div class="single-file" *ngFor="let file of files; let i = index">
+        <img src="assets/img/dnd/icon-file.svg" width="45px" alt="file"/>
+        <div class="info">
+            <h4 class="name">
+            {{ file?.name }}
+            </h4>
+            <p class="size">
+            {{ formatBytes(file?.size) }}
+            </p>
+            <app-progress [progress]="file?.progress"></app-progress>
+        </div>
+        <img 
+            src="assets/img/dnd/icon-delete-file.svg" 
+            class="delete-img" 
+            width="20px" 
+            alt="file" 
+            (click)="deleteFile(i)"
+        />
+    </div>
+</div>
