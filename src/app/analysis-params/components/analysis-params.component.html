@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-title>Параметры анализа</mat-card-title>
+  <mat-card-title>{{title}}</mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
     <br/>
@@ -74,15 +74,25 @@
             <div class="buttons-container">  -->
         <button 
             mat-raised-button 
+            color="accent"
+            class="button-excel"
+            (click)="downloadExcel()"
+        >
+            Скачать Excel
+        </button> 
+        <button 
+            mat-raised-button 
             color="primary"
-            (click)="downloadDoc(wordExt)"
+            class="button-word"
+            (click)="downloadWord()"
         >
             Скачать Word
         </button> 
         <button 
             mat-raised-button 
             color="warn"
-            (click)="downloadDoc(pdfExt)"
+            class="button-pdf"
+            (click)="downloadPdf()"
         >
             Скачать PDF
         </button> 

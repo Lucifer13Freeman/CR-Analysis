@@ -52,8 +52,8 @@ export class FileWriterComponent implements OnInit
     //   data: ELEMENT_DATA
     // }
     await this.excelService.writeTableToExcel({ tableData: this.tableData, 
-                                        filename: FILENAME, 
-                                        extension: ExcelExtEnum.XLSX });
+                                              filename: FILENAME, 
+                                              extension: ExcelExtEnum.XLSX });
   }
 
   async downloadWord()

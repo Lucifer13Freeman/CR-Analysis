@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Associations, DIGIT_ACCURACY } from '../../constants/constants';
 import { ITableData } from '../../interfaces/table-data.interface';
 import { Point } from 'chart.js';
+import { IAnalysisParams } from '../../interfaces/analysis-params.interface';
+import { HeaderLabelsEnum } from '../../enums/enums';
 
 
 @Injectable(
@@ -50,6 +52,120 @@ export class UtilsService
       (key: string) => Associations.keysHeaderLabels[key]
     );
     return header;
+  }
+
+  makeTableDataFromAnalysisParams(analysisParams: IAnalysisParams)
+  {
+    const tableData: ITableData<any> = {
+      header: [
+        HeaderLabelsEnum.name,
+        HeaderLabelsEnum.value
+      ],
+      data: [
+        { 
+          name: analysisParams.meanSqrOffX.name,
+          value: analysisParams.meanSqrOffX.value
+        },
+        { 
+          name: analysisParams.meanSqrOffY.name,
+          value: analysisParams.meanSqrOffY.value
+        },
+        { 
+          name: analysisParams.linearCorrCoef.name,
+          value: analysisParams.linearCorrCoef.value
+        },
+        { 
+          name: analysisParams.avgCorrCoefErr.name,
+          value: analysisParams.avgCorrCoefErr.value
+        },
+        { 
+          name: analysisParams.coefCorrSignCheck.name,
+          value: analysisParams.coefCorrSignCheck.value
+        },
+        { 
+          name: analysisParams.signLvlSelectVal.name,
+          value: analysisParams.signLvlSelectVal.value
+        },
+        { 
+          name: analysisParams.tTable.name,
+          value: analysisParams.tTable.value
+        },
+        { 
+          name: analysisParams.relXY.name,
+          value: analysisParams.relXY.value
+        },
+        { 
+          name: analysisParams.coefCorrSign.name,
+          value: analysisParams.coefCorrSign.value
+        },
+        { 
+          name: analysisParams.spearmanCoeff.name,
+          value: analysisParams.spearmanCoeff.value
+        },
+        { 
+          name: analysisParams.elasticity.name,
+          value: analysisParams.elasticity.value
+        },
+        { 
+          name: analysisParams.avgApproxErr.name,
+          value: analysisParams.avgApproxErr.value
+        },
+        { 
+          name: analysisParams.totalDispersion.name,
+          value: analysisParams.totalDispersion.value
+        },
+        { 
+          name: analysisParams.factorDispersion.name,
+          value: analysisParams.factorDispersion.value
+        },
+        { 
+          name: analysisParams.residualDispersion.name,
+          value: analysisParams.residualDispersion.value
+        },
+        { 
+          name: analysisParams.totalDispersionCheck.name,
+          value: analysisParams.totalDispersionCheck.value
+        },
+        { 
+          name: analysisParams.theorCoefDeterm.name,
+          value: analysisParams.theorCoefDeterm.value
+        },
+        { 
+          name: analysisParams.theorCorrRel.name,
+          value: analysisParams.theorCorrRel.value
+        },
+        { 
+          name: analysisParams.avgA0Err.name,
+          value: analysisParams.avgA0Err.value
+        },
+        { 
+          name: analysisParams.avgA1Err.name,
+          value: analysisParams.avgA1Err.value
+        },
+        { 
+          name: analysisParams.tA0.name,
+          value: `${analysisParams.tA0.value} - ${analysisParams.tA0Check.value}`
+        },
+        { 
+          name: analysisParams.tA1.name,
+          value: `${analysisParams.tA1.value} - ${analysisParams.tA1Check.value}`
+        },
+        { 
+          name: analysisParams.fisherCrit.name,
+          value: analysisParams.fisherCrit.value
+        },
+        { 
+          name: `${analysisParams.fTableValLvl.name} (${analysisParams.fTableValLvlSelectVal.value}):`,
+          value: analysisParams.fTableValLvl.value
+        },
+        { 
+          name: analysisParams.fTableValLvlCheck.name,
+          value: analysisParams.fTableValLvlCheck.value
+        }
+      ]
+    }
+
+    return tableData;
   }
 
   // makeHeaderFromObj<T>(obj: T): Array<string>

@@ -11,7 +11,23 @@
     <!-- </div> -->
     <ng-container *ngIf="isVisible">
         <div class="data-container">
-            <div class="table">
+            <mat-card>
+                <mat-card-title>
+                    {{header.CALC_TABLE_DATA}}
+                </mat-card-title>
+                <mat-card-content>
+                    <app-data-table 
+                        [tableData]="getAnalysisData.calcTableData"
+                        [tableType]="outputCalcTableType"
+                    ></app-data-table>
+                </mat-card-content>
+                <mat-card-actions>
+                    <app-file-writer
+                        [tableData]="getAnalysisData.calcTableData"
+                    ></app-file-writer> 
+                </mat-card-actions>
+            </mat-card>
+            <!-- <div class="table">
                 <app-data-table 
                     [tableData]="getAnalysisData.calcTableData"
                     [tableType]="outputCalcTableType"
@@ -21,35 +37,47 @@
                 <app-file-writer
                     [tableData]="getAnalysisData.calcTableData"
                 ></app-file-writer> 
-            </div>
-        </div>
-        <div class="data-container">
-            <div class="table">
-                <app-data-table 
-                    [tableData]="getAnalysisData.rangTableData"
-                    [tableType]="outputRangTableType"
-                ></app-data-table>
-            </div>
-            <div class="download">
-                <app-file-writer
-                    [tableData]="getAnalysisData.rangTableData"
-                ></app-file-writer> 
-            </div>
+            </div> -->
         </div>
 
         <div class="data-container">
-            <div class="table">
-                <app-data-table 
-                    [tableData]="analysisData.tableData"
-                    [tableType]="outputExtCalcTableType"
-                ></app-data-table>
-            </div>
-            <div class="download">
-                <app-file-writer
-                    [tableData]="analysisData.tableData"
-                ></app-file-writer> 
-            </div>
+            <mat-card>
+                <mat-card-title>
+                    {{header.RANG_TABLE_DATA}}
+                </mat-card-title>
+                <mat-card-content>
+                    <app-data-table 
+                        [tableData]="getAnalysisData.rangTableData"
+                        [tableType]="outputRangTableType"
+                    ></app-data-table>
+                </mat-card-content>
+                <mat-card-actions>
+                    <app-file-writer
+                        [tableData]="getAnalysisData.rangTableData"
+                    ></app-file-writer> 
+                </mat-card-actions>
+            </mat-card>
         </div>
+
+        <div class="data-container">
+            <mat-card>
+                <mat-card-title>
+                    {{header.EXT_CALC_TABLE_DATA}}
+                </mat-card-title>
+                <mat-card-content>
+                    <app-data-table 
+                        [tableData]="analysisData.tableData"
+                        [tableType]="outputExtCalcTableType"
+                    ></app-data-table>
+                </mat-card-content>
+                <mat-card-actions>
+                    <app-file-writer
+                        [tableData]="analysisData.tableData"
+                    ></app-file-writer> 
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
         <div class="data-container">
             <div class="params">
                 <app-analysis-params
@@ -72,7 +100,7 @@
                         <div class="buttons-container"> 
                             <button 
                                 mat-raised-button 
-                                color="warn" 
+                                color="accent" 
                                 class="button-excel" 
                                 (click)="downloadExcel()"
                             >

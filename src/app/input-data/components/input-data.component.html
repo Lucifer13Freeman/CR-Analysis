@@ -12,12 +12,28 @@
             <app-file-reader></app-file-reader> 
         </ng-container>
         <!-- <div> -->
-        <app-data-table 
+        <!-- <app-data-table 
             [tableData]="tableData"
             [tableType]="inputTableType"
             [isPageble]="true"
             [withToolbar]="true"
-        ></app-data-table>
+        ></app-data-table> -->
+
+        <ng-container *ngIf="tableData.data.length !== 0">
+        <mat-card>
+            <mat-card-title>
+                {{title}}
+            </mat-card-title>
+            <mat-card-content>
+                <app-data-table 
+                    [tableData]="tableData"
+                    [tableType]="inputTableType"
+                    [isPageble]="true"
+                    [withToolbar]="true"
+                ></app-data-table>
+            </mat-card-content>
+        </mat-card>
+        </ng-container>
         <!-- </div> -->
     </div>
 </div>

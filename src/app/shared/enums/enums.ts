@@ -68,7 +68,10 @@ export enum HeaderLabelsEnum
   YxY2 = '(F(X) - Y)^2',
   YAvgY2 = '(Y - avg(Y))^2',
   YAvgYx2 = '(Y - avg(F(X)))^2',
-  AvgYxAvgY2 = '(avg(F(X)) - avg(Y))^2'
+  AvgYxAvgY2 = '(avg(F(X)) - avg(Y))^2',
+
+  name = 'Параметр',
+  value = 'Значение'
 }
 
 export enum FullFileDataHeaderWordEnum 

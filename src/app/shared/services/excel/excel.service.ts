@@ -228,8 +228,8 @@ export class ExcelService
     const worksheet: XLSX.WorkSheet = this.createWsFromJson(filteredTableData);
 
     const workbook: XLSX.WorkBook = { 
-      Sheets: { 'Data': worksheet },
-      SheetNames: ['Data']
+      Sheets: { 'Данные': worksheet },
+      SheetNames: ['Данные']
     };
  
     const excelBuffer = XLSX.write(workbook, { bookType: extension, type: 'array' });
@@ -258,6 +258,10 @@ export class ExcelService
     const filteredExtCalcTableData = this.utilsService.filterDataByHeader(extCalcTableData);
     const worksheetExtCalcTable: XLSX.WorkSheet = this.createWsFromJson(filteredExtCalcTableData);
 
+    const analysisParamsTableData = this.utilsService.makeTableDataFromAnalysisParams(analysisParams);
+    const filteredAnalysisParamsTableData = this.utilsService.filterDataByHeader(analysisParamsTableData);
+    const worksheetAnalysisParamsTable: XLSX.WorkSheet = this.createWsFromJson(filteredAnalysisParamsTableData);
+
     // FULL_FILE_DATA_HEADER_EXCEL.analysisParams
     // FULL_FILE_DATA_HEADER_EXCEL.chartData
 
@@ -267,6 +271,7 @@ export class ExcelService
     sheets[FullFileDataHeaderExcelEnum.CALC_TABLE_DATA as string] = worksheetCalcTable;
     sheets[FullFileDataHeaderExcelEnum.RANG_TABLE_DATA as string] = worksheetRangTable;
     sheets[FullFileDataHeaderExcelEnum.EXT_CALC_TABLE_DATA as string] = worksheetExtCalcTable;
+    sheets[FullFileDataHeaderExcelEnum.ANALYSIS_PARAMS as string] = worksheetAnalysisParamsTable;
 
     const workbook: XLSX.WorkBook = { 
       Sheets: sheets,
@@ -274,7 +279,8 @@ export class ExcelService
         FullFileDataHeaderExcelEnum.READ_TABLE_DATA,
         FullFileDataHeaderExcelEnum.CALC_TABLE_DATA,
         FullFileDataHeaderExcelEnum.RANG_TABLE_DATA,
-        FullFileDataHeaderExcelEnum.EXT_CALC_TABLE_DATA
+        FullFileDataHeaderExcelEnum.EXT_CALC_TABLE_DATA,
+        FullFileDataHeaderExcelEnum.ANALYSIS_PARAMS
       ]
     };
  

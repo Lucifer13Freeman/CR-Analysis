@@ -312,7 +312,10 @@ export class Associations
     YxY2: HeaderLabelsEnum.YxY2,
     YAvgY2: HeaderLabelsEnum.YAvgY2,
     YAvgYx2: HeaderLabelsEnum.YAvgYx2,
-    AvgYxAvgY2: HeaderLabelsEnum.AvgYxAvgY2
+    AvgYxAvgY2: HeaderLabelsEnum.AvgYxAvgY2,
+
+    name: HeaderLabelsEnum.name,
+    value: HeaderLabelsEnum.value
   }
 }
 
