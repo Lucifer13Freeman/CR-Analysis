@@ -213,24 +213,6 @@ export const FUNC_TYPE_VALUES: IFuncTypeValues[] = [
   { value: FuncTypeEnum.EXPONENTIAL, viewValue: FuncTypeViewValuesEnum.EXPONENTIAL }
 ]
 
-export const FULL_FILE_DATA_HEADER_WORD = {
-  header: "Результаты корреляционно-регрессионного анализа",
-  readTableData: "Таблица входных данных",
-  calcTableData: "Таблица промежуточных вычислений 1",
-  rangTableData: "Таблица рангов",
-  extCalcTableData: "Таблица промежуточных вычислений 2",
-  analysisParams: "Параметры анализа",
-  chartData: "График"
-}
-
-export const FULL_FILE_DATA_HEADER_EXCEL = {
-  readTableData: "Входные данные",
-  calcTableData: "Промежуточные вычисления 1",
-  rangTableData: "Ранги",
-  extCalcTableData: "Промежуточные вычисления 2",
-  analysisParams: "Параметры анализа",
-  chartData: "График"
-}
 
 // export type KeysHeaderAssociationType = {
 //   id: string,

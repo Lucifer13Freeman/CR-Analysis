@@ -23,9 +23,12 @@
     </ng-template>
     
     <img [ngClass]="{'light-img': !isDark}" src="assets/img/dnd/icon-upload-file.svg" alt=""/> 
-    <h3>Drag and drop file here</h3>
-    <h3>or</h3>
-    <label for="fileDropRef">Browse for file</label>
+    <h3>Перенести файл сюда </h3>
+    <!-- <h3>Drag and drop file here</h3> -->
+    <!-- <h3>or</h3> -->
+    <h3>или</h3>
+    <label for="fileDropRef">Выбрать файл</label>
+    <!-- <label for="fileDropRef">Browse for file</label> -->
 </div>
 <div class="files-list">
     <div class="single-file" *ngFor="let file of files; let i = index">

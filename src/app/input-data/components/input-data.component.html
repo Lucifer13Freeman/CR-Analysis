@@ -1,10 +1,10 @@
 <div class="data-container">
     <div class="buttons-container"> 
         <ng-container *ngIf="!isManual">
-            <button mat-raised-button color="primary" (click)="manualDataInput()">Manual Input</button>
+            <button mat-raised-button color="primary" (click)="manualDataInput()">Ручной ввод</button>
         </ng-container>
         <ng-container *ngIf="isManual">
-            <button mat-raised-button color="primary" (click)="fileDataInput()">Send File</button>
+            <button mat-raised-button color="primary" (click)="fileDataInput()">Загрузка из файла</button>
         </ng-container>
     </div>
     <div>

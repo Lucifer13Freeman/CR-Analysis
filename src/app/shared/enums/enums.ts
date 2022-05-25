@@ -71,6 +71,27 @@ export enum HeaderLabelsEnum
   AvgYxAvgY2 = '(avg(F(X)) - avg(Y))^2'
 }
 
+export enum FullFileDataHeaderWordEnum 
+{
+    MAIN_HEADER = "Результаты корреляционно-регрессионного анализа",
+    READ_TABLE_DATA = "Таблица входных данных",
+    CALC_TABLE_DATA= "Таблица промежуточных вычислений 1",
+    RANG_TABLE_DATA = "Таблица рангов",
+    EXT_CALC_TABLE_DATA = "Таблица промежуточных вычислений 2",
+    ANALYSIS_PARAMS = "Параметры анализа",
+    CHART_DATA = "График"
+}
+
+export enum FullFileDataHeaderExcelEnum 
+{
+    READ_TABLE_DATA = "Входные данные",
+    CALC_TABLE_DATA= "Промежуточные вычисления 1",
+    RANG_TABLE_DATA = "Ранги",
+    EXT_CALC_TABLE_DATA = "Промежуточные вычисления 2",
+    ANALYSIS_PARAMS = "Параметры анализа",
+    CHART_DATA = "График"
+}
+
 export enum FuncTypeEnum
 {
     LINE = 'LINE',

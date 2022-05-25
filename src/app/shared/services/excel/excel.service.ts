@@ -7,12 +7,11 @@ import { IFileData } from '../../interfaces/file-data.interface';
 import { UtilsService } from '../utils/utils.service';
 import { CSV_POSSIBLE_SEPARATORS,
   FILENAME, 
-  FULL_FILE_DATA_HEADER_EXCEL, 
   HEADER_LABLES_FROM_FILE,
   INITIAL_TABLE_DATA } from '../../constants/constants';
 import { ITableData } from '../../interfaces/table-data.interface';
 import { CsvSeparatorType, PossibleExtEnum } from '../../types/types';
-import { CsvSeparatorTypeEnum, ExcelExtEnum } from '../../enums/enums';
+import { CsvSeparatorTypeEnum, ExcelExtEnum, FullFileDataHeaderExcelEnum } from '../../enums/enums';
 import { FullFileDataDto } from '../../dto/full-file-data.dto';
 
 
@@ -264,18 +263,18 @@ export class ExcelService
 
     const sheets: any = {}
     
-    sheets[FULL_FILE_DATA_HEADER_EXCEL.readTableData as string] = worksheetReadTable;
-    sheets[FULL_FILE_DATA_HEADER_EXCEL.calcTableData as string] = worksheetCalcTable;
-    sheets[FULL_FILE_DATA_HEADER_EXCEL.rangTableData as string] = worksheetRangTable;
-    sheets[FULL_FILE_DATA_HEADER_EXCEL.extCalcTableData as string] = worksheetExtCalcTable;
+    sheets[FullFileDataHeaderExcelEnum.READ_TABLE_DATA as string] = worksheetReadTable;
+    sheets[FullFileDataHeaderExcelEnum.CALC_TABLE_DATA as string] = worksheetCalcTable;
+    sheets[FullFileDataHeaderExcelEnum.RANG_TABLE_DATA as string] = worksheetRangTable;
+    sheets[FullFileDataHeaderExcelEnum.EXT_CALC_TABLE_DATA as string] = worksheetExtCalcTable;
 
     const workbook: XLSX.WorkBook = { 
       Sheets: sheets,
       SheetNames: [
-        FULL_FILE_DATA_HEADER_EXCEL.readTableData,
-        FULL_FILE_DATA_HEADER_EXCEL.calcTableData,
-        FULL_FILE_DATA_HEADER_EXCEL.rangTableData,
-        FULL_FILE_DATA_HEADER_EXCEL.extCalcTableData
+        FullFileDataHeaderExcelEnum.READ_TABLE_DATA,
+        FullFileDataHeaderExcelEnum.CALC_TABLE_DATA,
+        FullFileDataHeaderExcelEnum.RANG_TABLE_DATA,
+        FullFileDataHeaderExcelEnum.EXT_CALC_TABLE_DATA
       ]
     };
  

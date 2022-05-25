@@ -3,15 +3,14 @@ import { Document, Packer, Paragraph,
         Table, TableCell, TableRow, 
         TextRun, WidthType, Media, ImageRun } from "docx";
 import { saveAs } from "file-saver";
-import { FILENAME, 
-        FULL_FILE_DATA_HEADER_WORD, 
+import { FILENAME,  
         FUNC_TYPE_VALUES, 
         WORD_FONT_HEADER_SIZE, 
         WORD_FONT_SIZE } from '../../constants/constants';
 import { FullFileDataDto } from '../../dto/full-file-data.dto';
 import { AnalysisParamsDto } from '../../dto/write-analysis-params.dto';
 import { WriteTableDataDto } from '../../dto/write-table-data.dto';
-import { ImageExtEnum, MimeTypeEnum, WordPdfExtEnum } from '../../enums/enums';
+import { FullFileDataHeaderWordEnum, ImageExtEnum, MimeTypeEnum, WordPdfExtEnum } from '../../enums/enums';
 import { IAnalysisParams } from '../../interfaces/analysis-params.interface';
 import { IFuncTypeValues } from '../../interfaces/func-type-values.interface';
 import { ITableData } from '../../interfaces/table-data.interface';
@@ -77,7 +76,7 @@ export class WordService
             children: [
               new TextRun(
               { 
-                text: FULL_FILE_DATA_HEADER_WORD.analysisParams,
+                text: FullFileDataHeaderWordEnum.ANALYSIS_PARAMS,
                 bold: true,
                 size: WORD_FONT_HEADER_SIZE
               })
@@ -143,7 +142,7 @@ export class WordService
             children: [
               new TextRun(
               { 
-                text: FULL_FILE_DATA_HEADER_WORD.header,
+                text: FullFileDataHeaderWordEnum.MAIN_HEADER,
                 bold: true,
                 size: WORD_FONT_HEADER_SIZE
               })
@@ -156,7 +155,7 @@ export class WordService
             children: [
               new TextRun(
               { 
-                text: FULL_FILE_DATA_HEADER_WORD.readTableData,
+                text: FullFileDataHeaderWordEnum.READ_TABLE_DATA,
                 bold: false,
                 size: WORD_FONT_HEADER_SIZE
               })
@@ -171,7 +170,7 @@ export class WordService
             children: [
               new TextRun(
               { 
-                text: FULL_FILE_DATA_HEADER_WORD.calcTableData,
+                text: FullFileDataHeaderWordEnum.CALC_TABLE_DATA,
                 bold: false,
                 size: WORD_FONT_HEADER_SIZE
               })
@@ -186,7 +185,7 @@ export class WordService
             children: [
               new TextRun(
               { 
-                text: FULL_FILE_DATA_HEADER_WORD.rangTableData,
+                text: FullFileDataHeaderWordEnum.RANG_TABLE_DATA,
                 bold: false,
                 size: WORD_FONT_HEADER_SIZE
               })
@@ -201,7 +200,7 @@ export class WordService
             children: [
               new TextRun(
               { 
-                text: FULL_FILE_DATA_HEADER_WORD.extCalcTableData,
+                text: FullFileDataHeaderWordEnum.EXT_CALC_TABLE_DATA,
                 bold: false,
                 size: WORD_FONT_HEADER_SIZE
               })
@@ -216,7 +215,7 @@ export class WordService
             children: [
               new TextRun(
               { 
-                text: FULL_FILE_DATA_HEADER_WORD.analysisParams,
+                text: FullFileDataHeaderWordEnum.ANALYSIS_PARAMS,
                 bold: false,
                 size: WORD_FONT_HEADER_SIZE
               })
@@ -231,7 +230,7 @@ export class WordService
             children: [
               new TextRun(
               { 
-                text: FULL_FILE_DATA_HEADER_WORD.chartData,
+                text: FullFileDataHeaderWordEnum.CHART_DATA,
                 bold: false,
                 size: WORD_FONT_HEADER_SIZE
               })
