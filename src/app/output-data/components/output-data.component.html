@@ -1,6 +1,6 @@
 <!-- <div class="card highlight-card card-small"> -->
 <!-- <div class="data-container"> -->
-    <div class="buttons-container"> 
+    <!-- <div class="buttons-container">  -->
         <!-- <ng-container *ngIf="!isManual">
             <button mat-button class="button-input" (click)="manualDataInput()">Manual Input</button>
         </ng-container>
@@ -8,31 +8,31 @@
             <button mat-button class="button-input" (click)="fileDataInput()">Send File</button>
         </ng-container> -->
         <!-- <button mat-button>Analyze</button> -->
-    </div>
+    <!-- </div> -->
     <ng-container *ngIf="isVisible">
         <div class="data-container">
             <div class="table">
                 <app-data-table 
-                    [tableData]="getAanalysisData.calcTableData"
+                    [tableData]="getAnalysisData.calcTableData"
                     [tableType]="outputCalcTableType"
                 ></app-data-table>
             </div>
             <div class="download">
                 <app-file-writer
-                    [tableData]="getAanalysisData.calcTableData"
+                    [tableData]="getAnalysisData.calcTableData"
                 ></app-file-writer> 
             </div>
         </div>
         <div class="data-container">
             <div class="table">
                 <app-data-table 
-                    [tableData]="getAanalysisData.rangTableData"
+                    [tableData]="getAnalysisData.rangTableData"
                     [tableType]="outputRangTableType"
                 ></app-data-table>
             </div>
             <div class="download">
                 <app-file-writer
-                    [tableData]="getAanalysisData.rangTableData"
+                    [tableData]="getAnalysisData.rangTableData"
                 ></app-file-writer> 
             </div>
         </div>
@@ -53,7 +53,7 @@
         <div class="data-container">
             <div class="params">
                 <app-analysis-params
-                    [getAanalysisData]="getAanalysisData"
+                    [getAanalysisData]="getAnalysisData"
                     [analysisParams]="analysisData.params"
                 ></app-analysis-params>
             </div>
@@ -61,9 +61,44 @@
         <div>
             <app-chart
                 [analysisData]="analysisData"
-                [getAanalysisData]="getAanalysisData"
+                [getAanalysisData]="getAnalysisData"
                 [chartData]="analysisData.chartData"
             ></app-chart>
         </div>
+        <mat-card class="download">
+            <mat-card-title>Скачать полный отчёт</mat-card-title>
+                <mat-card-actions>
+                    <div class="card highlight-card">
+                        <div class="buttons-container"> 
+                            <button 
+                                mat-raised-button 
+                                color="warn" 
+                                class="button-excel" 
+                                (click)="downloadExcel()"
+                            >
+                                Скачать Excel
+                            </button>  
+                    
+                            <button 
+                                mat-raised-button 
+                                class="button-word" 
+                                color="primary"
+                                (click)="downloadWord()"
+                            >
+                                Скачать Word
+                            </button>  
+
+                            <button 
+                                mat-raised-button 
+                                class="button-word" 
+                                color="warn"
+                                (click)="downloadPdf()"
+                            >
+                                Скачать PDF
+                            </button>  
+                        </div>
+                    </div>
+                </mat-card-actions>
+        </mat-card>
     </ng-container>
 <!-- </div> -->

@@ -8,7 +8,7 @@ import { IAnalysisParams } from 'src/app/shared/interfaces/analysis-params.inter
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
-import { WriteAnalysisService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
+import { WriteAnalysisDataService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
 import { FileDataWriteCalcService } from 'src/app/shared/services/file-data/write-calc/file-data-write-calc.service';
 import { FileDataWriteRangService } from 'src/app/shared/services/file-data/write-rang/file-data-write-rang.service';
 import { WordService } from 'src/app/shared/services/word/word.service';
@@ -25,7 +25,7 @@ import { ISelectValues } from '../interfaces/select-values.interface';
 export class AnalysisParamsComponent implements OnInit
 {
   constructor(private readonly analysisService: AnalysisService, 
-              private readonly writeAnalysisDataService: WriteAnalysisService,
+              private readonly writeAnalysisDataService: WriteAnalysisDataService,
               private readonly wordService: WordService) { }
   
   // @Input()
@@ -71,6 +71,6 @@ export class AnalysisParamsComponent implements OnInit
 
   async downloadDoc(extension: WordPdfExtEnum)
   {
-    await this.wordService.writeAnalysisParamsToWord({ analysisParams: this.analysisParams, extension });
+    await this.wordService.writeAnalysisParamsToWordPdf({ analysisParams: this.analysisParams, extension });
   }
 }

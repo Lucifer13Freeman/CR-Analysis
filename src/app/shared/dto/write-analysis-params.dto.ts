@@ -5,11 +5,11 @@ import { ITableData } from "../interfaces/table-data.interface";
 import { TableDataDto } from "./table-data.dto";
 
 
-export class WriteWordDto<T>
+export class AnalysisParamsDto//<T>
 {
-    readonly tableDataArr?: ITableData<T>[] = [{...INITIAL_TABLE_DATA}];
+    // readonly tableDataArr?: ITableData<T>[] = [{...INITIAL_TABLE_DATA}];
     readonly analysisParams?: IAnalysisParams = {...INITIAL_ANALYSIS_PARAMS};
-    readonly chartImage?: HTMLCanvasElement;
+    // readonly chartImage?: HTMLCanvasElement;
     readonly filename?: string = FILENAME;
     readonly extension?: WordPdfExtEnum = WordPdfExtEnum.DOCX;
 }

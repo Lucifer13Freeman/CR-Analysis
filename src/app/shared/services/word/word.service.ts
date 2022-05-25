@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Document, Packer, Paragraph, 
         Table, TableCell, TableRow, 
-        TextRun, WidthType } from "docx";
+        TextRun, WidthType, Media, ImageRun } from "docx";
 import { saveAs } from "file-saver";
 import { FILENAME, 
+        FULL_FILE_DATA_HEADER_WORD, 
+        FUNC_TYPE_VALUES, 
         WORD_FONT_HEADER_SIZE, 
         WORD_FONT_SIZE } from '../../constants/constants';
-import { WriteWordDto } from '../../dto/write-word.dto';
-import { MimeTypeEnum, WordPdfExtEnum } from '../../enums/enums';
+import { FullFileDataDto } from '../../dto/full-file-data.dto';
+import { AnalysisParamsDto } from '../../dto/write-analysis-params.dto';
+import { WriteTableDataDto } from '../../dto/write-table-data.dto';
+import { ImageExtEnum, MimeTypeEnum, WordPdfExtEnum } from '../../enums/enums';
 import { IAnalysisParams } from '../../interfaces/analysis-params.interface';
+import { IFuncTypeValues } from '../../interfaces/func-type-values.interface';
 import { ITableData } from '../../interfaces/table-data.interface';
+import { PossibleExtEnum } from '../../types/types';
 import { UtilsService } from '../utils/utils.service';
 
 
@@ -21,8 +27,22 @@ export class WordService
 {
   constructor(private readonly utilsService: UtilsService) { }
 
-  async writeTableToWord<T>(tableData: ITableData<T>) 
+  checkExtension(extension?: PossibleExtEnum) 
   {
+    if (extension !== WordPdfExtEnum.DOCX
+      && extension !== WordPdfExtEnum.DOC
+      && extension !== WordPdfExtEnum.PDF) extension = WordPdfExtEnum.DOCX;
+
+    return extension;
+  }
+
+  async writeTableToWord<T>(dto: WriteTableDataDto<T>) 
+  {
+    const { tableData, filename } = dto;
+    
+    let { extension } = dto;
+    extension = this.checkExtension(extension);
+
     const table: Table = this.createTableFromJson(tableData);
 
     const doc = new Document(
@@ -33,12 +53,15 @@ export class WordService
       }]
     });
 
-    await this.saveFile(doc);
+    await this.saveFile(doc, filename, extension);
   }
 
-  async writeAnalysisParamsToWord<T>(dto: WriteWordDto<T>) 
+  async writeAnalysisParamsToWordPdf(dto: AnalysisParamsDto) 
   {
-    const { analysisParams, extension } = dto;
+    const { analysisParams } = dto;
+
+    let { extension } = dto;
+    extension = this.checkExtension(extension);
 
     if (!analysisParams) return;
 
@@ -48,11 +71,181 @@ export class WordService
     {
       sections: [
       {
-        children: [...paragraph],
+        children: [
+          new Paragraph(
+          {
+            children: [
+              new TextRun(
+              { 
+                text: FULL_FILE_DATA_HEADER_WORD.analysisParams,
+                bold: true,
+                size: WORD_FONT_HEADER_SIZE
+              })
+            ]
+          }),
+          ...paragraph
+        ],
       }]
     });
 
     await this.saveFile(doc, FILENAME, extension);
+  }
+
+  async writeFullDataToWordPdf<T>(fullFileData: FullFileDataDto<T>) 
+  {
+    const { readTableData, calcTableData, rangTableData, 
+          extCalcTableData, analysisParams, 
+          funcType, canvasElement, 
+          extension, filename } = fullFileData;
+
+    const readTable: Table = this.createTableFromJson(readTableData);
+    const calcTable: Table = this.createTableFromJson(calcTableData);
+    const rangTable: Table = this.createTableFromJson(rangTableData);
+    const extCalcTable: Table = this.createTableFromJson(extCalcTableData);
+
+    const analysisParagraph: Paragraph[] = this.createDocParagraphFromJson(analysisParams);
+
+    const funcTypeValue = FUNC_TYPE_VALUES.find((fType: IFuncTypeValues) => fType.value === funcType)
+
+    const funcTypeValueParagrah = new Paragraph(
+    {
+      children: [
+        new TextRun({
+          text: funcTypeValue?.viewValue,
+          size: WORD_FONT_SIZE
+        })
+      ]
+    })
+
+    const chartImageURL: string | undefined = canvasElement?.toDataURL(`image/${ImageExtEnum.PNG}`, 1);
+
+    const image = chartImageURL ? new Paragraph(
+    {
+      children: [
+        new ImageRun(
+        {
+          data: chartImageURL,
+          transformation: {
+            width: 600,
+            height: 300
+          }
+        })
+      ]
+    }) : new Paragraph({ children: [] })
+
+    const doc = new Document(
+    {
+      sections: [
+      {
+        children: [
+          new Paragraph(
+          {
+            children: [
+              new TextRun(
+              { 
+                text: FULL_FILE_DATA_HEADER_WORD.header,
+                bold: true,
+                size: WORD_FONT_HEADER_SIZE
+              })
+            ]
+          }),
+          new Paragraph({ children: [] }),
+          new Paragraph({ children: [] }),
+          new Paragraph(
+          {
+            children: [
+              new TextRun(
+              { 
+                text: FULL_FILE_DATA_HEADER_WORD.readTableData,
+                bold: false,
+                size: WORD_FONT_HEADER_SIZE
+              })
+            ]
+          }),
+          new Paragraph({ children: [] }),
+          readTable,
+          new Paragraph({ children: [] }),
+          new Paragraph({ children: [] }),
+          new Paragraph(
+          {
+            children: [
+              new TextRun(
+              { 
+                text: FULL_FILE_DATA_HEADER_WORD.calcTableData,
+                bold: false,
+                size: WORD_FONT_HEADER_SIZE
+              })
+            ]
+          }),
+          new Paragraph({ children: [] }),
+          calcTable,
+          new Paragraph({ children: [] }),
+          new Paragraph({ children: [] }),
+          new Paragraph(
+          {
+            children: [
+              new TextRun(
+              { 
+                text: FULL_FILE_DATA_HEADER_WORD.rangTableData,
+                bold: false,
+                size: WORD_FONT_HEADER_SIZE
+              })
+            ]
+          }),
+          new Paragraph({ children: [] }),
+          rangTable,
+          new Paragraph({ children: [] }),
+          new Paragraph({ children: [] }),
+          new Paragraph(
+          {
+            children: [
+              new TextRun(
+              { 
+                text: FULL_FILE_DATA_HEADER_WORD.extCalcTableData,
+                bold: false,
+                size: WORD_FONT_HEADER_SIZE
+              })
+            ]
+          }),
+          new Paragraph({ children: [] }),
+          extCalcTable,
+          new Paragraph({ children: [] }),
+          new Paragraph({ children: [] }),
+          new Paragraph(
+          {
+            children: [
+              new TextRun(
+              { 
+                text: FULL_FILE_DATA_HEADER_WORD.analysisParams,
+                bold: false,
+                size: WORD_FONT_HEADER_SIZE
+              })
+            ]
+          }),
+          new Paragraph({ children: [] }), 
+          ...analysisParagraph,
+          new Paragraph({ children: [] }),
+          new Paragraph({ children: [] }),
+          new Paragraph(
+          {
+            children: [
+              new TextRun(
+              { 
+                text: FULL_FILE_DATA_HEADER_WORD.chartData,
+                bold: false,
+                size: WORD_FONT_HEADER_SIZE
+              })
+            ]
+          }),
+          new Paragraph({ children: [] }),
+          funcTypeValueParagrah,
+          new Paragraph({ children: [] }),
+          image
+        ]
+      }]
+    });
+
+    await this.saveFile(doc, filename, extension);
   }
 
   createTableFromJson<T>(tableData: ITableData<T>): Table
@@ -105,21 +298,7 @@ export class WordService
   createDocParagraphFromJson(analysisParams: IAnalysisParams)
   {
     const paragraphs: Paragraph[] = [
-      new Paragraph(
-      {
-        children: [
-          new TextRun(
-          { 
-            text: "Параметры анализа",
-            bold: true,
-            size: WORD_FONT_HEADER_SIZE
-          })
-        ]
-      }),
-      new Paragraph(
-      {
-        children: [],
-      }),
+      new Paragraph({ children: []}),
       // new Paragraph(
       // {
       //   children: [],
@@ -142,10 +321,7 @@ export class WordService
           }) 
         ]
       }),
-      new Paragraph(
-      {
-        children: []
-      }),
+      new Paragraph({ children: [] }),
       new Paragraph(
       {
         children: [
@@ -173,10 +349,7 @@ export class WordService
           })
         ]
       }),
-      new Paragraph(
-      {
-        children: []
-      }),
+      new Paragraph({ children: [] }),
       new Paragraph(
       {
         children: [
@@ -195,10 +368,7 @@ export class WordService
           })
         ]
       }),
-      new Paragraph(
-      {
-        children: []
-      }),
+      new Paragraph({ children: [] }),
       new Paragraph(
       {
         children: [
@@ -217,10 +387,7 @@ export class WordService
             })
           ]
       }),
-      new Paragraph(
-      {
-        children: []
-      }),
+      new Paragraph({ children: [] }),
       new Paragraph(
       {
         children: [
@@ -239,10 +406,7 @@ export class WordService
           })
         ]
       }),
-      new Paragraph(
-      {
-        children: []
-      }),
+      new Paragraph({ children: [] }),
       new Paragraph(
       {
         children: [
@@ -293,10 +457,7 @@ export class WordService
           })
         ]
       }),
-      new Paragraph(
-      {
-        children: []
-      }),
+      new Paragraph({ children: [] }),
       new Paragraph(
       {
         children: [
@@ -315,10 +476,7 @@ export class WordService
           })
         ]
       }),
-      new Paragraph(
-      {
-        children: []
-      }),
+      new Paragraph({ children: [] }),
       new Paragraph(
       {
         children: [
@@ -355,10 +513,7 @@ export class WordService
           })
         ]
       }),
-      new Paragraph(
-      {
-        children: []
-      }),
+      new Paragraph({ children: [] }),
       new Paragraph(
       {
         children: [

@@ -78,6 +78,13 @@ export enum FuncTypeEnum
     EXPONENTIAL = 'EXPONENTIAL'
 }
 
+export enum FuncTypeViewValuesEnum
+{
+    LINE = 'Прямая',
+    PARABOLA = 'Парабола',
+    EXPONENTIAL = 'Показательная функция'
+}
+
 export enum RelationTypeEnum
 {
     NONE = 'отсутствует',

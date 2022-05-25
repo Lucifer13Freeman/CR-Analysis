@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx-js-style';
 import { saveAs } from 'file-saver';
-import { WriteExcelDto } from '../../dto/write-excel.dto';
+import { WriteTableDataDto } from '../../dto/write-table-data.dto';
 import { ReadExcelDto } from '../../dto/read-excel.dto';
 import { IFileData } from '../../interfaces/file-data.interface';
 import { UtilsService } from '../utils/utils.service';
 import { CSV_POSSIBLE_SEPARATORS,
   FILENAME, 
+  FULL_FILE_DATA_HEADER_EXCEL, 
   HEADER_LABLES_FROM_FILE,
   INITIAL_TABLE_DATA } from '../../constants/constants';
 import { ITableData } from '../../interfaces/table-data.interface';
-import { CsvSeparatorType } from '../../types/types';
+import { CsvSeparatorType, PossibleExtEnum } from '../../types/types';
 import { CsvSeparatorTypeEnum, ExcelExtEnum } from '../../enums/enums';
+import { FullFileDataDto } from '../../dto/full-file-data.dto';
 
 
 @Injectable({ providedIn: 'root' })
@@ -19,6 +21,13 @@ export class ExcelService
 {
   constructor(private readonly utilsService: UtilsService) { }
 
+  private checkExtension(extension?: PossibleExtEnum) 
+  {
+    if (extension !== ExcelExtEnum.XLSX 
+      && extension !== ExcelExtEnum.CSV) extension = ExcelExtEnum.XLSX
+
+    return extension;
+  }
 
   private getCsvSeparators(str: string, possibleSeparators: Array<string>) 
   {
@@ -130,7 +139,8 @@ export class ExcelService
 
     // console.log(aoaData)
 
-    if (!isCorrect) alert('Alert: Please, check your file data!');
+    if (!isCorrect) alert('Уведомление: проверьте данные файла!');
+    // Alert: Please, check your file data!
 
     const newWorksheet: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(aoaData);
 
@@ -207,9 +217,12 @@ export class ExcelService
     return fileData;
   }
 
-  public async writeExcel<T>(dto: WriteExcelDto<T>): Promise<void>
+  public async writeTableToExcel<T>(dto: WriteTableDataDto<T>): Promise<void>
   {
-    const { tableData, filename, extension } = dto;
+    const { tableData, filename } = dto;
+    
+    let { extension } = dto; 
+    extension = this.checkExtension(extension);
 
     const filteredTableData = this.utilsService.filterDataByHeader(tableData);
 
@@ -218,6 +231,52 @@ export class ExcelService
     const workbook: XLSX.WorkBook = { 
       Sheets: { 'Data': worksheet },
       SheetNames: ['Data']
+    };
+ 
+    const excelBuffer = XLSX.write(workbook, { bookType: extension, type: 'array' });
+
+    this.saveFile(excelBuffer, filename, extension);
+  }
+
+  public async writeFullFileDataToExcel<T>(dto: FullFileDataDto<T>): Promise<void>
+  {
+    const { readTableData, calcTableData, rangTableData, 
+            extCalcTableData, analysisParams, 
+            funcType, canvasElement, filename } = dto;
+    
+    let { extension } = dto; 
+    extension = this.checkExtension(extension);
+
+    const filteredReadTableData = this.utilsService.filterDataByHeader(readTableData);
+    const worksheetReadTable: XLSX.WorkSheet = this.createWsFromJson(filteredReadTableData);
+
+    const filteredCalcTableData = this.utilsService.filterDataByHeader(calcTableData);
+    const worksheetCalcTable: XLSX.WorkSheet = this.createWsFromJson(filteredCalcTableData);
+
+    const filteredRangTableData = this.utilsService.filterDataByHeader(rangTableData);
+    const worksheetRangTable: XLSX.WorkSheet = this.createWsFromJson(filteredRangTableData);
+
+    const filteredExtCalcTableData = this.utilsService.filterDataByHeader(extCalcTableData);
+    const worksheetExtCalcTable: XLSX.WorkSheet = this.createWsFromJson(filteredExtCalcTableData);
+
+    // FULL_FILE_DATA_HEADER_EXCEL.analysisParams
+    // FULL_FILE_DATA_HEADER_EXCEL.chartData
+
+    const sheets: any = {}
+    
+    sheets[FULL_FILE_DATA_HEADER_EXCEL.readTableData as string] = worksheetReadTable;
+    sheets[FULL_FILE_DATA_HEADER_EXCEL.calcTableData as string] = worksheetCalcTable;
+    sheets[FULL_FILE_DATA_HEADER_EXCEL.rangTableData as string] = worksheetRangTable;
+    sheets[FULL_FILE_DATA_HEADER_EXCEL.extCalcTableData as string] = worksheetExtCalcTable;
+
+    const workbook: XLSX.WorkBook = { 
+      Sheets: sheets,
+      SheetNames: [
+        FULL_FILE_DATA_HEADER_EXCEL.readTableData,
+        FULL_FILE_DATA_HEADER_EXCEL.calcTableData,
+        FULL_FILE_DATA_HEADER_EXCEL.rangTableData,
+        FULL_FILE_DATA_HEADER_EXCEL.extCalcTableData
+      ]
     };
  
     const excelBuffer = XLSX.write(workbook, { bookType: extension, type: 'array' });

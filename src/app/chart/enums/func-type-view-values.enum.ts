@@ -1,6 +1,6 @@
-export enum FuncTypeViewValuesEnum
-{
-    LINE = 'Линия',
-    PARABOLA = 'Парабола',
-    EXPONENTIAL = 'Показательная функция'
-}
+// export enum FuncTypeViewValuesEnum
+// {
+//     LINE = 'Прямая',
+//     PARABOLA = 'Парабола',
+//     EXPONENTIAL = 'Показательная функция'
+// }

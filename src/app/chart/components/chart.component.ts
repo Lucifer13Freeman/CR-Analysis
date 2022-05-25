@@ -1,16 +1,16 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { INITIAL_ANALYSIS_DATA, INITIAL_CHART_DATA, INITIAL_GET_ANALYSIS_DATA, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
+import { FUNC_TYPE_VALUES, INITIAL_ANALYSIS_DATA, INITIAL_CHART_DATA, INITIAL_GET_ANALYSIS_DATA, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
 import { ChartDataDto } from 'src/app/shared/dto/chart-data.dto';
 import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
-import { WriteAnalysisService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
-import { FuncTypeViewValuesEnum } from '../enums/func-type-view-values.enum';
-import { FuncTypeEnum, ImageExtEnum } from 'src/app/shared/enums/enums';
-import { IFuncTypeValues } from '../interfaces/func-type-values.interface';
+import { WriteAnalysisDataService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
+import { FuncTypeEnum, FuncTypeViewValuesEnum, ImageExtEnum } from 'src/app/shared/enums/enums';
+import { IFuncTypeValues } from '../../shared/interfaces/func-type-values.interface';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
 import { ImageService } from 'src/app/shared/services/image/image.service';
+import { FileDataWriteImageService } from 'src/app/shared/services/file-data/write-image/file-data-write-image.service';
 
 
 @Component(
@@ -22,7 +22,8 @@ import { ImageService } from 'src/app/shared/services/image/image.service';
 export class ChartComponent implements OnInit, OnDestroy
 {
   constructor(private readonly analysisService: AnalysisService, 
-              private readonly writeAnalysisDataService: WriteAnalysisService,
+              private readonly writeAnalysisDataService: WriteAnalysisDataService,
+              private readonly fileDataWriteImageService: FileDataWriteImageService,
               private readonly imageService: ImageService) { }
 
   @ViewChild('chart')
@@ -45,11 +46,12 @@ export class ChartComponent implements OnInit, OnDestroy
 
   selectedFuncType: FuncTypeEnum = this.chartData.funcType;
 
-  funcTypeValues: IFuncTypeValues[] = [
-    { value: FuncTypeEnum.LINE, viewValue: FuncTypeViewValuesEnum.LINE },
-    { value: FuncTypeEnum.PARABOLA, viewValue: FuncTypeViewValuesEnum.PARABOLA },
-    { value: FuncTypeEnum.EXPONENTIAL, viewValue: FuncTypeViewValuesEnum.EXPONENTIAL }
-  ]
+  funcTypeValues: IFuncTypeValues[] = FUNC_TYPE_VALUES
+  //  [
+  //   { value: FuncTypeEnum.LINE, viewValue: FuncTypeViewValuesEnum.LINE },
+  //   { value: FuncTypeEnum.PARABOLA, viewValue: FuncTypeViewValuesEnum.PARABOLA },
+  //   { value: FuncTypeEnum.EXPONENTIAL, viewValue: FuncTypeViewValuesEnum.EXPONENTIAL }
+  // ]
 
   pngExt: ImageExtEnum = ImageExtEnum.PNG;
   jpgExt: ImageExtEnum = ImageExtEnum.JPG;
@@ -177,5 +179,7 @@ export class ChartComponent implements OnInit, OnDestroy
     });
 
     this.chart.update();
+
+    this.fileDataWriteImageService.setWriteImageFileData({ canvasElement: this.chartRef.nativeElement });
   }
 }

@@ -10,4 +10,5 @@ import { IColumnSchemaElement } from './data-table/interfaces/column-schema-elem
 export class AppComponent 
 {
   title = 'cra-app';
+  year = new Date().getFullYear();
 }

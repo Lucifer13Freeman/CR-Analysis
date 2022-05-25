@@ -28,16 +28,20 @@ export class AnalysisService
 
     const { tableData, extension } = fileData;
 
+    // if (!tableData) return false;
+
     if (extension !== ExcelExtEnum.XLSX && 
         extension !== ExcelExtEnum.CSV) 
     {
-      alert('Alert: Incorrect file extension!');
+      // alert('Alert: Incorrect file extension!');
+      alert('Уведомление: некорректное расширение файла!');
       return false;
     }
 
     if (Object.keys(tableData.data[0]).length !== tableData.header.length) 
     {
-      alert('Alert: Header and data columns count are different!');
+      // alert('Alert: Header and data columns count are different!');
+      alert('Уведомление: количество колонок заголовка и данных различны!');
       return false;
     }
 
@@ -47,7 +51,8 @@ export class AnalysisService
     if (!(tableData.data[0] as any).hasOwnProperty('X') && 
         !(tableData.data[0] as any).hasOwnProperty('Y'))
     {
-      alert(`Alert: Incorrect file data format: missing X and Y columns!`);
+      // alert(`Alert: Incorrect file data format: missing X and Y columns!`);
+      alert('Уведомление: некорректный формат данных файла: отсутствуют колонки X и Y!');
       return false;
     }
 
@@ -228,8 +233,8 @@ export class AnalysisService
     
     //TODO: signLvlSelectType: selection index of comboBox with values: 0.05, 0.01, 0.01 for example
     const signLvlSelectValIdx = signLvlSelectVal === SignificanceSelectValueEnum.VALUE_3 ? 2 
-                                : signLvlSelectVal === SignificanceSelectValueEnum.VALUE_1 ? 1 
-                                : 0;
+                                : signLvlSelectVal === SignificanceSelectValueEnum.VALUE_1 ? 0 
+                                : 1;
 
     const tTable: number = this.getTtable(signLvlSelectValIdx, count);
 
@@ -936,6 +941,7 @@ export class AnalysisService
       xArr.push(newData[i].X);
       yArr.push(newData[i].Y);
     }
+    
 
     // let xArrSorted = [...xArr];
     // let yArrSorted = [...yArr];
@@ -1013,46 +1019,3 @@ export class AnalysisService
     return lastRow;
   }
 }
-
-
-
-// if (6 < n && n <= 100)
-// {
-//     d = new double[n, 2];
-//     for (int i = 0; i < n; i++)
-//         for (int j = 0; j < 2; j++)
-//         {
-//             d[i, j] = MassivDannhIzFile[k];
-//             k++;
-//         }
-
-//     k = 0;
-//     var s = new double[0];
-//     for (int i = 0; i < n; i++)
-//     {
-//         if (Math.Abs(sred(Sumx) - d[k, 0]) < 4 * sigma(sred(Sumx), n))
-//         {
-//             Array.Resize(ref s, s.Length + 2);
-//             s[s.Length - 2] = this.d[k, 0];
-//             s[s.Length - 1] = this.d[k, 1];
-//         }
-//         k++;
-//     }
-//     n = s.Length / 2;
-
-//     if (n > 2)
-//     {
-
-//         k = 0;
-//         d = new double[n, 2];
-//         for (int i = 0; i < n; i++)
-//             for (int j = 0; j < 2; j++)
-//             {
-//                 d[i, j] = Convert.ToDouble(s[k]);
-//                 k++;
-//             }
-
-//         for (int i = 0; i < n; i++)
-//         {
-//             x = this.d[i, 0]; y = this.d[i, 1];
-//             x2 = Math.Pow(x, 2); y2 = Math.Pow(y, 2); xy = x * y;

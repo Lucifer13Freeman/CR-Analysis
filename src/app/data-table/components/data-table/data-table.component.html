@@ -28,15 +28,18 @@
 
     <ng-container *ngIf="withToolbar">
       <div class="data-table-toolbar">
-        <mat-form-field appearance="standard">
+        <mat-form-field class="search-input" appearance="standard">
           <mat-label>Поиск</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Поиск" #input>
+          <input matInput 
+            (keyup)="applyFilter($event)" 
+            placeholder="Поиск" 
+            #input
+          />
         </mat-form-field>
 
         <div class="table-toolbar-buttons">
           <ng-container *ngIf="isEditable">
             <!-- <div> -->
-          
             <button 
               class="button-add-row" 
               mat-raised-button 
@@ -57,7 +60,7 @@
             <button class="button-cancel" mat-button (click)="cancelChanges()">Cancel changes</button>
             </div> -->
           </ng-container>
-
+          <!-- <div> -->
           <button 
             mat-raised-button 
             class="button-edit"
@@ -65,6 +68,7 @@
           >
             Редактировать
           </button>
+          <!-- </div> -->
         </div>
       </div>
     </ng-container>

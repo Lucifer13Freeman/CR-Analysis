@@ -7,7 +7,7 @@ import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
 {
   providedIn: 'root'
 })
-export class WriteAnalysisService 
+export class WriteAnalysisDataService 
 {
   constructor() { }
 

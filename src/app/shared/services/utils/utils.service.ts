@@ -158,7 +158,7 @@ export class UtilsService
     { 
       const currentValue = arrSorted[i].toString();
     
-      if (arrSorted[i] != arrSorted[i - 1]) ranks[currentValue] = i + 1; // if the current value is the same as the previous one, then do not overwrite the rank that was originally assigned (in this way each unique value will have the lowest rank)
+      if (arrSorted[i] !== arrSorted[i - 1]) ranks[currentValue] = i + 1; // if the current value is the same as the previous one, then do not overwrite the rank that was originally assigned (in this way each unique value will have the lowest rank)
       if (ranksCount[currentValue] == undefined) ranksCount[currentValue] = 1; // if this is the first time we iterate this value, then set count to 1
       else ranksCount[currentValue]++; // else increment by one
     }
@@ -174,7 +174,8 @@ export class UtilsService
 
       if (ranksCount[currentValue] < 0) // a check just in case but in theory it should never fail
       { 
-        console.error("Negative rank count has been found which means something went wrong :(");
+        console.error("Негативное значение количества рангов!");
+        // console.error("Negative rank count has been found which means something went wrong :(");
         return [];
       }
 

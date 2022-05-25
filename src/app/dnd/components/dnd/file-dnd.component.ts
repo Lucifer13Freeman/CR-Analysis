@@ -67,18 +67,23 @@ export class FileDndComponent implements OnInit
   {
     const fileData = await this.excelService.readExcel({ file: this.files[0] });
 
-    if (fileData)
-    {
-      setTimeout(() => 
-      { 
-        const isCorrect = this.analysisService.checkReadFileData(fileData);
+    if (!fileData) return
 
-        if (isCorrect)
-        {
-          this.fileDataReadService.setReadFileData<any>(fileData as any);
-        }
-      }, READ_FILE_TIMOUT);
-    }
+    // const isCorrect = this.analysisService.checkReadFileData(fileData);
+
+    // console.log(fileData)
+    
+    setTimeout(() => 
+    { 
+      const isCorrect = this.analysisService.checkReadFileData(fileData);
+
+      // console.log(this.analysisService.checkReadFileData(fileData))
+
+      // if (!isCorrect/* && !this.isMultiple && this.files.length > 0*/) this.deleteFile(0);
+
+      if (isCorrect) this.fileDataReadService.setReadFileData<any>(fileData as any);
+      // else !this.isMultiple && this.files.length > 0 && this.deleteFile(0);
+    }, READ_FILE_TIMOUT);
   }
 
   /**
@@ -89,7 +94,9 @@ export class FileDndComponent implements OnInit
   {
     if (this.files[index].progress < 100) 
     {
-      console.log("Upload in progress.");
+      // console.log("Upload in progress.");
+      // console.log("Загрузка файла в процессе");
+      alert("Уведомление: загрузка файла в процессе!");
       return;
     }
     
@@ -132,10 +139,12 @@ export class FileDndComponent implements OnInit
   {
     for (const item of files) 
     {
-      if (!this.isMultiple && this.files.length === 1) this.deleteFile(0);
+      if (!this.isMultiple && this.files.length > 0) this.deleteFile(0);
 
       item.progress = 0;
       this.files.push(item);
+
+      // console.log(files[0])
     }
 
     this.fileDropEl.nativeElement.value = "";

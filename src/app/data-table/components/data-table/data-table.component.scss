@@ -19,6 +19,8 @@ table
 .button-edit 
 {
     text-align: right;
+    margin-top: 10px;
+    // margin-left: auto;
 }
 
 h2 
@@ -40,6 +42,7 @@ h2
     background: #1b9e1b;
     color: #ffffff;
     margin-right: 10px;
+    margin-top: 10px;
 }
 
 .button-remove-rows 
@@ -47,22 +50,34 @@ h2
     background: red;
     color: #ffffff;
     margin-right: 10px;
+    margin-top: 10px;
 }
 
-.button-remove 
-{
-    color: red;
-}
+// .button-remove 
+// {
+//     color: red;
+// }
+
+// .buttons
+// {
+//     margin: 10px;
+// }
 
 ::ng-deep .mat-form-field-infix 
 {
     width: 100% !important;
 }
 
+.search-input
+{
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
 .form-input 
 {
     padding-right: 20px;
-    // margin-right: 10px;
+    // margin-right: 20px;
     max-width: 150px;
 }
 

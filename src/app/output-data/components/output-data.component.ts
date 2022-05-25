@@ -1,21 +1,27 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TableTypeEnum } from 'src/app/data-table/enums/table-type.enum';
-import { INITIAL_ANALYSIS_DATA, INITIAL_GET_ANALYSIS_DATA, INITIAL_TABLE_DATA, READ_FILE_TIMOUT } from 'src/app/shared/constants/constants';
+import { FILENAME, INITIAL_ANALYSIS_DATA, INITIAL_GET_ANALYSIS_DATA, INITIAL_IMAGE_DATA, INITIAL_TABLE_DATA, READ_FILE_TIMOUT } from 'src/app/shared/constants/constants';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
 import { ChartDataDto } from 'src/app/shared/dto/chart-data.dto';
+import { FullFileDataDto } from 'src/app/shared/dto/full-file-data.dto';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
-import { FTableSelectValueEnum, SignificanceSelectValueEnum } from 'src/app/shared/enums/enums';
+import { ImageDataDto } from 'src/app/shared/dto/image-data.dto';
+import { ExcelExtEnum, FTableSelectValueEnum, SignificanceSelectValueEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
 import { IAnalysisParams } from 'src/app/shared/interfaces/analysis-params.interface';
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
+import { ExcelService } from 'src/app/shared/services/excel/excel.service';
 import { FileDataReadService } from 'src/app/shared/services/file-data/read/file-data-read.service';
-import { WriteAnalysisService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
+import { WriteAnalysisDataService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
 import { FileDataWriteCalcService } from 'src/app/shared/services/file-data/write-calc/file-data-write-calc.service';
+import { FileDataWriteImageService } from 'src/app/shared/services/file-data/write-image/file-data-write-image.service';
 import { FileDataWriteRangService } from 'src/app/shared/services/file-data/write-rang/file-data-write-rang.service';
 // import { FileDataService } from 'src/app/shared/services/file-data/file-data.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { WordService } from 'src/app/shared/services/word/word.service';
+import { PossibleExtEnum } from 'src/app/shared/types/types';
 
 // interface Element  
 // {
@@ -51,8 +57,11 @@ export class OutputDataComponent implements OnInit, OnDestroy
   constructor(private readonly fileDataReadService: FileDataReadService,
               private readonly fileDataWriteCalcService: FileDataWriteCalcService,
               private readonly fileDataWriteRangService: FileDataWriteRangService,
-              private readonly writeAnalysisDataService: WriteAnalysisService,
+              private readonly fileDataWriteImageService: FileDataWriteImageService,
+              private readonly writeAnalysisDataService: WriteAnalysisDataService,
               private readonly analysisService: AnalysisService,
+              private readonly excelService: ExcelService,
+              private readonly wordService: WordService,
               private readonly utilsService: UtilsService) { }
 
   subsReadFileData?: Subscription;
@@ -60,13 +69,17 @@ export class OutputDataComponent implements OnInit, OnDestroy
   subsWriteRangFileData?: Subscription;
 
   subsWriteAnalysisData?: Subscription;
+  subsWriteImageFileData?: Subscription;
+
 
   // calcTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
   // rangTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
 
+  readTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
   analysisData: AnalysisDataDto<any> = {...INITIAL_ANALYSIS_DATA};
+  imageData: ImageDataDto = {...INITIAL_IMAGE_DATA};
 
-  getAanalysisData: GetAnalysisDataDto<any> = INITIAL_GET_ANALYSIS_DATA;
+  getAnalysisData: GetAnalysisDataDto<any> = INITIAL_GET_ANALYSIS_DATA;
 
   // analysisParams: IAnalysisParams = new AnalysisDataDto().params;
   // extCalcTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
@@ -94,6 +107,7 @@ export class OutputDataComponent implements OnInit, OnDestroy
     this.getWriteCalcFileData();
     this.getWriteRangFileData();
     this.getWriteAnalysisData();
+    this.getWriteImageFileData();
   }
 
   ngOnDestroy(): void
@@ -102,6 +116,46 @@ export class OutputDataComponent implements OnInit, OnDestroy
     this.subsWriteCalcFileData?.unsubscribe();
     this.subsWriteRangFileData?.unsubscribe();
     this.subsWriteAnalysisData?.unsubscribe();
+    this.subsWriteImageFileData?.unsubscribe();
+  }
+
+  async downloadExcel(filename: string = FILENAME, 
+                      extension: ExcelExtEnum = ExcelExtEnum.XLSX)
+  {
+    const fullFileData: FullFileDataDto<any> = this.getFullFileData(filename, extension);
+    await this.excelService.writeFullFileDataToExcel(fullFileData);
+  }
+
+  async downloadWord(filename: string = FILENAME, 
+                    extension: WordPdfExtEnum = WordPdfExtEnum.DOCX)
+  {
+    const fullFileData: FullFileDataDto<any> = this.getFullFileData(filename, extension);
+    await this.wordService.writeFullDataToWordPdf(fullFileData);
+  }
+
+  async downloadPdf(filename: string = FILENAME, 
+                    extension: WordPdfExtEnum = WordPdfExtEnum.PDF)
+  {
+    const fullFileData: FullFileDataDto<any> = this.getFullFileData(filename, extension);
+    await this.wordService.writeFullDataToWordPdf(fullFileData);
+  }
+
+  private getFullFileData(filename: string = FILENAME, 
+                          extension: PossibleExtEnum = WordPdfExtEnum.DOCX) 
+  {
+    const fullFileData: FullFileDataDto<any> = {
+      readTableData: this.readTableData,
+      calcTableData: this.getAnalysisData.calcTableData,
+      rangTableData: this.getAnalysisData.rangTableData,
+      extCalcTableData: this.analysisData.tableData,
+      analysisParams: this.analysisData.params,
+      funcType: this.analysisData.chartData.funcType,
+      canvasElement: this.imageData.canvasElement,
+      filename,
+      extension
+    }
+
+    return fullFileData;
   }
 
   private checkReadFileData()
@@ -117,6 +171,8 @@ export class OutputDataComponent implements OnInit, OnDestroy
         // this.fileDataWriteCalcService.clearWriteCalcFileData();
         // this.fileDataWriteRangService.clearWriteRangFileData();
 
+        this.readTableData = fileData.tableData;
+
         const calcTableData = this.analysisService.getCalcTableData(fileData.tableData, false);
         this.fileDataWriteCalcService.setWriteCalcFileData({ ...fileData, tableData: calcTableData });
 
@@ -124,7 +180,7 @@ export class OutputDataComponent implements OnInit, OnDestroy
         this.fileDataWriteRangService.setWriteRangFileData({ ...fileData, tableData: rangTableData });
 
         const analysisData = this.analysisService.getAnalysisData({ calcTableData, rangTableData });
-        this.getAanalysisData = { ...this.getAanalysisData, calcTableData, rangTableData }
+        this.getAnalysisData = { ...this.getAnalysisData, calcTableData, rangTableData }
         this.writeAnalysisDataService.setWriteAnalysisData(analysisData);
         // }, READ_FILE_TIMOUT)
         // console.log(fileData.tableData.data.length === 0)
@@ -145,7 +201,7 @@ export class OutputDataComponent implements OnInit, OnDestroy
   {
     const { data, header } = fileData.tableData;
     // this.calcTableData = { data, header }
-    this.getAanalysisData.calcTableData = { data, header };
+    this.getAnalysisData.calcTableData = { data, header };
   }
 
   private getWriteRangFileData()
@@ -161,7 +217,7 @@ export class OutputDataComponent implements OnInit, OnDestroy
   {
     const { data, header } = fileData.tableData;
     // this.rangTableData = { data, header }
-    this.getAanalysisData.rangTableData = { data, header };
+    this.getAnalysisData.rangTableData = { data, header };
   }
 
   private getWriteAnalysisData()
@@ -177,17 +233,32 @@ export class OutputDataComponent implements OnInit, OnDestroy
   {
     this.analysisData = analysisData;
     // this.getAanalysisData.funcType = analysisData.chartData.funcType;
-    this.getAanalysisData = {
-      ...this.getAanalysisData,
+    this.getAnalysisData = {
+      ...this.getAnalysisData,
       funcType: analysisData.chartData.funcType,
       fTableValLvlSelectVal: analysisData.params.fTableValLvlSelectVal.value as FTableSelectValueEnum,
       signLvlSelectVal: analysisData.params.signLvlSelectVal.value as SignificanceSelectValueEnum
     }
   }
 
+  private getWriteImageFileData()
+  {
+    this.subsWriteImageFileData = this.fileDataWriteImageService.getWriteImageFileData().subscribe(
+    {
+      next: (imageData: ImageDataDto) => this.setWriteImageFileData(imageData),
+      error: this.handleError
+    });
+  }
+
+  private setWriteImageFileData(imageData: ImageDataDto)
+  {
+    this.imageData = imageData;
+    // console.log(imageData)
+  }
+
   private handleError(error: any)
   {
-    const errMsg = error.message || 'Something went wrong!';
+    const errMsg = error.message || 'Что-то пошло не так!';//'Something went wrong!';
     throw new Error(errMsg);
   }
 }

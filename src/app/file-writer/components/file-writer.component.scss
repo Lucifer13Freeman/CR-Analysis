@@ -1,26 +1,38 @@
 
-button {
-  margin-left: 10px;
-}
+// button {
+//   margin-left: 10px;
+// }
 
 .buttons-container {
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  margin: 0;
 }
 
 .button-excel {
   background-color: #82d89b;
   // color: #82d89b;
+  margin-left: 8px !important;
+  padding: 1px 5px !important;
+  // min-width: 120px;
 }
 
-// .button-word {
+.button-word {
+  margin-right: 0 !important;
+  padding: 1px 5px !important;
+  // min-width: 120px;
+}
 
+.button-pdf {
+  // margin-right: 0 !important;
+  padding: 1px 5px !important;
+  // min-width: 120px;
+}
+
+// .card svg.material-icons path {
+//   fill: #888;
 // }
-
-.card svg.material-icons path {
-  fill: #888;
-}
 
 .card-container {
   display: flex;
@@ -30,14 +42,14 @@ button {
 }
 
 .card {
-  all: unset;
+  // all: unset;
   border-radius: 4px;
   border: 1px solid #eee;
   background-color: #fafafa;
   // height: 40px;
   // width: 200px;
   // margin: 0 8px 16px;
-  padding: 16px;
+  padding: 0 0 16px 0;
   display: flex;
   flex-direction: row;
   // justify-content: center;
@@ -46,27 +58,27 @@ button {
   line-height: 24px;
 }
 
-.card-container .card:not(:last-child) {
-  margin-right: 0;
-}
+// .card-container .card:not(:last-child) {
+//   margin-right: 0;
+// }
 
-.card.card-small {
-  height: 16px;
-  width: 168px;
-}
+// .card.card-small {
+//   height: 16px;
+//   width: 168px;
+// }
 
-.card-container .card:not(.highlight-card) {
-  cursor: pointer;
-}
+// .card-container .card:not(.highlight-card) {
+//   cursor: pointer;
+// }
 
-.card-container .card:not(.highlight-card):hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
-}
+// .card-container .card:not(.highlight-card):hover {
+//   transform: translateY(-3px);
+//   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+// }
 
-.card-container .card:not(.highlight-card):hover .material-icons path {
-  fill: rgb(105, 103, 103);
-}
+// .card-container .card:not(.highlight-card):hover .material-icons path {
+//   fill: rgb(105, 103, 103);
+// }
 
 .card.highlight-card {
   background-color: #1976d2;
@@ -83,14 +95,14 @@ button {
 }
 
 /* Responsive Styles */
-@media screen and (max-width: 767px) {
-  .card-container > *:not(.circle-link),
-  .card:not(.highlight-card) {
-    height: 16px;
-    margin: 8px 0;
-  }
+// @media screen and (max-width: 767px) {
+//   .card-container > *:not(.circle-link),
+//   .card:not(.highlight-card) {
+//     height: 16px;
+//     margin: 8px 0;
+//   }
 
-  .card.highlight-card span {
-    margin-left: 72px;
-  }
-}
+//   .card.highlight-card span {
+//     margin-left: 72px;
+//   }
+// }

@@ -5,6 +5,7 @@ import { FileWriterModule } from '../file-writer/file-writer.module';
 import { DataTableModule } from '../data-table/data-table.module';
 import { AnalysisParamsModule } from '../analysis-params/analysis-params.module';
 import { ChartModule } from '../chart/chart.module';
+import { MaterialUiModule } from '../material-ui/material-ui.module';
 
 
 
@@ -18,7 +19,8 @@ import { ChartModule } from '../chart/chart.module';
     FileWriterModule,
     DataTableModule,
     AnalysisParamsModule,
-    ChartModule
+    ChartModule,
+    MaterialUiModule
   ],
   exports: [
     OutputDataComponent

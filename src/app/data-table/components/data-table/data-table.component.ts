@@ -14,7 +14,7 @@ import { UseOnTableDto } from '../../dto/use-on-table-type.dto';
 import { FileDataReadService } from 'src/app/shared/services/file-data/read/file-data-read.service';
 import { FileDataWriteCalcService } from 'src/app/shared/services/file-data/write-calc/file-data-write-calc.service';
 import { FileDataWriteRangService } from 'src/app/shared/services/file-data/write-rang/file-data-write-rang.service';
-import { WriteAnalysisService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
+import { WriteAnalysisDataService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
 import { TableTypeEnum } from '../../enums/table-type.enum';
 // import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle } from '@angular/cdk/drag-drop';
@@ -32,7 +32,7 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
               private readonly fileDataReadService: FileDataReadService,
               private readonly fileDataWriteCalcService: FileDataWriteCalcService,
               private readonly fileDataWriteRangService: FileDataWriteRangService,
-              private readonly writeAnalysisDataService: WriteAnalysisService,
+              private readonly writeAnalysisDataService: WriteAnalysisDataService,
               private readonly analysisService: AnalysisService,
               private readonly utilsService: UtilsService,
               public dialog: MatDialog) { }

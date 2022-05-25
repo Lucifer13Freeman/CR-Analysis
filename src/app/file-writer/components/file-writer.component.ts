@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ExcelExtEnum } from 'src/app/shared/enums/enums';
+import { FILENAME } from 'src/app/shared/constants/constants';
+import { ExcelExtEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
 import { WordService } from 'src/app/shared/services/word/word.service';
@@ -43,20 +44,29 @@ export class FileWriterComponent implements OnInit
 
   ngOnInit(): void { }
 
-
-
-  downloadExcel()
+  async downloadExcel()
   {
     // const header = ["Position", "Name", "Weight", "Symbol"];
     // const tableData: ITableData<any> = {
     //   header,
     //   data: ELEMENT_DATA
     // }
-    this.excelService.writeExcel({ tableData: this.tableData, extension: ExcelExtEnum.XLSX });
+    await this.excelService.writeTableToExcel({ tableData: this.tableData, 
+                                        filename: FILENAME, 
+                                        extension: ExcelExtEnum.XLSX });
   }
 
   async downloadWord()
   {
-    await this.wordService.writeTableToWord(this.tableData);
+    await this.wordService.writeTableToWord({ tableData: this.tableData, 
+                                            filename: FILENAME, 
+                                            extension: WordPdfExtEnum.DOCX });
+  }
+
+  async downloadPdf()
+  {
+    await this.wordService.writeTableToWord({ tableData: this.tableData, 
+                                            filename: FILENAME, 
+                                            extension: WordPdfExtEnum.PDF });
   }
 }

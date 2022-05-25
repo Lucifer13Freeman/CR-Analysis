@@ -1,5 +1,9 @@
-<div class="card highlight-card">
-    <div class="buttons-container">
+<!-- <div class="card highlight-card"> -->
+    <!-- <div class="buttons-container">  -->
+<mat-card class="card highlight-card">
+    <mat-card-actions class="buttons-container">
+                <!-- <div class="buttons-container">       -->
+        <!-- <div> -->
         <button 
             mat-raised-button 
             color="warn" 
@@ -8,7 +12,8 @@
         >
             Скачать Excel
         </button>  
-
+        <!-- </div>
+        <div> -->
         <button 
             mat-raised-button 
             class="button-word" 
@@ -17,5 +22,19 @@
         >
             Скачать Word
         </button>  
-    </div>
-</div>
+        <!-- </div>
+        <div> -->
+        <button 
+            mat-raised-button 
+            class="button-pdf" 
+            color="warn" 
+            (click)="downloadPdf()"
+        >
+            Скачать PDF
+        </button> 
+        <!-- </div> -->
+        <!-- </div> -->
+    </mat-card-actions>
+</mat-card>
+    <!-- </div> -->
+<!-- </div> -->

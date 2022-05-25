@@ -70,6 +70,8 @@
     <h4>{{analysisParams.fTableValLvlCheck.value}}</h4>
     </mat-card-content>
     <mat-card-actions>
+        <!-- <div class="card highlight-card">
+            <div class="buttons-container">  -->
         <button 
             mat-raised-button 
             color="primary"
@@ -79,10 +81,12 @@
         </button> 
         <button 
             mat-raised-button 
-            color="primary"
+            color="warn"
             (click)="downloadDoc(pdfExt)"
         >
             Скачать PDF
         </button> 
+            <!-- </div>
+        </div> -->
     </mat-card-actions>
 </mat-card>
