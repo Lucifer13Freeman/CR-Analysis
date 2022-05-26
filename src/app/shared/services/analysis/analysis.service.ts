@@ -526,9 +526,13 @@ export class AnalysisService
       data[i].AvgYxAvgY2 = (avgRow.Yx - avgRow.Y) ** 2;
       // data[i].AvgYxAvgY2 = (data[i].Yx - avgRow.Y) ** 2; //?
       sumRow.AvgYxAvgY2 += data[i].AvgYxAvgY2;
+
+      console.log(data[i].YAvgYx2, data[i].AvgYxAvgY2)
     }
 
-    // console.log(sumRow.YAvgYx2, sumRow.AvgYxAvgY2)
+    // console.log(sumRow.YAvgYx2)
+
+    console.log(sumRow.YAvgYx2, sumRow.AvgYxAvgY2)
 
     avgRow = {
       ...avgRow,
@@ -831,8 +835,8 @@ export class AnalysisService
   private getRelationXY(linearCorrCoef: number)
   {
     const relationXY = Math.abs(linearCorrCoef) == 0
-                      ? RelationTypeEnum.NONE : (0 < linearCorrCoef && linearCorrCoef < 0.3) 
-                      ? RelationTypeEnum.WEAK : (0.3 <= linearCorrCoef && linearCorrCoef <= 0.7) 
+                      ? RelationTypeEnum.NONE : (0 < Math.abs(linearCorrCoef) && Math.abs(linearCorrCoef) < 0.3) 
+                      ? RelationTypeEnum.WEAK : (0.3 <= Math.abs(linearCorrCoef) && Math.abs(linearCorrCoef) <= 0.7) 
                       ? RelationTypeEnum.MEDIUM : RelationTypeEnum.STRONG;
     return relationXY;
   }
