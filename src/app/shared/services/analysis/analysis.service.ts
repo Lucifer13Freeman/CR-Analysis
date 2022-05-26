@@ -517,14 +517,14 @@ export class AnalysisService
       sumRow.YAvgY2 += data[i].YAvgY2;
 
       //TODO: research this
-      // data[i].YAvgYx2 = (data[i].Y - avgRow.Yx) ** 2;
-      data[i].YAvgYx2 = (data[i].Y - data[i].Yx) ** 2; //?
+      data[i].YAvgYx2 = (data[i].Y - avgRow.Yx) ** 2;
+      // data[i].YAvgYx2 = (data[i].Y - data[i].Yx) ** 2; //?
       sumRow.YAvgYx2 += data[i].YAvgYx2;
       // console.log(data[i].Y, avgRow.Yx, data[i].YAvgYx2)
 
       //TODO: research this
-      // data[i].AvgYxAvgY2 = (avgRow.Yx - avgRow.Y) ** 2;
-      data[i].AvgYxAvgY2 = (data[i].Yx - avgRow.Y) ** 2; //?
+      data[i].AvgYxAvgY2 = (avgRow.Yx - avgRow.Y) ** 2;
+      // data[i].AvgYxAvgY2 = (data[i].Yx - avgRow.Y) ** 2; //?
       sumRow.AvgYxAvgY2 += data[i].AvgYxAvgY2;
     }
 
@@ -1016,7 +1016,7 @@ export class AnalysisService
       Y: '',
       Nx: '',
       Ny: '',
-      d: 'Sum',
+      d: 'Сумма',
       d2: sumRangDiffPow2
     }
 
