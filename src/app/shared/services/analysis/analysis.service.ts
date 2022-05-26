@@ -977,8 +977,6 @@ export class AnalysisService
     //   console.log(newData[i].Nx, newData[i].Ny)
     // }
 
-    
-
     const arrNx = this.utilsService.rankArray(xArr as number[], (a, b) => b - a);
     const arrNy = this.utilsService.rankArray(yArr as number[], (a, b) => b - a);
 
@@ -991,8 +989,6 @@ export class AnalysisService
       newData[i].Nx = arrNx[i];
       newData[i].Ny = arrNy[i];
     }
-
-    console.log(newData)
 
     return newData;
   }
