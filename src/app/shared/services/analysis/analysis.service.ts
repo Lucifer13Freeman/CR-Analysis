@@ -942,8 +942,8 @@ export class AnalysisService
 
     for (let i = 0; i < data.length; i++)
     {
-      xArr.push(newData[i].X);
-      yArr.push(newData[i].Y);
+      xArr.push(parseFloat(newData[i].X));
+      yArr.push(parseFloat(newData[i].Y));
     }
     
 
@@ -977,8 +977,10 @@ export class AnalysisService
     //   console.log(newData[i].Nx, newData[i].Ny)
     // }
 
-    const arrNx = this.utilsService.rankArray(xArr/*, (a, b) => b - a*/);
-    const arrNy = this.utilsService.rankArray(yArr/*, (a, b) => b - a*/);
+    
+
+    const arrNx = this.utilsService.rankArray(xArr as number[], (a, b) => b - a);
+    const arrNy = this.utilsService.rankArray(yArr as number[], (a, b) => b - a);
 
     // this.utilsService.rankArray([1, 3, 52, 6, 100, 64, 71, 100, 100, 100])
 
@@ -989,6 +991,8 @@ export class AnalysisService
       newData[i].Nx = arrNx[i];
       newData[i].Ny = arrNy[i];
     }
+
+    console.log(newData)
 
     return newData;
   }

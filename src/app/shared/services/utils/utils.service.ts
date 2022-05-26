@@ -261,41 +261,49 @@ export class UtilsService
     return parseFloat((parseFloat(val)).toFixed(num));
   }
 
-  rankArray(arr: any, 
+  rankArray(arr: number[], 
     compareFn: ((a: number, b: number) => number) | undefined = (a, b) => b - a) 
   {
-    const sortedArr = [...arr].sort(compareFn);
+    // const newArr: number[] = [...arr as number[]];
 
-    for (let i = 0; i < arr.length; i++) 
+    let rankArr: any = [...arr as number[]];
+    const sortedArr = [...rankArr].sort(compareFn);
+
+    // console.table(arr.slice(0).sort(compareFn))
+
+    for (let i = 0; i < sortedArr.length; i++) 
     {
-      let val = arr[i];
+      let val: number | null = parseFloat(rankArr[i]) //parseFloat(sortedArr[i]);
 
-      if (typeof val !== "number") continue;
+      // console.log(val, typeof val)
 
-      arr[i] = null;
+      if (typeof val !== "number" 
+          || Number.isNaN(val)) continue;
 
-      if (arr.indexOf(val) === -1) 
+      rankArr[i] = null;
+
+      if ((rankArr as number[]).indexOf(val) === -1) 
       {
-        arr[i] = { rank: sortedArr.indexOf(val) + 1 };
+        rankArr[i] = { rank: sortedArr.indexOf(val) + 1 };
       } 
       else 
       {
-        arr[i] = val;
+        rankArr[i] = val;
         
         let pos = sortedArr.indexOf(val);
 
-        let posSum = 0;
-        let count = 0;
-        let index = [];
+        let posSum: number = 0;
+        let count: number = 0;
+        let index: number[] = [];
 
-        for (let j = 0; j < arr.length; j++) 
+        for (let j = 0; j < rankArr.length; j++) 
         {
-          if (arr[j] === val) 
+          if (rankArr[j] === val) 
           {
             ++count;
             ++pos;
             posSum += pos;
-            arr[j] = null;
+            rankArr[j] = null;
             index.push(j);
           }
         }
@@ -304,19 +312,17 @@ export class UtilsService
 
         for (let j = 0; j < index.length; j++) 
         {
-          arr[index[j]] = { rank: val };
+          rankArr[index[j]] = { rank: val };
         }
       }
     }
 
-    for (let i = 0; i < arr.length; i++) 
+    for (let i = 0; i < rankArr.length; i++) 
     {
-      arr[i] = arr[i].rank;
+      rankArr[i] = rankArr[i].rank;
     }
 
-    // console.log(arr)
-
-    return arr;
+    return rankArr;
   }
 
   // rankArray(arr: number[], 
