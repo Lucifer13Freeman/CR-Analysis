@@ -5,7 +5,7 @@ import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
 import { WriteAnalysisDataService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
-import { FullFileDataHeaderWordEnum, FuncTypeEnum, FuncTypeViewValuesEnum, ImageExtEnum } from 'src/app/shared/enums/enums';
+import { DownloadButtonLabelsEnum, FullFileDataHeaderWordEnum, FuncTypeEnum, FuncTypeViewValuesEnum, ImageExtEnum } from 'src/app/shared/enums/enums';
 import { IFuncTypeValues } from '../../shared/interfaces/func-type-values.interface';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
@@ -33,7 +33,8 @@ export class ChartComponent implements OnInit, OnDestroy
 
   // private data: Point[] = [];
 
-  title: FullFileDataHeaderWordEnum = FullFileDataHeaderWordEnum.CHART_DATA
+  title: FullFileDataHeaderWordEnum = FullFileDataHeaderWordEnum.CHART_DATA;
+  downloadButtonLabels = DownloadButtonLabelsEnum;
 
   @Input()
   chartData: ChartDataDto = {...INITIAL_CHART_DATA};

@@ -7,7 +7,7 @@ import { ChartDataDto } from 'src/app/shared/dto/chart-data.dto';
 import { FullFileDataDto } from 'src/app/shared/dto/full-file-data.dto';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
 import { ImageDataDto } from 'src/app/shared/dto/image-data.dto';
-import { ExcelExtEnum, FTableSelectValueEnum, FullFileDataHeaderWordEnum, SignificanceSelectValueEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
+import { DownloadButtonLabelsEnum, ExcelExtEnum, FTableSelectValueEnum, FullFileDataHeaderWordEnum, SignificanceSelectValueEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
 import { IAnalysisParams } from 'src/app/shared/interfaces/analysis-params.interface';
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
@@ -71,7 +71,8 @@ export class OutputDataComponent implements OnInit, OnDestroy
   subsWriteAnalysisData?: Subscription;
   subsWriteImageFileData?: Subscription;
 
-  header = FullFileDataHeaderWordEnum
+  header = FullFileDataHeaderWordEnum;
+  downloadButtonLabels = DownloadButtonLabelsEnum;
 
 
   // calcTableData: ITableData<any> = {...INITIAL_TABLE_DATA};

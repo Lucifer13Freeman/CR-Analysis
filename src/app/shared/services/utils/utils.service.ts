@@ -261,46 +261,105 @@ export class UtilsService
     return parseFloat((parseFloat(val)).toFixed(num));
   }
 
-  rankArray(arr: number[], compareFn?: ((a: number, b: number) => number) | undefined) 
+  rankArray(arr: any, 
+    compareFn: ((a: number, b: number) => number) | undefined = (a, b) => b - a) 
   {
-    // STEP 1
-    const arrSorted = arr.slice().sort(compareFn);
-    
-    const ranks: any = {}; // each value from the input array will become a key here and have a rank assigned
-    const ranksCount: any = {}; // each value from the input array will become a key here and will count number of same elements
-    
-    // STEP 2
-    for (let i = 0; i < arrSorted.length; i++) // here we populate ranks and ranksCount
-    { 
-      const currentValue = arrSorted[i].toString();
-    
-      if (arrSorted[i] !== arrSorted[i - 1]) ranks[currentValue] = i + 1; // if the current value is the same as the previous one, then do not overwrite the rank that was originally assigned (in this way each unique value will have the lowest rank)
-      if (ranksCount[currentValue] == undefined) ranksCount[currentValue] = 1; // if this is the first time we iterate this value, then set count to 1
-      else ranksCount[currentValue]++; // else increment by one
-    }
-    
-    const ranked = [];
-    
-    // STEP 3
-    for (let i = arr.length - 1; i >= 0; i--) // we need to iterate backwards because ranksCount starts with maximum values and decreases
-    { 
-      const currentValue = arr[i].toString();
-    
-      ranksCount[currentValue]--;
+    const sortedArr = [...arr].sort(compareFn);
 
-      if (ranksCount[currentValue] < 0) // a check just in case but in theory it should never fail
-      { 
-        console.error("Негативное значение количества рангов!");
-        // console.error("Negative rank count has been found which means something went wrong :(");
-        return [];
+    for (let i = 0; i < arr.length; i++) 
+    {
+      let val = arr[i];
+
+      if (typeof val !== "number") continue;
+
+      arr[i] = null;
+
+      if (arr.indexOf(val) === -1) 
+      {
+        arr[i] = { rank: sortedArr.indexOf(val) + 1 };
+      } 
+      else 
+      {
+        arr[i] = val;
+        
+        let pos = sortedArr.indexOf(val);
+
+        let posSum = 0;
+        let count = 0;
+        let index = [];
+
+        for (let j = 0; j < arr.length; j++) 
+        {
+          if (arr[j] === val) 
+          {
+            ++count;
+            ++pos;
+            posSum += pos;
+            arr[j] = null;
+            index.push(j);
+          }
+        }
+
+        val = posSum / count;
+
+        for (let j = 0; j < index.length; j++) 
+        {
+          arr[index[j]] = { rank: val };
+        }
       }
-
-      ranked[i] = ranks[currentValue]; // start with the lowest rank for that value...
-      ranked[i] += ranksCount[currentValue]; // ...and then add the remaining number of duplicate values
     }
-    
-    return ranked;
+
+    for (let i = 0; i < arr.length; i++) 
+    {
+      arr[i] = arr[i].rank;
+    }
+
+    // console.log(arr)
+
+    return arr;
   }
+
+  // rankArray(arr: number[], 
+  //   compareFn: ((a: number, b: number) => number) | undefined = (a, b) => b - a) 
+  // {
+  //   // STEP 1
+  //   const arrSorted = arr.slice().sort(compareFn);
+    
+  //   const ranks: any = {}; // each value from the input array will become a key here and have a rank assigned
+  //   const ranksCount: any = {}; // each value from the input array will become a key here and will count number of same elements
+    
+  //   // STEP 2
+  //   for (let i = 0; i < arrSorted.length; i++) // here we populate ranks and ranksCount
+  //   { 
+  //     const currentValue = arrSorted[i].toString();
+    
+  //     if (arrSorted[i] !== arrSorted[i - 1]) ranks[currentValue] = i + 1; // if the current value is the same as the previous one, then do not overwrite the rank that was originally assigned (in this way each unique value will have the lowest rank)
+  //     if (ranksCount[currentValue] == undefined) ranksCount[currentValue] = 1; // if this is the first time we iterate this value, then set count to 1
+  //     else ranksCount[currentValue]++; // else increment by one
+  //   }
+    
+  //   const ranked = [];
+    
+  //   // STEP 3
+  //   for (let i = arr.length - 1; i >= 0; i--) // we need to iterate backwards because ranksCount starts with maximum values and decreases
+  //   { 
+  //     const currentValue = arr[i].toString();
+    
+  //     ranksCount[currentValue]--;
+
+  //     if (ranksCount[currentValue] < 0) // a check just in case but in theory it should never fail
+  //     { 
+  //       console.error("Негативное значение количества рангов!");
+  //       // console.error("Negative rank count has been found which means something went wrong :(");
+  //       return [];
+  //     }
+
+  //     ranked[i] = ranks[currentValue]; // start with the lowest rank for that value...
+  //     ranked[i] += ranksCount[currentValue]; // ...and then add the remaining number of duplicate values
+  //   }
+    
+  //   return ranked;
+  // }
 
   getPointsArray(xArr: number[], yArr: number[])
   {

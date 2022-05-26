@@ -78,7 +78,7 @@
             class="button-excel"
             (click)="downloadExcel()"
         >
-            Скачать Excel
+            {{downloadButtonLabels.EXCEL}}
         </button> 
         <button 
             mat-raised-button 
@@ -86,7 +86,7 @@
             class="button-word"
             (click)="downloadWord()"
         >
-            Скачать Word
+            {{downloadButtonLabels.WORD}}
         </button> 
         <button 
             mat-raised-button 
@@ -94,7 +94,7 @@
             class="button-pdf"
             (click)="downloadPdf()"
         >
-            Скачать PDF
+            {{downloadButtonLabels.PDF}}
         </button> 
             <!-- </div>
         </div> -->

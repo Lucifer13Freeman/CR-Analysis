@@ -262,8 +262,22 @@ export class ExcelService
     const filteredAnalysisParamsTableData = this.utilsService.filterDataByHeader(analysisParamsTableData);
     const worksheetAnalysisParamsTable: XLSX.WorkSheet = this.createWsFromJson(filteredAnalysisParamsTableData);
 
+    // const worksheetChartData: any = {
+    //   { name: 'image1.jpg',
+    //     data: this.picBlob,
+    //     opts: { base64: true },
+    //     position: {
+    //       type: 'twoCellAnchor',
+    //       attrs: { editAs: 'oneCell' },
+    //       from: { col: 2, row : 2 },
+    //       to: { col: 6, row: 5 }
+    //   }
+    // }
+
     // FULL_FILE_DATA_HEADER_EXCEL.analysisParams
     // FULL_FILE_DATA_HEADER_EXCEL.chartData
+
+    const worksheetChartData: any = {}
 
     const sheets: any = {}
     
@@ -272,17 +286,36 @@ export class ExcelService
     sheets[FullFileDataHeaderExcelEnum.RANG_TABLE_DATA as string] = worksheetRangTable;
     sheets[FullFileDataHeaderExcelEnum.EXT_CALC_TABLE_DATA as string] = worksheetExtCalcTable;
     sheets[FullFileDataHeaderExcelEnum.ANALYSIS_PARAMS as string] = worksheetAnalysisParamsTable;
+    sheets[FullFileDataHeaderExcelEnum.CHART_DATA as string];
 
     const workbook: XLSX.WorkBook = { 
-      Sheets: sheets,
+      Sheets: {
+        ...sheets},
       SheetNames: [
         FullFileDataHeaderExcelEnum.READ_TABLE_DATA,
         FullFileDataHeaderExcelEnum.CALC_TABLE_DATA,
         FullFileDataHeaderExcelEnum.RANG_TABLE_DATA,
         FullFileDataHeaderExcelEnum.EXT_CALC_TABLE_DATA,
-        FullFileDataHeaderExcelEnum.ANALYSIS_PARAMS
+        FullFileDataHeaderExcelEnum.ANALYSIS_PARAMS//,
+        // 'График'
       ]
     };
+
+    // const blob = canvasElement?.toDataURL().split(',')[1];
+
+    // workbook.Sheets['График']['!images']= [
+    // {
+    //       name: filename,
+    //       data: blob,
+    //       opts: { base64: true },
+    //       position: {
+    //           type: 'twoCellAnchor',
+    //           attrs: { editAs: 'oneCell' },
+    //           from: { col: 8, row : 2 },
+    //           to: { col: 8, row: 4 }
+    //       }
+    //   }
+    // ]
  
     const excelBuffer = XLSX.write(workbook, { bookType: extension, type: 'array' });
 

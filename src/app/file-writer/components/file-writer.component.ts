@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FILENAME } from 'src/app/shared/constants/constants';
-import { ExcelExtEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
+import { DownloadButtonLabelsEnum, ExcelExtEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
 import { WordService } from 'src/app/shared/services/word/word.service';
@@ -41,6 +41,8 @@ export class FileWriterComponent implements OnInit
 
   @Input()
   tableData!: ITableData<any>;
+
+  downloadButtonLabels = DownloadButtonLabelsEnum;
 
   ngOnInit(): void { }
 

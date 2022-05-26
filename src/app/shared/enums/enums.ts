@@ -74,6 +74,15 @@ export enum HeaderLabelsEnum
   value = 'Значение'
 }
 
+export enum DownloadButtonLabelsEnum
+{
+    WORD = 'Скачать Word',
+    EXCEL = 'Скачать Excel',
+    PDF = 'Скачать PDF',
+    PNG = 'Скачать PNG',
+    JPG = 'Скачать JPG'
+}
+
 export enum FullFileDataHeaderWordEnum 
 {
     MAIN_HEADER = "Результаты корреляционно-регрессионного анализа",

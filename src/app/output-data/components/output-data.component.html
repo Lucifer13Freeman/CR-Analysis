@@ -104,7 +104,7 @@
                                 class="button-excel" 
                                 (click)="downloadExcel()"
                             >
-                                Скачать Excel
+                                {{downloadButtonLabels.EXCEL}}
                             </button>  
                     
                             <button 
@@ -113,7 +113,7 @@
                                 color="primary"
                                 (click)="downloadWord()"
                             >
-                                Скачать Word
+                                {{downloadButtonLabels.WORD}}
                             </button>  
 
                             <button 
@@ -122,7 +122,7 @@
                                 color="warn"
                                 (click)="downloadPdf()"
                             >
-                                Скачать PDF
+                                {{downloadButtonLabels.PDF}}
                             </button>  
                         </div>
                     </div>

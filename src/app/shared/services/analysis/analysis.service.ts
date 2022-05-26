@@ -973,8 +973,12 @@ export class AnalysisService
     //   console.log(newData[i].Nx, newData[i].Ny)
     // }
 
-    const arrNx = this.utilsService.rankArray(xArr, (a, b) => b - a);
-    const arrNy = this.utilsService.rankArray(yArr, (a, b) => b - a);
+    const arrNx = this.utilsService.rankArray(xArr/*, (a, b) => b - a*/);
+    const arrNy = this.utilsService.rankArray(yArr/*, (a, b) => b - a*/);
+
+    // this.utilsService.rankArray([1, 3, 52, 6, 100, 64, 71, 100, 100, 100])
+
+    // console.table(arrNx, arrNy)
 
     for (let i = 0; i < xArr.length; i++)
     {
