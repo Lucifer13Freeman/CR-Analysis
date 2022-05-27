@@ -4,7 +4,7 @@ import { DIGIT_ACCURACY, TCrit } from '../../constants/constants';
 import { AnalysisDataDto } from '../../dto/analysis-data.dto';
 import { GetYxArrayDto } from '../../dto/get-yx-array.dto';
 import { ChartDataDto } from '../../dto/chart-data.dto';
-import { ExcelExtEnum, FTableSelectValueEnum, FTableValueLevelTypeEnum, FuncTypeEnum, HeaderLabelsEnum, RelationTypeEnum, SignificanceSelectValueEnum, SignificentTypeEnum } from '../../enums/enums';
+import { ExcelExtEnum, FTableSelectValueEnum, FTableValueLevelTypeEnum, FuncTypeEnum, HeaderLabelsEnum, RelationDirectionEnum, RelationTypeEnum, SignificanceSelectValueEnum, SignificentTypeEnum } from '../../enums/enums';
 import { IFileData } from '../../interfaces/file-data.interface';
 import { IAValuesAndElasticy } from '../../interfaces/graph-data.interface';
 import { ITableData } from '../../interfaces/table-data.interface';
@@ -12,6 +12,7 @@ import { UtilsService } from '../utils/utils.service';
 import { Point } from 'chart.js';
 import { GetAnalysisDataDto } from '../../dto/get-analysis-data.dto';
 import { IGetAnalysisData } from '../../interfaces/get-analysis-data.interface';
+import { RelationType } from '../../types/types';
 
 
 @Injectable(
@@ -227,7 +228,7 @@ export class AnalysisService
     const avgCorrCoefErr: number = this.getAvgCorrelCoefError(linearCorrCoef, count);     
     const coefCorrSignCheck: number = this.getCoefCorrelSignCheck(linearCorrCoef, avgCorrCoefErr);
 
-    const relXY: RelationTypeEnum = this.getRelationXY(linearCorrCoef);
+    const relXY: RelationType = this.getRelationXY(linearCorrCoef);
 
 
     
@@ -241,6 +242,8 @@ export class AnalysisService
     const coefCorrSign: SignificentTypeEnum = this.coefCorrelSignificance(coefCorrSignCheck, tTable);
 
     const spearmanCoeff: number = this.getSpiermanCoef(d2Sum, count);
+
+    const relXYspearman: RelationType = this.getRelationXYspearman(spearmanCoeff);
 
     sumRow = extCalcData[count];
     avgRow = extCalcData[count + 1];
@@ -299,6 +302,8 @@ export class AnalysisService
     params.coefCorrSign.value = coefCorrSign;
 
     params.spearmanCoeff.value = spearmanCoeff;
+    params.relXYspearman.value = relXYspearman;
+
     params.elasticity.value = elasticity;
 
     params.avgApproxErr.value = avgApproxErr;
@@ -375,10 +380,10 @@ export class AnalysisService
     return totalDispersion;
   }
 
-  private getFactorDispersion(sumAvgYAvgY2: number, count: number)
+  private getFactorDispersion(sumAvgYxAvgY2: number, count: number)
   {
     const factorDispersion = this.utilsService.roundNum(
-        sumAvgYAvgY2 / count
+        sumAvgYxAvgY2 / count
     , DIGIT_ACCURACY);
     return factorDispersion;
   }
@@ -507,6 +512,7 @@ export class AnalysisService
 
     for (let i = 0; i < count; i++)
     {
+      // data[i].YYx = Math.abs(data[i].Y - avgRow.Yx /*data[i].Yx*/); //?
       data[i].YYx = Math.abs(data[i].Y - data[i].Yx);
       sumRow.YYx += data[i].YYx;
 
@@ -746,7 +752,6 @@ export class AnalysisService
     return values;
   }
 
-
   private getYxArray(dto: GetYxArrayDto)
   {
     const { funcType: funcVariant, a0, a1, a2, xArr } = dto;
@@ -832,13 +837,37 @@ export class AnalysisService
     return spearmanCoeff;
   }
 
-  private getRelationXY(linearCorrCoef: number)
+  private getRelationXY(linearCorrCoef: number): RelationType
   {
-    const relationXY = Math.abs(linearCorrCoef) == 0
-                      ? RelationTypeEnum.NONE : (0 < Math.abs(linearCorrCoef) && Math.abs(linearCorrCoef) < 0.3) 
-                      ? RelationTypeEnum.WEAK : (0.3 <= Math.abs(linearCorrCoef) && Math.abs(linearCorrCoef) <= 0.7) 
-                      ? RelationTypeEnum.MEDIUM : RelationTypeEnum.STRONG;
-    return relationXY;
+    let relationXY: RelationType = Math.abs(linearCorrCoef) === 0
+                        ? RelationTypeEnum.NONE 
+                      : (0 < Math.abs(linearCorrCoef) && Math.abs(linearCorrCoef) < 0.3) 
+                        ? RelationTypeEnum.WEAK 
+                      : (0.3 <= Math.abs(linearCorrCoef) && Math.abs(linearCorrCoef) <= 0.7) 
+                        ? RelationTypeEnum.MEDIUM 
+                      : RelationTypeEnum.STRONG;
+    
+    relationXY = linearCorrCoef > 0 ? `${RelationDirectionEnum.DIRECT} ${relationXY}` as RelationType
+                : linearCorrCoef < 0 ? `${RelationDirectionEnum.BACK} ${relationXY}` as RelationType
+                : relationXY;
+
+    return relationXY as RelationType;
+  }
+
+  getRelationXYspearman(spearmanCoeff: number): RelationType 
+  {
+    let relationXYspearman: RelationType = spearmanCoeff === 0
+                        ? RelationTypeEnum.NONE 
+                      : (0 < Math.abs(spearmanCoeff) && Math.abs(spearmanCoeff) < 0.3) 
+                        ? RelationTypeEnum.WEAK 
+                      : (0.3 <= Math.abs(spearmanCoeff) && Math.abs(spearmanCoeff) <= 0.7) 
+                        ? RelationTypeEnum.MEDIUM : RelationTypeEnum.STRONG;
+    
+    relationXYspearman = spearmanCoeff > 0 ? `${RelationDirectionEnum.DIRECT} ${relationXYspearman}` as RelationType
+                        : spearmanCoeff < 0 ? `${RelationDirectionEnum.BACK} ${relationXYspearman}` as RelationType
+                        : relationXYspearman;
+
+    return relationXYspearman;
   }
 
   private coefCorrelSignificance(x: number, tTable: number)

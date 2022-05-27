@@ -400,6 +400,16 @@ export class WordService
       {
         children: [
           new TextRun({
+            text: `${analysisParams.relXYspearman.name}: ${analysisParams.relXYspearman.value}\n`,
+            size: WORD_FONT_SIZE
+          })
+        ]
+      }),
+      new Paragraph({ children: [] }),
+      new Paragraph(
+      {
+        children: [
+          new TextRun({
             text: `${analysisParams.elasticity.name}: ${analysisParams.elasticity.value}\n`,
             size: WORD_FONT_SIZE
           })

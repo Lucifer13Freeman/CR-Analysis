@@ -105,6 +105,10 @@ export const INITIAL_ANALYSIS_PARAMS: IAnalysisParams = {
       name: AnalisysDataNamesEnum.SPEARMAN_COEF, 
       value: 0 
   },
+  relXYspearman: {
+    name: AnalisysDataNamesEnum.RELATION_XY_SPEARMAN, 
+    value: 0 
+  },
   elasticity: { 
       name: AnalisysDataNamesEnum.ELASTICITY, 
       value: 0 

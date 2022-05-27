@@ -18,6 +18,7 @@ export interface IAnalysisParams
     coefCorrSign: AnalysisParamsType;
 
     spearmanCoeff: AnalysisParamsType;
+    relXYspearman: AnalysisParamsType;
     elasticity: AnalysisParamsType;
 
     avgApproxErr: AnalysisParamsType;

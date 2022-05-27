@@ -118,6 +118,13 @@ export enum FuncTypeViewValuesEnum
     EXPONENTIAL = 'Показательная функция'
 }
 
+export enum RelationDirectionEnum
+{
+    DIRECT = 'прямая',
+    BACK = 'обратная',
+    NONE = ''
+}
+
 export enum RelationTypeEnum
 {
     NONE = 'отсутствует',
@@ -164,9 +171,10 @@ export enum AnalisysDataNamesEnum
     SIGNIFICANCE_LEVEL = 'Уровень значимости',
     T_TABLE= 't - таблицы',
 
-    RELATION_XY = 'Связь между признаками X и Y',
+    RELATION_XY = 'Связь между признаками X и Y по коэффициенту корреляции',
     COEF_CORREL_SIGNIFICANCE = 'Коэффициент корреляции',
     
+    RELATION_XY_SPEARMAN = 'Связь между признаками X и Y по коэффициенту Спирмена',
     SPEARMAN_COEF = 'Коэффициент Спирмена',
     ELASTICITY = 'Эластичность',
     

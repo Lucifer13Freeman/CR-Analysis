@@ -103,6 +103,10 @@ export class UtilsService
           value: analysisParams.spearmanCoeff.value
         },
         { 
+          name: analysisParams.relXYspearman.name,
+          value: analysisParams.relXYspearman.value
+        },
+        { 
           name: analysisParams.elasticity.name,
           value: analysisParams.elasticity.value
         },
