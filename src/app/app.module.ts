@@ -25,7 +25,7 @@ import { MaterialUiModule } from './material-ui/material-ui.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+    // AppRoutingModule,
     // MaterialUiModule,
     InputDataModule,
     OutputDataModule,

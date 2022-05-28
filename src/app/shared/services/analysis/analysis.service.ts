@@ -296,9 +296,6 @@ export class AnalysisService
     const V2 = parseInt((count - m).toString());
 
     const fisherCrit: number = this.getFisherCrit(factorDispersion, residualDispersion, V1, V2);
-    
-    //TODO: fTableValLvlSelectVal: selection index of comboBox with values: 0.05, 0.01 for example
-    // const fTableValLvlSelectVal = 1;
 
     const fTableValLvl: number = this.getFtableValueLevel(V1 - 1, V2 - 1, fTableValLvlSelectVal, count); //?
     const fTableValueLevelCheck: FTableValueLevelTypeEnum = this.getFTableValueLevelCheck(fisherCrit, fTableValLvl); //?
@@ -386,99 +383,66 @@ export class AnalysisService
   private getAvgApproximationError(sumY: number, sumYYx: number)
   {
     const avgApproxErr = sumYYx / sumY;
-    //  this.utilsService.roundNum(
-    //     sumYYx / sumY
-    // , DIGIT_ACCURACY);
     return avgApproxErr;
   }
 
   private getTotalDispersion(sumYAvgY2: number, count: number)
   {
     const totalDispersion = sumYAvgY2 / count;
-    //  this.utilsService.roundNum(
-    //     sumYAvgY2 / count
-    // , DIGIT_ACCURACY);
     return totalDispersion;
   }
 
   private getFactorDispersion(sumAvgYxAvgY2: number, count: number)
   {
     const factorDispersion = sumAvgYxAvgY2 / count;
-    //  this.utilsService.roundNum(
-    //     sumAvgYxAvgY2 / count
-    // , DIGIT_ACCURACY);
     return factorDispersion;
   }
 
   private getResidualDispersion(sumYAvgYx2: number, count: number)
   {
     const residualDispersion = sumYAvgYx2 / count;
-    //  this.utilsService.roundNum(
-    //     sumYAvgYx2 / count
-    // , DIGIT_ACCURACY);
   return residualDispersion;
   }
 
   private getResidualDispersionSqrt(residualDispersion: number)
   {
     const residualDispersionSqrt = Math.sqrt(residualDispersion);
-    // this.utilsService.roundNum(
-    //     Math.sqrt(residualDispersion)
-    // , DIGIT_ACCURACY);
     return residualDispersionSqrt;
   }
   
   private getTotalDispersionCheck(factorDispersion: number, residualDispersion: number)
   {
     const totalDispersionCheck = factorDispersion + residualDispersion;
-    //  this.utilsService.roundNum(
-    //     factorDispersion + residualDispersion
-    // , DIGIT_ACCURACY);
     return totalDispersionCheck;
   }
 
   private getTheorCoefDetermination(factorDispersion: number, totalDispersion: number)
   {
     const theorCoefDeterm = factorDispersion / totalDispersion;
-    //  this.utilsService.roundNum(
-    //     factorDispersion / totalDispersion
-    // , DIGIT_ACCURACY);
     return theorCoefDeterm;
   }
 
   private getTheorCorrelRelation(theorCoefDeterm: number)
   {
     const theorCoefRel = Math.sqrt(theorCoefDeterm);
-    // this.utilsService.roundNum(
-    //     Math.sqrt(theorCoefDeterm)
-    // , DIGIT_ACCURACY);
     return theorCoefRel;
   }
 
   private getAvgA0Error(residualDispersionSqrt: number, count: number)
   {
     const avgA0Err = residualDispersionSqrt / Math.sqrt(count - 2);
-    // this.utilsService.roundNum(
-    //   residualDispersionSqrt / Math.sqrt(count - 2)
-    // , DIGIT_ACCURACY);
     return avgA0Err;
   }
 
   private getAvgA1Error(residualDispersionSqrt: number, meanSqrOffX: number, count: number)
   {
     const avgA0Err = residualDispersionSqrt / (meanSqrOffX * Math.sqrt(count - 2));
-    // this.utilsService.roundNum(
-    //   residualDispersionSqrt / (meanSqrOffX * Math.sqrt(count - 2))
-    // , DIGIT_ACCURACY);
     return avgA0Err;
   }
 
   private getTa(a: number, avgAError: number)
   {
     const Ta = a / avgAError;
-    //  this.utilsService.roundNum(
-    //     a / avgAError
-    // , DIGIT_ACCURACY);
     return Ta;
   }
 
@@ -487,9 +451,6 @@ export class AnalysisService
                         V1: number, V2: number)
   {
     const fisherCrit = (factorDispersion / V1) / (residualDispersion / V2)
-    // this.utilsService.roundNum(
-    //     (factorDispersion / V1) / (residualDispersion / V2)
-    // , DIGIT_ACCURACY);
     return fisherCrit;
   }
 
@@ -674,8 +635,6 @@ export class AnalysisService
     switch (funcVariant)
     {
       case FuncTypeEnum.LINE:
-      // case FuncTypeEnum.HYPERBOLA:
-      // case FuncTypeEnum.LOGARITHM:
       default:
       {
         a0 = (sumRow.Y * sumRow.X2 - sumRow.XY * sumRow.X) 
@@ -843,6 +802,8 @@ export class AnalysisService
 
         elasticity = avgRow.X * a1; 
 
+        // elasticity = avgRow.X * Math.log(a1); 
+
         //  this.utilsService.roundNum(avgRow.X * a1, DIGIT_ACCURACY);
 
         // a1 = this.utilsService.roundNum(
@@ -932,7 +893,7 @@ export class AnalysisService
 
         // console.log(a1, a0)
 
-        elasticity = a1 * (avgRow.lnX / (a0 + a1 * avgRow.lnX))
+        elasticity = a1 / (a0 + a1 * avgRow.lnX)
           
         m = 2;
 

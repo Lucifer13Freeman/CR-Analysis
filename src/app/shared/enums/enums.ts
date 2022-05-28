@@ -117,7 +117,7 @@ export enum FuncTypeViewValuesEnum
 {
     LINE = 'Прямая',
     PARABOLA = 'Парабола',
-    EXPONENTIAL = 'Показательная функция',
+    EXPONENTIAL = 'Показательная',
     HYPERBOLA = 'Гипербола',
     LOGARITHM = 'Логарифмическая'
 }
@@ -161,13 +161,6 @@ export enum FTableSelectValueEnum
     VALUE_1 = '0.05',
     VALUE_2 = '0.01'
 }
-
-
-
-
-
-
-
 
 export enum AnalisysDataNamesEnum {
   MEAN_SQUARE_OFF_X = 'Среднеквадратичное отклонение для признака X',
