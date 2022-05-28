@@ -108,14 +108,18 @@ export enum FuncTypeEnum
 {
     LINE = 'LINE',
     PARABOLA = 'PARABOLA',
-    EXPONENTIAL = 'EXPONENTIAL'
+    EXPONENTIAL = 'EXPONENTIAL',
+    HYPERBOLA = 'HYPERBOLA',
+    LOGARITHM = 'LOGARITHM'
 }
 
 export enum FuncTypeViewValuesEnum
 {
     LINE = 'Прямая',
     PARABOLA = 'Парабола',
-    EXPONENTIAL = 'Показательная функция'
+    EXPONENTIAL = 'Показательная функция',
+    HYPERBOLA = 'Гипербола',
+    LOGARITHM = 'Логарифмическая'
 }
 
 export enum RelationDirectionEnum
@@ -158,44 +162,54 @@ export enum FTableSelectValueEnum
     VALUE_2 = '0.01'
 }
 
-export enum AnalisysDataNamesEnum
-{
-    MEAN_SQUARE_OFF_X = 'Среднеквадратичное отклонение для признака X',
-    MEAN_SQUARE_OFF_Y = 'Среднеквадратичное отклонение для признака Y',
-    
-    LINEAR_CORREL_COEF = 'Линейный коэффициент корреляции',
-    AVG_CORREL_COEF_ERROR = 'Средняя ошибка коэффициента корреляции',
 
-    COEF_CORREL_SIGNIFICANCE_LEVEL_CHECK = 'Проверка коэффициента корреляции на значимость',
-    
-    SIGNIFICANCE_LEVEL = 'Уровень значимости',
-    T_TABLE= 't - таблицы',
 
-    RELATION_XY = 'Связь между признаками X и Y по коэффициенту корреляции',
-    COEF_CORREL_SIGNIFICANCE = 'Коэффициент корреляции',
-    
-    RELATION_XY_SPEARMAN = 'Связь между признаками X и Y по коэффициенту Спирмена',
-    SPEARMAN_COEF = 'Коэффициент Спирмена',
-    ELASTICITY = 'Эластичность',
-    
-    AVG_APPROXIMATION_ERROR = 'Средняя ошибка аппроксимации',
 
-    FACTOR_DISPERSION = 'Факторная дисперсия',
-    RESIDUAL_DISPERSION = 'Остаточная дисперсия',
 
-    TOTAL_DISPERSION = 'Общая дисперсия',
-    TOTAL_DISPERSION_CHECK = 'Проверка общей дисперсии',
 
-    THEOR_COEF_DETERMINATION = 'Теоретический коэффициент детерминации',
-    THEOR_CORREL_RELATION = 'Теоретическое корреляционное отношение',
 
-    AVG_PARAM_A0_ERROR = 'Средняя ошибка параметров а0',
-    AVG_PARAM_A1_ERROR = 'Средняя ошибка параметров а1',
 
-    T_A0 = 't a0',
-    T_A1 = 't a1',
+export enum AnalisysDataNamesEnum {
+  MEAN_SQUARE_OFF_X = 'Среднеквадратичное отклонение для признака X',
+  MEAN_SQUARE_OFF_Y = 'Среднеквадратичное отклонение для признака Y',
 
-    FISHER_CRITERION = 'F-критерий Фишера',
+  LINEAR_CORREL_COEF = 'Линейный коэффициент корреляции',
+  AVG_CORREL_COEF_ERROR = 'Средняя ошибка коэффициента корреляции',
 
-    F_TABLE_VAL_LEVEL = 'Уровень значений F-таблицы'
+  COEF_CORREL_SIGNIFICANCE_LEVEL_CHECK = 'Проверка коэффициента корреляции на значимость',
+
+  SIGNIFICANCE_LEVEL = 'Уровень значимости',
+  T_TABLE = 't - таблицы',
+
+  RELATION_XY = 'Связь между признаками X и Y по коэффициенту корреляции',
+  COEF_CORREL_SIGNIFICANCE = 'Коэффициент корреляции',
+
+  RELATION_XY_SPEARMAN = 'Связь между признаками X и Y по коэффициенту Спирмена',
+  SPEARMAN_COEF = 'Коэффициент Спирмена',
+  ELASTICITY = 'Эластичность',
+
+  AVG_APPROXIMATION_ERROR = 'Средняя ошибка аппроксимации',
+
+  FACTOR_DISPERSION = 'Факторная дисперсия',
+  RESIDUAL_DISPERSION = 'Остаточная дисперсия',
+
+  TOTAL_DISPERSION = 'Общая дисперсия',
+  TOTAL_DISPERSION_CHECK = 'Проверка общей дисперсии',
+
+  THEOR_COEF_DETERMINATION = 'Теоретический коэффициент детерминации',
+  THEOR_CORREL_RELATION = 'Теоретическое корреляционное отношение',
+
+  AVG_PARAM_A0_ERROR = 'Средняя ошибка параметров а0',
+  AVG_PARAM_A1_ERROR = 'Средняя ошибка параметров а1',
+
+  T_A0 = 't a0',
+  T_A1 = 't a1',
+
+  FISHER_CRITERION = 'F-критерий Фишера',
+
+  F_TABLE_VAL_LEVEL = 'Уровень значений F-таблицы',
+
+  A0 = "Параметр a0",
+  A1 = "Параметр a1",
+  A2 = "Параметр a2"
 }

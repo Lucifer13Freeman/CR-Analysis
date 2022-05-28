@@ -7,7 +7,7 @@ import { DataTableService } from '../../services/data-table.service';
 import { IColumnSchemaElement } from '../../interfaces/column-schema-element.interface';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
-import { INITIAL_TABLE_DATA, READ_FILE_TIMOUT, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
+import { DIGIT_ACCURACY, INITIAL_TABLE_DATA, READ_FILE_TIMOUT, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { ICheckTableType } from '../../interfaces/check-table-type.interface';
 import { UseOnTableDto } from '../../dto/use-on-table-type.dto';
@@ -88,6 +88,11 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
   {
     this.subs?.unsubscribe();
   }
+
+  // round(num: number): number
+  // {
+  //   return this.utilsService.roundNum(num, DIGIT_ACCURACY);
+  // }
 
   private subscribeOn()
   {

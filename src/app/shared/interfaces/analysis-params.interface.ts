@@ -32,6 +32,10 @@ export interface IAnalysisParams
     theorCoefDeterm: AnalysisParamsType;
     theorCorrRel: AnalysisParamsType;
 
+    // a0: AnalysisParamsType;
+    // a1: AnalysisParamsType;
+    // a2: AnalysisParamsType;
+
     avgA0Err: AnalysisParamsType;
     avgA1Err: AnalysisParamsType;
 

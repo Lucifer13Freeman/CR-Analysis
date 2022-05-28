@@ -334,6 +334,16 @@ export class WordService
       {
         children: [
           new TextRun({
+            text: `${analysisParams.relXY.name}: ${analysisParams.relXY.value}\n`,
+            size: WORD_FONT_SIZE
+          })
+        ]
+      }),
+      new Paragraph({ children: [] }),
+      new Paragraph(
+      {
+        children: [
+          new TextRun({
             text: `${analysisParams.avgCorrCoefErr.name}: ${analysisParams.avgCorrCoefErr.value}\n`,
             size: WORD_FONT_SIZE
           })
@@ -363,16 +373,6 @@ export class WordService
         children: [
           new TextRun({
             text: `${analysisParams.tTable.name}: ${analysisParams.tTable.value}\n`,
-            size: WORD_FONT_SIZE
-          })
-        ]
-      }),
-      new Paragraph({ children: [] }),
-      new Paragraph(
-      {
-        children: [
-          new TextRun({
-            text: `${analysisParams.relXY.name}: ${analysisParams.relXY.value}\n`,
             size: WORD_FONT_SIZE
           })
         ]

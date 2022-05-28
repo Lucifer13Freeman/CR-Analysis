@@ -128,6 +128,8 @@ export class ChartComponent implements OnInit, OnDestroy
           //   "#1fc8f8",
           //   "#76a346"
           // ]
+          // fill: true,
+          // borderRadius: 15,
         }, 
         { 
           type: 'scatter',
@@ -152,10 +154,15 @@ export class ChartComponent implements OnInit, OnDestroy
       data,
       options: {
         // cutoutPercentage: 50,
+        elements: {
+          line: {
+            borderJoinStyle: 'round'
+          }
+        },
         animation: {
-            delay: 1
-            // animateScale: true,
-            // animateRotate: true
+          delay: 1
+          // animateScale: true,
+          // animateRotate: true
         },
         responsive: true,
         scales: {

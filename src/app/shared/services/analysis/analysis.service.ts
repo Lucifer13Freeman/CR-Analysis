@@ -75,7 +75,24 @@ export class AnalysisService
         X4: this.utilsService.roundNum(row.X ** 4, DIGIT_ACCURACY), 
         X2Y: this.utilsService.roundNum((row.X ** 2) * row.Y, DIGIT_ACCURACY),
         lnY: this.utilsService.roundNum(Math.log(row.Y), DIGIT_ACCURACY),
-        XlnY: this.utilsService.roundNum(row.X * Math.log(row.Y), DIGIT_ACCURACY)
+        XlnY: this.utilsService.roundNum(row.X * Math.log(row.Y), DIGIT_ACCURACY),
+
+        lnX: this.utilsService.roundNum(Math.log(row.X), DIGIT_ACCURACY),
+        // lnXY: this.utilsService.roundNum(Math.log(row.X * row.Y), DIGIT_ACCURACY),
+        lnX2: this.utilsService.roundNum(Math.log(row.X) ** 2, DIGIT_ACCURACY),
+        YlnX: this.utilsService.roundNum(row.Y * Math.log(row.X), DIGIT_ACCURACY),
+
+        div1X: this.utilsService.roundNum(1 / row.X, DIGIT_ACCURACY),
+        div1X2: this.utilsService.roundNum(1 / (row.X ** 2), DIGIT_ACCURACY),
+        YdivX: this.utilsService.roundNum(row.Y / row.X, DIGIT_ACCURACY),
+
+        // div1XY: this.utilsService.roundNum(1 / row.X * row.Y, DIGIT_ACCURACY),
+
+        // div1X2
+        
+        // div1X3: this.utilsService.roundNum(1 / row.X ** 3, DIGIT_ACCURACY), 
+        // div1X4: this.utilsService.roundNum(1 / row.X ** 4, DIGIT_ACCURACY), 
+        // div1X2Y: this.utilsService.roundNum(((1 / row.X) ** 2) * row.Y, DIGIT_ACCURACY),
       }
     });
 
@@ -104,6 +121,8 @@ export class AnalysisService
     const header: string[] = !isExtended ? stdHeader : extHeader;
   
     calcTableData.header.push(...header);
+
+    // console.log(calcTableData)
 
     return calcTableData;
   }
@@ -243,7 +262,7 @@ export class AnalysisService
 
     const spearmanCoeff: number = this.getSpiermanCoef(d2Sum, count);
 
-    const relXYspearman: RelationType = this.getRelationXYspearman(spearmanCoeff);
+    const relXYspearman: RelationType = this.getRelationXY(spearmanCoeff);
 
     sumRow = extCalcData[count];
     avgRow = extCalcData[count + 1];
@@ -288,46 +307,46 @@ export class AnalysisService
     // const fTableValLvlCheck = this.getFTableValueLevelCheck(fisherCrit, fTableValLvl);
 
 
-    params.meanSqrOffX.value = meanSqrOffX;
-    params.meanSqrOffY.value = meanSqrOffY;
+    params.meanSqrOffX.value = this.utilsService.roundNum(meanSqrOffX, DIGIT_ACCURACY);
+    params.meanSqrOffY.value = this.utilsService.roundNum(meanSqrOffY, DIGIT_ACCURACY);
 
-    params.linearCorrCoef.value = linearCorrCoef;
-    params.avgCorrCoefErr.value = avgCorrCoefErr;
-    params.coefCorrSignCheck.value = coefCorrSignCheck;
+    params.linearCorrCoef.value = this.utilsService.roundNum(linearCorrCoef, DIGIT_ACCURACY);
+    params.avgCorrCoefErr.value = this.utilsService.roundNum(avgCorrCoefErr, DIGIT_ACCURACY);
+    params.coefCorrSignCheck.value = this.utilsService.roundNum(coefCorrSignCheck, DIGIT_ACCURACY);
 
     params.signLvlSelectVal.value = signLvlSelectVal;
-    params.tTable.value = tTable;
+    params.tTable.value = this.utilsService.roundNum(tTable, DIGIT_ACCURACY);
 
     params.relXY.value = relXY;
     params.coefCorrSign.value = coefCorrSign;
 
-    params.spearmanCoeff.value = spearmanCoeff;
+    params.spearmanCoeff.value = this.utilsService.roundNum(spearmanCoeff, DIGIT_ACCURACY);
     params.relXYspearman.value = relXYspearman;
 
-    params.elasticity.value = elasticity;
+    params.elasticity.value = this.utilsService.roundNum(elasticity, DIGIT_ACCURACY);
 
-    params.avgApproxErr.value = avgApproxErr;
+    params.avgApproxErr.value = this.utilsService.roundNum(avgApproxErr, DIGIT_ACCURACY);
 
-    params.totalDispersion.value = totalDispersion;
-    params.factorDispersion.value = factorDispersion;
-    params.residualDispersion.value = residualDispersion;
-    params.totalDispersionCheck.value = totalDispersionCheck;
+    params.totalDispersion.value = this.utilsService.roundNum(totalDispersion, DIGIT_ACCURACY);
+    params.factorDispersion.value = this.utilsService.roundNum(factorDispersion, DIGIT_ACCURACY);
+    params.residualDispersion.value = this.utilsService.roundNum(residualDispersion, DIGIT_ACCURACY);
+    params.totalDispersionCheck.value = this.utilsService.roundNum(totalDispersionCheck, DIGIT_ACCURACY);
 
-    params.theorCoefDeterm.value = theorCoefDeterm;
-    params.theorCorrRel.value = theorCorrRel;
+    params.theorCoefDeterm.value = this.utilsService.roundNum(theorCoefDeterm, DIGIT_ACCURACY);
+    params.theorCorrRel.value = this.utilsService.roundNum(theorCorrRel, DIGIT_ACCURACY);
 
-    params.avgA0Err.value = avgA0Err;
-    params.avgA1Err.value = avgA1Err;
+    params.avgA0Err.value = this.utilsService.roundNum(avgA0Err, DIGIT_ACCURACY);
+    params.avgA1Err.value = this.utilsService.roundNum(avgA1Err, DIGIT_ACCURACY);
 
-    params.tA0.value = tA0;
-    params.tA1.value = tA1;
+    params.tA0.value = this.utilsService.roundNum(tA0, DIGIT_ACCURACY);
+    params.tA1.value = this.utilsService.roundNum(tA1, DIGIT_ACCURACY);
 
     params.tA0Check.value = tA0Check;
     params.tA1Check.value = tA1Check;
 
-    params.fisherCrit.value = fisherCrit;
+    params.fisherCrit.value = this.utilsService.roundNum(fisherCrit, DIGIT_ACCURACY);
 
-    params.fTableValLvl.value = fTableValLvl;
+    params.fTableValLvl.value = this.utilsService.roundNum(fTableValLvl, DIGIT_ACCURACY);
     params.fTableValLvlSelectVal.value = fTableValLvlSelectVal;
     params.fTableValLvlCheck.value = fTableValueLevelCheck;
     
@@ -366,89 +385,100 @@ export class AnalysisService
 
   private getAvgApproximationError(sumY: number, sumYYx: number)
   {
-    const avgApproxErr = this.utilsService.roundNum(
-        sumYYx / sumY
-    , DIGIT_ACCURACY);
+    const avgApproxErr = sumYYx / sumY;
+    //  this.utilsService.roundNum(
+    //     sumYYx / sumY
+    // , DIGIT_ACCURACY);
     return avgApproxErr;
   }
 
   private getTotalDispersion(sumYAvgY2: number, count: number)
   {
-    const totalDispersion = this.utilsService.roundNum(
-        sumYAvgY2 / count
-    , DIGIT_ACCURACY);
+    const totalDispersion = sumYAvgY2 / count;
+    //  this.utilsService.roundNum(
+    //     sumYAvgY2 / count
+    // , DIGIT_ACCURACY);
     return totalDispersion;
   }
 
   private getFactorDispersion(sumAvgYxAvgY2: number, count: number)
   {
-    const factorDispersion = this.utilsService.roundNum(
-        sumAvgYxAvgY2 / count
-    , DIGIT_ACCURACY);
+    const factorDispersion = sumAvgYxAvgY2 / count;
+    //  this.utilsService.roundNum(
+    //     sumAvgYxAvgY2 / count
+    // , DIGIT_ACCURACY);
     return factorDispersion;
   }
 
   private getResidualDispersion(sumYAvgYx2: number, count: number)
   {
-    const residualDispersion = this.utilsService.roundNum(
-        sumYAvgYx2 / count
-    , DIGIT_ACCURACY);
+    const residualDispersion = sumYAvgYx2 / count;
+    //  this.utilsService.roundNum(
+    //     sumYAvgYx2 / count
+    // , DIGIT_ACCURACY);
   return residualDispersion;
   }
 
   private getResidualDispersionSqrt(residualDispersion: number)
   {
-    const residualDispersionSqrt = this.utilsService.roundNum(
-        Math.sqrt(residualDispersion)
-    , DIGIT_ACCURACY);
+    const residualDispersionSqrt = Math.sqrt(residualDispersion);
+    // this.utilsService.roundNum(
+    //     Math.sqrt(residualDispersion)
+    // , DIGIT_ACCURACY);
     return residualDispersionSqrt;
   }
   
   private getTotalDispersionCheck(factorDispersion: number, residualDispersion: number)
   {
-    const totalDispersionCheck = this.utilsService.roundNum(
-        factorDispersion + residualDispersion
-    , DIGIT_ACCURACY);
+    const totalDispersionCheck = factorDispersion + residualDispersion;
+    //  this.utilsService.roundNum(
+    //     factorDispersion + residualDispersion
+    // , DIGIT_ACCURACY);
     return totalDispersionCheck;
   }
 
   private getTheorCoefDetermination(factorDispersion: number, totalDispersion: number)
   {
-    const theorCoefDeterm = this.utilsService.roundNum(
-        factorDispersion / totalDispersion
-    , DIGIT_ACCURACY);
+    const theorCoefDeterm = factorDispersion / totalDispersion;
+    //  this.utilsService.roundNum(
+    //     factorDispersion / totalDispersion
+    // , DIGIT_ACCURACY);
     return theorCoefDeterm;
   }
 
   private getTheorCorrelRelation(theorCoefDeterm: number)
   {
-    const theorCoefRel = this.utilsService.roundNum(
-        Math.sqrt(theorCoefDeterm)
-    , DIGIT_ACCURACY);
+    const theorCoefRel = Math.sqrt(theorCoefDeterm);
+    // this.utilsService.roundNum(
+    //     Math.sqrt(theorCoefDeterm)
+    // , DIGIT_ACCURACY);
     return theorCoefRel;
   }
 
   private getAvgA0Error(residualDispersionSqrt: number, count: number)
   {
-    const avgA0Err = this.utilsService.roundNum(
-      residualDispersionSqrt / Math.sqrt(count - 2)
-    , DIGIT_ACCURACY);
+    const avgA0Err = residualDispersionSqrt / Math.sqrt(count - 2);
+    // this.utilsService.roundNum(
+    //   residualDispersionSqrt / Math.sqrt(count - 2)
+    // , DIGIT_ACCURACY);
     return avgA0Err;
   }
 
   private getAvgA1Error(residualDispersionSqrt: number, meanSqrOffX: number, count: number)
   {
-    const avgA0Err = this.utilsService.roundNum(
-      residualDispersionSqrt / (meanSqrOffX * Math.sqrt(count - 2))
-    , DIGIT_ACCURACY);
+    const avgA0Err = residualDispersionSqrt / (meanSqrOffX * Math.sqrt(count - 2));
+    // this.utilsService.roundNum(
+    //   residualDispersionSqrt / (meanSqrOffX * Math.sqrt(count - 2))
+    // , DIGIT_ACCURACY);
     return avgA0Err;
   }
 
   private getTa(a: number, avgAError: number)
   {
-    const Ta = this.utilsService.roundNum(
-        a / avgAError
-    , DIGIT_ACCURACY);
+    const Ta = a / avgAError;
+    //  this.utilsService.roundNum(
+    //     a / avgAError
+    // , DIGIT_ACCURACY);
     return Ta;
   }
 
@@ -456,9 +486,10 @@ export class AnalysisService
                         residualDispersion: number, 
                         V1: number, V2: number)
   {
-    const fisherCrit = this.utilsService.roundNum(
-        (factorDispersion / V1) / (residualDispersion / V2)
-    , DIGIT_ACCURACY);
+    const fisherCrit = (factorDispersion / V1) / (residualDispersion / V2)
+    // this.utilsService.roundNum(
+    //     (factorDispersion / V1) / (residualDispersion / V2)
+    // , DIGIT_ACCURACY);
     return fisherCrit;
   }
 
@@ -496,7 +527,9 @@ export class AnalysisService
       YxY2: 0,
       YAvgY2: 0,
       YAvgYx2: 0,
-      AvgYxAvgY2: 0
+      AvgYxAvgY2: 0,
+
+      lnYx: 0
     }
 
     // let corCoefArr = [3][f];
@@ -515,6 +548,9 @@ export class AnalysisService
       // data[i].YYx = Math.abs(data[i].Y - avgRow.Yx /*data[i].Yx*/); //?
       data[i].YYx = Math.abs(data[i].Y - data[i].Yx);
       sumRow.YYx += data[i].YYx;
+
+      // data[i].YYx = Math.abs(data[i].Y - data[i].Yx);
+      // sumRow.YYx += data[i].YYx;
 
       data[i].YxY2 = (YxArr[i] - data[i].Y) ** 2;
       sumRow.YxY2 += data[i].YxY2;
@@ -552,10 +588,10 @@ export class AnalysisService
     data[count] = sumRow;
     data[count + 1] = avgRow;
 
-    for (let i = 0; i < data.length; i++)
-    {
-      data[i] = this.utilsService.roundObjNums(data[i], DIGIT_ACCURACY);
-    }
+    // for (let i = 0; i < data.length; i++)
+    // {
+    //   data[i] = this.utilsService.roundObjNums(data[i], DIGIT_ACCURACY);
+    // }
 
     header = this.utilsService.makeHeaderFromObj(data[0]);
 
@@ -638,21 +674,30 @@ export class AnalysisService
     switch (funcVariant)
     {
       case FuncTypeEnum.LINE:
+      // case FuncTypeEnum.HYPERBOLA:
+      // case FuncTypeEnum.LOGARITHM:
       default:
       {
-        a0 = this.utilsService.roundNum(
-          (sumRow.Y * sumRow.X2 - sumRow.XY * sumRow.X) 
-          / (count * sumRow.X2 - sumRow.X ** 2)
-        , DIGIT_ACCURACY);
+        a0 = (sumRow.Y * sumRow.X2 - sumRow.XY * sumRow.X) 
+            / (count * sumRow.X2 - sumRow.X ** 2);
+        
+        // this.utilsService.roundNum(
+        //   (sumRow.Y * sumRow.X2 - sumRow.XY * sumRow.X) 
+        //   / (count * sumRow.X2 - sumRow.X ** 2)
+        // , DIGIT_ACCURACY);
 
-        a1 = this.utilsService.roundNum(
-          (count * sumRow.XY - sumRow.X * sumRow.Y) 
-          / (count * sumRow.X2 - sumRow.X ** 2)
-        , DIGIT_ACCURACY);
+        a1 =  (count * sumRow.XY - sumRow.X * sumRow.Y) 
+              / (count * sumRow.X2 - sumRow.X ** 2);
+        // this.utilsService.roundNum(
+        //   (count * sumRow.XY - sumRow.X * sumRow.Y) 
+        //   / (count * sumRow.X2 - sumRow.X ** 2)
+        // , DIGIT_ACCURACY);
 
-        elasticity = this.utilsService.roundNum(
-          a1 * (avgRow.X / (a0 + a1 * avgRow.X))
-        , DIGIT_ACCURACY);
+        elasticity = a1 * (avgRow.X / (a0 + a1 * avgRow.X));
+        
+        // this.utilsService.roundNum(
+        //   a1 * (avgRow.X / (a0 + a1 * avgRow.X))
+        // , DIGIT_ACCURACY);
           
         m = 2;
 
@@ -660,20 +705,45 @@ export class AnalysisService
       }
       case FuncTypeEnum.PARABOLA:
       {
+
+        // const sum = (xs: number[]) =>
+        //   xs.reduce ((a, b) => a + b, 0)
+          
+        // const excluding = (i: number) => (xs: number[]) => 
+        //   [... xs.slice (0, i), ...xs.slice (i + 1)]
+
+        // const determinant = ([xs, ...xss]: number[][]): number => 
+        //   xs.length == 1
+        //     ? xs [0]
+        //     : sum (xs .map (
+        //     (x, i) => (-1) ** i * x * determinant(xss.map(excluding(i)))
+        //     )
+        //   )
+
+        // const matrA = [
+        //   [ sumRow.X2, sumRow.X, count ],
+        //   [ sumRow.X3, sumRow.X2, sumRow.X ],
+        //   [ sumRow.X4, sumRow.X3, sumRow.X2 ],
+        // ];
+
         const matrA = [
           [ count, sumRow.X, sumRow.X2 ],
           [ sumRow.X, sumRow.X2, sumRow.X3 ],
           [ sumRow.X2, sumRow.X3, sumRow.X4 ],
         ];
 
-        a = this.utilsService.roundNum(
-              matrA[0][0] * matrA[1][1] * matrA[2][2] 
-                + matrA[1][0] * matrA[2][1] * matrA[0][2] 
-                + matrA[2][0] * matrA[0][1] * matrA[1][2] 
-              - (matrA[2][0] * matrA[1][1] * matrA[0][2] 
-                + matrA[1][2] * matrA[2][1] * matrA[0][0] 
-                + matrA[2][2] * matrA[0][1] * matrA[1][0])
-        , DIGIT_ACCURACY);
+        // console.table(matrA)
+
+        // a = //this.utilsService.roundNum(
+        //       matrA[0][0] * matrA[1][1] * matrA[2][2] 
+        //         + matrA[1][0] * matrA[2][1] * matrA[0][2] 
+        //         + matrA[2][0] * matrA[0][1] * matrA[1][2] 
+        //       - (matrA[2][0] * matrA[1][1] * matrA[0][2] 
+        //         + matrA[1][2] * matrA[2][1] * matrA[0][0] 
+        //         + matrA[2][2] * matrA[0][1] * matrA[1][0])
+        //, DIGIT_ACCURACY);
+
+        a = this.utilsService.matrDeterminant(matrA) // determinant(matrA)
 
           
         const matrA0 = [
@@ -682,14 +752,21 @@ export class AnalysisService
           [ sumRow.X2Y, sumRow.X3, sumRow.X4 ]
         ];
 
-        a0 = this.utilsService.roundNum(
-              (matrA0[0][0] * matrA0[1][1] * matrA0[2][2] 
-              + matrA0[1][0] * matrA0[2][1] * matrA0[0][2]
-              + matrA0[2][0] * matrA0[0][1] * matrA0[1][2] 
-            - (matrA0[2][0] * matrA0[1][1] * matrA0[0][2] 
-              + matrA0[1][2] * matrA0[2][1] * matrA0[0][0] 
-              + matrA0[2][2] * matrA0[0][1] * matrA0[1][0])) / a
-        , DIGIT_ACCURACY);
+        // const matrA0 = [
+        //   [ sumRow.X2, sumRow.X, sumRow.Y ],
+        //   [ sumRow.X3, sumRow.X2, sumRow.XY ],
+        //   [ sumRow.X4, sumRow.X3, sumRow.X2Y ]
+        // ];
+
+        a0 = //this.utilsService.roundNum(
+            //   (matrA0[0][0] * matrA0[1][1] * matrA0[2][2] 
+            //   + matrA0[1][0] * matrA0[2][1] * matrA0[0][2]
+            //   + matrA0[2][0] * matrA0[0][1] * matrA0[1][2] 
+            // - (matrA0[2][0] * matrA0[1][1] * matrA0[0][2] 
+            //   + matrA0[1][2] * matrA0[2][1] * matrA0[0][0] 
+            //   + matrA0[2][2] * matrA0[0][1] * matrA0[1][0])) / a
+            this.utilsService.matrDeterminant(matrA0) / a;
+        //, DIGIT_ACCURACY);
 
 
         const matrA1 = [
@@ -698,14 +775,21 @@ export class AnalysisService
           [ sumRow.X2, sumRow.X2Y, sumRow.X4 ]
         ];
 
-        a1 = this.utilsService.roundNum(
-              (matrA1[0][0] * matrA1[1][1] * matrA1[2][2] 
-              + matrA1[1][0] * matrA1[2][1] * matrA1[0][2] 
-              + matrA1[2][0] * matrA1[0][1] * matrA1[1][2] 
-            - (matrA1[2][0] * matrA1[1][1] * matrA1[0][2] 
-              + matrA1[1][2] * matrA1[2][1] * matrA1[0][0] 
-              + matrA1[2][2] * matrA1[0][1] * matrA1[1][0])) / a
-        , DIGIT_ACCURACY);
+        // const matrA1 = [
+        //   [ sumRow.X2, sumRow.Y, count ],
+        //   [ sumRow.X3, sumRow.XY, sumRow.X ],
+        //   [ sumRow.X4, sumRow.X2Y, sumRow.X2 ]
+        // ];
+
+        a1 = //this.utilsService.roundNum(
+            //   (matrA1[0][0] * matrA1[1][1] * matrA1[2][2] 
+            //   + matrA1[1][0] * matrA1[2][1] * matrA1[0][2] 
+            //   + matrA1[2][0] * matrA1[0][1] * matrA1[1][2] 
+            // - (matrA1[2][0] * matrA1[1][1] * matrA1[0][2] 
+            //   + matrA1[1][2] * matrA1[2][1] * matrA1[0][0] 
+            //   + matrA1[2][2] * matrA1[0][1] * matrA1[1][0])) / a
+            this.utilsService.matrDeterminant(matrA1) / a;
+        //, DIGIT_ACCURACY);
 
 
         const matrA2 = [
@@ -713,19 +797,31 @@ export class AnalysisService
           [ sumRow.X, sumRow.X2, sumRow.XY ],
           [ sumRow.X2, sumRow.X3, sumRow.X2Y ]
         ];
-          
-        a2 = this.utilsService.roundNum(
-                (matrA2[0][0] * matrA2[1][1] * matrA2[2][2] 
-                + matrA2[1][0] * matrA2[2][1] * matrA2[0][2] 
-                + matrA2[2][0] * matrA2[0][1] * matrA2[1][2] 
-              - (matrA2[2][0] * matrA2[1][1] * matrA2[0][2] 
-                + matrA2[1][2] * matrA2[2][1] * matrA2[0][0] 
-                + matrA2[2][2] * matrA2[0][1] * matrA2[1][0])) / a
-        , DIGIT_ACCURACY);
 
-        elasticity = this.utilsService.roundNum(
-          (a1 * avgRow.X + (2 * a0 * avgRow.X ** 2)) / avgRow.Y
-        , DIGIT_ACCURACY);
+        // const matrA2 = [
+        //   [ sumRow.Y, sumRow.X, count ],
+        //   [ sumRow.XY, sumRow.X2, sumRow.X ],
+        //   [ sumRow.X2Y, sumRow.X3, sumRow.X2 ]
+        // ];
+          
+        a2 = //this.utilsService.roundNum(
+              //   (matrA2[0][0] * matrA2[1][1] * matrA2[2][2] 
+              //   + matrA2[1][0] * matrA2[2][1] * matrA2[0][2] 
+              //   + matrA2[2][0] * matrA2[0][1] * matrA2[1][2] 
+              // - (matrA2[2][0] * matrA2[1][1] * matrA2[0][2] 
+              //   + matrA2[1][2] * matrA2[2][1] * matrA2[0][0] 
+              //   + matrA2[2][2] * matrA2[0][1] * matrA2[1][0])) / a
+              this.utilsService.matrDeterminant(matrA2) / a;
+        //, DIGIT_ACCURACY);
+
+        elasticity = (a1 * avgRow.X + (2 * a2 * avgRow.X ** 2)) / avgRow.Y;
+        
+        // console.log(a, a0, a1, a2)
+
+        // this.utilsService.roundNum(
+          // (a1 * avgRow.X + (2 * a0 * avgRow.X ** 2)) / avgRow.Y
+        //   (a1 * avgRow.X + (2 * a2 * avgRow.X ** 2)) / avgRow.Y
+        // , DIGIT_ACCURACY);
 
         m = 3;
 
@@ -733,14 +829,111 @@ export class AnalysisService
       }
       case FuncTypeEnum.EXPONENTIAL:
       {
-        a1 = this.utilsService.roundNum(
-              (avgRow.XlnY - (avgRow.X * avgRow.lnY)) 
-              / (avgRow.X2 - avgRow.X ** 2)
-        , DIGIT_ACCURACY);
-        a0 = this.utilsService.roundNum(avgRow.lnY - a1 * avgRow.X, DIGIT_ACCURACY);
-         
-        elasticity = this.utilsService.roundNum(avgRow.X * a1, DIGIT_ACCURACY);
+        a1 = (avgRow.XlnY - (avgRow.X * avgRow.lnY))
+            / (avgRow.X2 - avgRow.X ** 2);
 
+        // this.utilsService.roundNum(
+        //       (avgRow.XlnY - (avgRow.X * avgRow.lnY))
+        //       / (avgRow.X2 - avgRow.X ** 2)
+        // , DIGIT_ACCURACY);
+
+        a0 = avgRow.lnY - a1 * avgRow.X;
+        
+        // this.utilsService.roundNum(avgRow.lnY - a1 * avgRow.X, DIGIT_ACCURACY);
+
+        elasticity = avgRow.X * a1; 
+
+        //  this.utilsService.roundNum(avgRow.X * a1, DIGIT_ACCURACY);
+
+        // a1 = this.utilsService.roundNum(
+        //       (count * sumRow.XlnY - sumRow.X * sumRow.lnY)
+        //       / (count * sumRow.X2 - sumRow.X ** 2)
+        // , DIGIT_ACCURACY);
+        // a0 = this.utilsService.roundNum(avgRow.lnY - a1 * avgRow.X, DIGIT_ACCURACY);
+
+        // elasticity = this.utilsService.roundNum(avgRow.X * a1, DIGIT_ACCURACY);
+
+        m = 2;
+
+        break;
+      }
+      case FuncTypeEnum.HYPERBOLA:
+      {
+        a1 = (count * sumRow.YdivX - sumRow.div1X * sumRow.Y) 
+            / (count * sumRow.div1X2 - sumRow.div1X ** 2);
+        
+        // this.utilsService.roundNum(
+        //   (count * sumRow.YdivX - sumRow.div1X * sumRow.Y) 
+        //   / (count * sumRow.div1X2 - sumRow.div1X ** 2)
+        // , DIGIT_ACCURACY);
+
+        a0 = avgRow.Y - a1 * avgRow.div1X;
+        
+        // this.utilsService.roundNum(
+        //     avgRow.Y - a1 * avgRow.div1X
+        // , DIGIT_ACCURACY);
+
+        // console.log(avgRow.div1X, sumRow.div1X, sumRow.div1X2, sumRow.YdivX, a1, a0)
+        // console.log(count, sumRow.YdivX, sumRow.div1X, sumRow.Y)
+        // console.log(count, sumRow.div1X2, sumRow.div1X)
+
+        elasticity = - a1 / (a0 * avgRow.X + a1)
+        
+        // this.utilsService.roundNum(
+        //   - (a1 / (a0 * avgRow.X + a1))
+        // , DIGIT_ACCURACY);
+          
+        m = 2;
+
+        break;
+      }
+      case FuncTypeEnum.LOGARITHM:
+      {
+        // a1 = this.utilsService.roundNum(
+        //   (count * sumRow.YdivX - sumRow.lnX * sumRow.Y) 
+        //   / (count * sumRow.lnX2 - sumRow.lnX ** 2)
+        // , DIGIT_ACCURACY);
+
+        // a0 = this.utilsService.roundNum(
+        //   (1 / count) * (sumRow.Y) - 
+        //   ((1 / count) * a1 * sumRow.lnX)
+        // , DIGIT_ACCURACY);
+
+        // elasticity = this.utilsService.roundNum(
+        //   - (a1 / (a0 * avgRow.X + a1))
+        // , DIGIT_ACCURACY);
+
+        // a0 = (sumRow.Y * sumRow.lnX2 - sumRow.lnXY * sumRow.lnX) 
+        //     / (count * sumRow.lnX2 - sumRow.Xln ** 2)
+
+        // this.utilsService.roundNum(
+        //   (sumRow.Y * sumRow.lnX2 - sumRow.lnXY * sumRow.lnX) 
+        //   / (count * sumRow.lnX2 - sumRow.Xln ** 2)
+        // , DIGIT_ACCURACY);
+
+        // a1 = (count * sumRow.lnXY - sumRow.lnX * sumRow.Y) 
+        //     / (count * sumRow.lnX2 - sumRow.lnX ** 2)
+        
+        // this.utilsService.roundNum(
+        //   (count * sumRow.lnXY - sumRow.lnX * sumRow.Y) 
+        //   / (count * sumRow.lnX2 - sumRow.lnX ** 2)
+        // , DIGIT_ACCURACY);
+
+        // elasticity = a1 * (avgRow.lnX / (a0 + a1 * avgRow.lnX))
+        
+        // this.utilsService.roundNum(
+        //   a1 * (avgRow.lnX / (a0 + a1 * avgRow.lnX))
+        // , DIGIT_ACCURACY);
+
+        a1 = (count * sumRow.YlnX - sumRow.lnX * sumRow.Y) 
+            / (count * sumRow.lnX2 - sumRow.lnX ** 2);
+        
+        a0 = avgRow.Y - a1 * avgRow.lnX;
+
+        // console.log(a1, a0)
+
+        elasticity = a1 * (avgRow.lnX / (a0 + a1 * avgRow.lnX))
+          
         m = 2;
 
         break;
@@ -769,22 +962,70 @@ export class AnalysisService
         case FuncTypeEnum.LINE:
         default:
         {
-          YxArr[i] = this.utilsService.roundNum(a0 + (a1 * X), DIGIT_ACCURACY);
+          YxArr[i] = a0 + (a1 * X);
+          
+          // this.utilsService.roundNum(
+          //       a0 + (a1 * X)
+          // , DIGIT_ACCURACY);
           // console.log(a0, a1, Yx[i], elasticity)
 
           break;
         }
         case FuncTypeEnum.PARABOLA:
         {
-          YxArr[i] = this.utilsService.roundNum(a0 + (a1 * X) + (a2 * X ** 2), DIGIT_ACCURACY);
-          // console.log(a, a0, a1, a2, Yx[i], elasticity)
+          YxArr[i] = a0 + a1 * X + a2 * X ** 2;
+          
+          // this.utilsService.roundNum(
+          //       a0 + (a1 * X) + (a2 * X ** 2)
+          // , DIGIT_ACCURACY);
+          // console.log(a0, a1, a2)
 
           break;
         }
         case FuncTypeEnum.EXPONENTIAL:
         {
-          YxArr[i] = this.utilsService.roundNum(Math.exp(a0) * Math.exp(a1) ** X, DIGIT_ACCURACY);
+          YxArr[i] = Math.exp(a0) * Math.exp(a1) ** X;
+          
+          // this.utilsService.roundNum(
+          //       Math.exp(a0) * Math.exp(a1) ** X
+          // , DIGIT_ACCURACY);
+
+          // YxArr[i] = this.utilsService.roundNum(
+          //       a0 * a1 ** X
+          // , DIGIT_ACCURACY);//?
           // console.log(a0, a1, Yx[i], elasticity)
+
+          break;
+        }
+        case FuncTypeEnum.HYPERBOLA:
+        {
+          // YxArr[i] = this.utilsService.roundNum(
+          //       a0 + (a1 * 1 / X) + (a2 * 1/ X ** 2)
+          // , DIGIT_ACCURACY);
+
+          YxArr[i] = a0 + a1 / X;
+          
+          // this.utilsService.roundNum(
+          //     a0 + a1 / X
+          // , DIGIT_ACCURACY);
+
+          // YxArr[i] = this.utilsService.roundNum(
+          //   a0 + (a1 * X)
+          // , DIGIT_ACCURACY);
+
+          break;
+        }
+        case FuncTypeEnum.LOGARITHM:
+        {
+          // YxArr[i] = this.utilsService.roundNum(
+          //       a0 + (a1 * Math.log(X)) + (a2 * Math.log(X) ** 2)
+          // , DIGIT_ACCURACY);
+
+          YxArr[i] = a0 + (a1 * Math.log(X));
+          
+          // this.utilsService.roundNum(
+          //     a0 + (a1 * Math.log(X))
+          // , DIGIT_ACCURACY);
 
           break;
         }
@@ -796,7 +1037,9 @@ export class AnalysisService
 
   private getMeanSqrOff(avgX: number, avgX2: number)
   {
-    const mean_sqr_off = this.utilsService.roundNum(Math.sqrt(avgX2 - avgX ** 2), DIGIT_ACCURACY);
+    const mean_sqr_off = //this.utilsService.roundNum(
+      Math.sqrt(avgX2 - avgX ** 2)
+      // , DIGIT_ACCURACY);
     return mean_sqr_off;
   }
 
@@ -806,69 +1049,76 @@ export class AnalysisService
                             meanSqrOffX: number, 
                             meanSqrOffY: number)
   {
-    const linearCorrCoef = this.utilsService.roundNum(
-        (avgXY - avgX * avgY) / (meanSqrOffX * meanSqrOffY)
-    , DIGIT_ACCURACY);
+    const linearCorrCoef = (avgXY - avgX * avgY) 
+                          / (meanSqrOffX * meanSqrOffY)
+    
+    // this.utilsService.roundNum(
+    //     (avgXY - avgX * avgY) / (meanSqrOffX * meanSqrOffY)
+    // , DIGIT_ACCURACY);
+
     return linearCorrCoef;
   }
 
   private getAvgCorrelCoefError(linearCorrCoef: number, count: number)
   {
     const avg_corr_coef_err = count > 50 && !(count < 30)
-                            ? this.utilsService.roundNum(
-                                (1 - linearCorrCoef ** 2) / Math.sqrt(count), DIGIT_ACCURACY)
-                            : this.utilsService.roundNum(
-                                Math.sqrt(1 - linearCorrCoef ** 2) / Math.sqrt(count - 2), DIGIT_ACCURACY);
+                            ? //this.utilsService.roundNum(
+                                (1 - linearCorrCoef ** 2) / Math.sqrt(count)//, DIGIT_ACCURACY)
+                            : //this.utilsService.roundNum(
+                                Math.sqrt(1 - linearCorrCoef ** 2) / Math.sqrt(count - 2)//, DIGIT_ACCURACY);
     
     return avg_corr_coef_err;
   }
 
   private getCoefCorrelSignCheck(linearCorrCoef: number, avgCorrCoefErr: number)
   {
-    const coef_corr_sign_check = this.utilsService.roundNum(Math.abs(linearCorrCoef) / avgCorrCoefErr, DIGIT_ACCURACY);
+    const coef_corr_sign_check = Math.abs(linearCorrCoef) / avgCorrCoefErr
+    
+    // this.utilsService.roundNum(Math.abs(linearCorrCoef) / avgCorrCoefErr, DIGIT_ACCURACY);
     return coef_corr_sign_check;
   }
 
   private getSpiermanCoef(d2Sum: number, count: number)
   {
-    const spearmanCoeff = this.utilsService.roundNum(
-        1 - ((6 * d2Sum) / (count * (count ** 2 - 1)))
-    , DIGIT_ACCURACY);
+    const spearmanCoeff = //this.utilsService.roundNum(
+        1 - ((6 * d2Sum) 
+        / (count * (count ** 2 - 1)))
+    // , DIGIT_ACCURACY);
     return spearmanCoeff;
   }
 
-  private getRelationXY(linearCorrCoef: number): RelationType
+  private getRelationXY(сorrCoef: number): RelationType
   {
-    let relationXY: RelationType = Math.abs(linearCorrCoef) === 0
+    let relationXY: RelationType = Math.abs(сorrCoef) === 0
                         ? RelationTypeEnum.NONE 
-                      : (0 < Math.abs(linearCorrCoef) && Math.abs(linearCorrCoef) < 0.3) 
+                      : (0 < Math.abs(сorrCoef) && Math.abs(сorrCoef) < 0.3) 
                         ? RelationTypeEnum.WEAK 
-                      : (0.3 <= Math.abs(linearCorrCoef) && Math.abs(linearCorrCoef) <= 0.7) 
+                      : (0.3 <= Math.abs(сorrCoef) && Math.abs(сorrCoef) <= 0.7) 
                         ? RelationTypeEnum.MEDIUM 
                       : RelationTypeEnum.STRONG;
     
-    relationXY = linearCorrCoef > 0 ? `${RelationDirectionEnum.DIRECT} ${relationXY}` as RelationType
-                : linearCorrCoef < 0 ? `${RelationDirectionEnum.BACK} ${relationXY}` as RelationType
+    relationXY = сorrCoef > 0 ? `${RelationDirectionEnum.DIRECT} ${relationXY}` as RelationType
+                : сorrCoef < 0 ? `${RelationDirectionEnum.BACK} ${relationXY}` as RelationType
                 : relationXY;
 
     return relationXY as RelationType;
   }
 
-  getRelationXYspearman(spearmanCoeff: number): RelationType 
-  {
-    let relationXYspearman: RelationType = spearmanCoeff === 0
-                        ? RelationTypeEnum.NONE 
-                      : (0 < Math.abs(spearmanCoeff) && Math.abs(spearmanCoeff) < 0.3) 
-                        ? RelationTypeEnum.WEAK 
-                      : (0.3 <= Math.abs(spearmanCoeff) && Math.abs(spearmanCoeff) <= 0.7) 
-                        ? RelationTypeEnum.MEDIUM : RelationTypeEnum.STRONG;
+  // getRelationXYspearman(spearmanCoeff: number): RelationType 
+  // {
+  //   let relationXYspearman: RelationType = spearmanCoeff === 0
+  //                       ? RelationTypeEnum.NONE 
+  //                     : (0 < Math.abs(spearmanCoeff) && Math.abs(spearmanCoeff) < 0.3) 
+  //                       ? RelationTypeEnum.WEAK 
+  //                     : (0.3 <= Math.abs(spearmanCoeff) && Math.abs(spearmanCoeff) <= 0.7) 
+  //                       ? RelationTypeEnum.MEDIUM : RelationTypeEnum.STRONG;
     
-    relationXYspearman = spearmanCoeff > 0 ? `${RelationDirectionEnum.DIRECT} ${relationXYspearman}` as RelationType
-                        : spearmanCoeff < 0 ? `${RelationDirectionEnum.BACK} ${relationXYspearman}` as RelationType
-                        : relationXYspearman;
+  //   relationXYspearman = spearmanCoeff > 0 ? `${RelationDirectionEnum.DIRECT} ${relationXYspearman}` as RelationType
+  //                       : spearmanCoeff < 0 ? `${RelationDirectionEnum.BACK} ${relationXYspearman}` as RelationType
+  //                       : relationXYspearman;
 
-    return relationXYspearman;
-  }
+  //   return relationXYspearman;
+  // }
 
   private coefCorrelSignificance(x: number, tTable: number)
   {
@@ -891,9 +1141,9 @@ export class AnalysisService
   {
     const taCheck = count > 30 && tA > 3
                       ? SignificentTypeEnum.SIGNIFICANCE 
-                      : (count > 30 && tA < 3) 
+                        : count > 30 && tA < 3
                       ? SignificentTypeEnum.NOT_SIGNIFICANCE 
-                      : (count < 30) 
+                        : count < 30 
                       ? this.coefCorrelSignificance(tA, tTable) 
                       : '';
     return taCheck;
@@ -928,7 +1178,7 @@ export class AnalysisService
       }
     }
 
-    sumRow = this.utilsService.roundObjNums(sumRow, DIGIT_ACCURACY);
+    // sumRow = this.utilsService.roundObjNums(sumRow, DIGIT_ACCURACY);
 
     return sumRow;
   }
@@ -957,7 +1207,7 @@ export class AnalysisService
       avgRow[keys[i] as string] = sumRow[keys[i] as string] / rowCount;
     }
 
-    avgRow = this.utilsService.roundObjNums(avgRow, DIGIT_ACCURACY);
+    // avgRow = this.utilsService.roundObjNums(avgRow, DIGIT_ACCURACY);
 
     return avgRow;
   }

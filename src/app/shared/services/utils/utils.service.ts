@@ -54,6 +54,60 @@ export class UtilsService
     return header;
   }
 
+  replaceCommasInTableData<T>(tableData: ITableData<T>)
+  {
+    const key = Object.keys
+    // return tableData.data.map(());
+  }
+
+  // matrDeterminant([xs, ...xss]: number[][])
+  // {
+  //   const sum = (xs: number[]) =>
+  //     xs.reduce ((a, b) => a + b, 0)
+          
+  //   const excluding = (i: number) => (xs: number[]) => 
+  //     [... xs.slice (0, i), ...xs.slice (i + 1)]
+
+  //   const determinant = ([xs, ...xss]: number[][]): number => 
+  //     xs.length == 1
+  //       ? xs [0]
+  //         : sum (xs .map (
+  //           (x, i) => (-1) ** i * x * determinant(xss.map(excluding(i)))
+  //         )
+  //       )
+  // }
+
+  matrDeterminant(matrix: number[][]) 
+  {
+    const sum = (xs: number[]) =>
+      xs.reduce ((a, b) => a + b, 0)
+        
+    // const excluding = (i: number) => (xs: number[]) => 
+    //   [... xs.slice (0, i), ...xs.slice (i + 1)]
+
+    // const determinant = ([xs, ...xss]: number[][]): number => 
+    //   xs.length == 1
+    //     ? xs [0]
+    //     : sum (xs .map (
+    //       (x, i) => (-1) ** i * x * determinant(xss.map(excluding(i)))
+    //     )
+    //   )
+
+      const stripRowAndCol = (r: number, c: number) => (matrix: number[][]) =>
+        matrix .filter ((_, j) => j !== r)
+            .map (row => row .filter ((_, i) => i !== c))
+                              
+
+      const determinant = (matrix: number[][]): number => 
+        matrix [0] .length == 1
+          ? matrix [0] [0]
+          : sum (matrix [0] .map (
+            (x, i) => (-1) ** i * x * determinant(stripRowAndCol(0, i) (matrix))
+        ))
+      
+      return determinant(matrix);
+  }
+
   makeTableDataFromAnalysisParams(analysisParams: IAnalysisParams)
   {
     const tableData: ITableData<any> = {
@@ -75,6 +129,10 @@ export class UtilsService
           value: analysisParams.linearCorrCoef.value
         },
         { 
+          name: analysisParams.relXY.name,
+          value: analysisParams.relXY.value
+        },
+        { 
           name: analysisParams.avgCorrCoefErr.name,
           value: analysisParams.avgCorrCoefErr.value
         },
@@ -89,10 +147,6 @@ export class UtilsService
         { 
           name: analysisParams.tTable.name,
           value: analysisParams.tTable.value
-        },
-        { 
-          name: analysisParams.relXY.name,
-          value: analysisParams.relXY.value
         },
         { 
           name: analysisParams.coefCorrSign.name,

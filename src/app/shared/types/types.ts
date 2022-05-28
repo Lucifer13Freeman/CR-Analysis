@@ -15,10 +15,9 @@ export type AnalysisParamsValueType = number
                                 | RelationType
                                 | '';
 
-export type AnalysisParamsType =
-{
+export type AnalysisParamsType = {
     name: AnalisysDataNamesEnum | string;
-    value: AnalysisParamsValueType
+    value: AnalysisParamsValueType;
 }
 
 export type RelationType = `${RelationDirectionEnum.DIRECT} ${RelationTypeEnum.STRONG}` 
@@ -27,4 +26,4 @@ export type RelationType = `${RelationDirectionEnum.DIRECT} ${RelationTypeEnum.S
                         | `${RelationDirectionEnum.BACK} ${RelationTypeEnum.STRONG}`
                         | `${RelationDirectionEnum.BACK} ${RelationTypeEnum.MEDIUM}`
                         | `${RelationDirectionEnum.BACK} ${RelationTypeEnum.WEAK}`
-                        | RelationTypeEnum.NONE | RelationTypeEnum
+                        | RelationTypeEnum.NONE | RelationTypeEnum;

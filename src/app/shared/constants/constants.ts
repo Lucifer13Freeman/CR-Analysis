@@ -62,7 +62,7 @@ export const WORD_FONT_HEADER_SIZE = 32;
 export const FILENAME = 'sr-analysis';
 // export const FILENAME = `${BASE_FILENAME}-${new Date().valueOf()}`;
 
-export const DIGIT_ACCURACY = 3;
+export const DIGIT_ACCURACY = 5;
 
 export const INITIAL_ANALYSIS_PARAMS: IAnalysisParams = {
   meanSqrOffX: { 
@@ -141,6 +141,18 @@ export const INITIAL_ANALYSIS_PARAMS: IAnalysisParams = {
       name: AnalisysDataNamesEnum.THEOR_CORREL_RELATION, 
       value: 0 
   },
+  // a0: {
+  //   name: AnalisysDataNamesEnum.A0, 
+  //   value: 0 
+  // },
+  // a1: {
+  //   name: AnalisysDataNamesEnum.A1, 
+  //   value: 0 
+  // },
+  // a2: {
+  //   name: AnalisysDataNamesEnum.A2, 
+  //   value: 0 
+  // },
   avgA0Err: { 
       name: AnalisysDataNamesEnum.AVG_PARAM_A0_ERROR, 
       value: 0 
@@ -214,7 +226,9 @@ export const INITIAL_GET_ANALYSIS_DATA: GetAnalysisDataDto<any> = {
 export const FUNC_TYPE_VALUES: IFuncTypeValues[] = [
   { value: FuncTypeEnum.LINE, viewValue: FuncTypeViewValuesEnum.LINE },
   { value: FuncTypeEnum.PARABOLA, viewValue: FuncTypeViewValuesEnum.PARABOLA },
-  { value: FuncTypeEnum.EXPONENTIAL, viewValue: FuncTypeViewValuesEnum.EXPONENTIAL }
+  { value: FuncTypeEnum.EXPONENTIAL, viewValue: FuncTypeViewValuesEnum.EXPONENTIAL },
+  { value: FuncTypeEnum.HYPERBOLA, viewValue: FuncTypeViewValuesEnum.HYPERBOLA },
+  { value: FuncTypeEnum.LOGARITHM, viewValue: FuncTypeViewValuesEnum.LOGARITHM }
 ]
 
 

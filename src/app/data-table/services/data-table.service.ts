@@ -53,13 +53,26 @@ export class DataTableService
     return columnSchema;
   }
 
-  public extractData(data: Array<any>): Array<any>
+  public extractData(data: any): any
   {
-    const extractedData: Array<any> = data.map((obj: any) =>
+    let extractedData: Array<any> = data.map((obj: any) =>
     {
       if (obj.hasOwnProperty('isSelected')) delete obj.isSelected;
       return obj;
     });
+
+    const keys = Object.keys(extractedData[0]);
+
+    if (keys.length > 0 && extractedData.length > 0)
+    {
+      for (let i = 0; i < extractedData.length; i++)
+      {
+        for (let j = 1; j < keys.length; j++)
+        {
+          extractedData[i][keys[j] as string] = parseFloat(extractedData[i][keys[j] as string].toString().replace(',', '.'));
+        }
+      }
+    }
 
     return extractedData;
   }
