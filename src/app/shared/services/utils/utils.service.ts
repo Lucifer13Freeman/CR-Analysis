@@ -54,11 +54,11 @@ export class UtilsService
     return header;
   }
 
-  replaceCommasInTableData<T>(tableData: ITableData<T>)
-  {
-    const key = Object.keys
-    // return tableData.data.map(());
-  }
+  // replaceCommasInTableData<T>(tableData: ITableData<T>)
+  // {
+  //   const key = Object.keys
+  //   // return tableData.data.map(());
+  // }
 
   // matrDeterminant([xs, ...xss]: number[][])
   // {
@@ -93,19 +93,19 @@ export class UtilsService
     //     )
     //   )
 
-      const stripRowAndCol = (r: number, c: number) => (matrix: number[][]) =>
-        matrix .filter ((_, j) => j !== r)
-            .map (row => row .filter ((_, i) => i !== c))
+    const stripRowAndCol = (r: number, c: number) => (matrix: number[][]) =>
+      matrix .filter ((_, j) => j !== r)
+        .map (row => row .filter ((_, i) => i !== c))
                               
 
-      const determinant = (matrix: number[][]): number => 
-        matrix [0] .length == 1
-          ? matrix [0] [0]
-          : sum (matrix [0] .map (
-            (x, i) => (-1) ** i * x * determinant(stripRowAndCol(0, i) (matrix))
-        ))
+    const determinant = (matrix: number[][]): number => 
+      matrix [0] .length == 1
+        ? matrix [0] [0]
+        : sum (matrix [0] .map (
+          (x, i) => (-1) ** i * x * determinant(stripRowAndCol(0, i) (matrix))
+      ))
       
-      return determinant(matrix);
+    return determinant(matrix);
   }
 
   makeTableDataFromAnalysisParams(analysisParams: IAnalysisParams)
@@ -296,6 +296,11 @@ export class UtilsService
   //   return binaryCode.join("");
   // }
 
+  roundNum(val: any, accuracy: number = DIGIT_ACCURACY)
+  {
+    return parseFloat((parseFloat(val)).toFixed(accuracy));
+  }
+
   roundObjNums<T>(obj: T, accuracy: number = DIGIT_ACCURACY)
   {
     const keys = Object.keys(obj);
@@ -307,17 +312,43 @@ export class UtilsService
 
       if (!Number.isNaN(parseFloat(val)))
       {
-        (newObj as any)[keys[i]] = parseFloat((parseFloat(val)).toFixed(accuracy));
+        (newObj as any)[keys[i]] = this.roundNum(val, accuracy);
       }
     }
 
     return newObj;
   }
 
-  roundNum(val: any, num: number = 2)
-  {
-    return parseFloat((parseFloat(val)).toFixed(num));
-  }
+  // roundArrObjNums<T>(arrObj: T[], accuracy: number = DIGIT_ACCURACY)
+  // {
+  //   if (!arrObj[0]) return arrObj;
+
+  //   const keys = Object.keys(arrObj[0]);
+
+  //   console.log(arrObj)
+
+  //   const newArrObj: any = [...arrObj];
+
+  //   if (!(keys.length > 0) && !(newArrObj.length > 0)) return arrObj;
+
+  //   for (let i = 0; i < newArrObj.length; i++)
+  //   {
+  //     for (let j = 0; j < keys.length; j++)
+  //     {
+  //       const val = newArrObj[i][keys[j] as string];
+
+  //       if (!Number.isNaN(parseFloat(val))) 
+  //       {
+  //         newArrObj[i][keys[j] as string] = this.roundNum(val, accuracy);
+  //       }
+  //     }
+  //   }
+
+  //   console.log(arrObj)
+
+  //   return newArrObj;
+  // }
+  
 
   rankArray(arr: number[], 
     compareFn: ((a: number, b: number) => number) | undefined = (a, b) => b - a) 
@@ -331,12 +362,11 @@ export class UtilsService
 
     for (let i = 0; i < sortedArr.length; i++) 
     {
-      let val: number | null = parseFloat(rankArr[i]) //parseFloat(sortedArr[i]);
+      let val: number | null = parseFloat(rankArr[i]); //parseFloat(sortedArr[i]);
 
       // console.log(val, typeof val)
 
-      if (typeof val !== "number" 
-          || Number.isNaN(val)) continue;
+      if (typeof val !== "number" || Number.isNaN(val)) continue;
 
       rankArr[i] = null;
 

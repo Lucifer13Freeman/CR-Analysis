@@ -72,23 +72,23 @@ export class AnalysisService
     {
       return {
         ...row,
-        X2: this.utilsService.roundNum(row.X ** 2, DIGIT_ACCURACY),
-        Y2: this.utilsService.roundNum(row.Y ** 2, DIGIT_ACCURACY),
-        XY: this.utilsService.roundNum(row.X * row.Y, DIGIT_ACCURACY),
-        X3: this.utilsService.roundNum(row.X ** 3, DIGIT_ACCURACY), 
-        X4: this.utilsService.roundNum(row.X ** 4, DIGIT_ACCURACY), 
-        X2Y: this.utilsService.roundNum((row.X ** 2) * row.Y, DIGIT_ACCURACY),
-        lnY: this.utilsService.roundNum(Math.log(row.Y), DIGIT_ACCURACY),
-        XlnY: this.utilsService.roundNum(row.X * Math.log(row.Y), DIGIT_ACCURACY),
+        X2: row.X ** 2, //this.utilsService.roundNum(row.X ** 2, DIGIT_ACCURACY),
+        Y2: row.Y ** 2, //this.utilsService.roundNum(row.Y ** 2, DIGIT_ACCURACY),
+        XY: row.X * row.Y, //this.utilsService.roundNum(row.X * row.Y, DIGIT_ACCURACY),
+        X3: row.X ** 3, //this.utilsService.roundNum(row.X ** 3, DIGIT_ACCURACY), 
+        X4: row.X ** 4, //this.utilsService.roundNum(row.X ** 4, DIGIT_ACCURACY), 
+        X2Y: (row.X ** 2) * row.Y, //this.utilsService.roundNum((row.X ** 2) * row.Y, DIGIT_ACCURACY),
+        lnY: Math.log(row.Y), //this.utilsService.roundNum(Math.log(row.Y), DIGIT_ACCURACY),
+        XlnY: row.X * Math.log(row.Y), //this.utilsService.roundNum(row.X * Math.log(row.Y), DIGIT_ACCURACY),
 
-        lnX: this.utilsService.roundNum(Math.log(row.X), DIGIT_ACCURACY),
+        lnX: Math.log(row.X), //this.utilsService.roundNum(Math.log(row.X), DIGIT_ACCURACY),
         // lnXY: this.utilsService.roundNum(Math.log(row.X * row.Y), DIGIT_ACCURACY),
-        lnX2: this.utilsService.roundNum(Math.log(row.X) ** 2, DIGIT_ACCURACY),
-        YlnX: this.utilsService.roundNum(row.Y * Math.log(row.X), DIGIT_ACCURACY),
+        lnX2: Math.log(row.X) ** 2, //this.utilsService.roundNum(Math.log(row.X) ** 2, DIGIT_ACCURACY),
+        YlnX: row.Y * Math.log(row.X), //this.utilsService.roundNum(row.Y * Math.log(row.X), DIGIT_ACCURACY),
 
-        div1X: this.utilsService.roundNum(1 / row.X, DIGIT_ACCURACY),
-        div1X2: this.utilsService.roundNum(1 / (row.X ** 2), DIGIT_ACCURACY),
-        YdivX: this.utilsService.roundNum(row.Y / row.X, DIGIT_ACCURACY),
+        div1X: 1 / row.X, //this.utilsService.roundNum(1 / row.X, DIGIT_ACCURACY),
+        div1X2: 1 / (row.X ** 2), //this.utilsService.roundNum(1 / (row.X ** 2), DIGIT_ACCURACY),
+        YdivX: row.Y / row.X, //this.utilsService.roundNum(row.Y / row.X, DIGIT_ACCURACY),
 
         // div1XY: this.utilsService.roundNum(1 / row.X * row.Y, DIGIT_ACCURACY),
 
@@ -904,7 +904,7 @@ export class AnalysisService
         // , DIGIT_ACCURACY);
 
         a0 = Math.exp(avgRow.lnY - Math.log(a1) * avgRow.X);
-        
+
         // this.utilsService.roundNum(avgRow.lnY - a1 * avgRow.X, DIGIT_ACCURACY);
 
         // elasticity = avgRow.X * a1; 
@@ -1017,7 +1017,7 @@ export class AnalysisService
   {
     const { funcType: funcVariant, a0, a1, a2, xArr } = dto;
 
-    let YxArr: number[] = [];
+    const YxArr: number[] = [];
 
     const count: number = xArr.length;
 
@@ -1052,6 +1052,8 @@ export class AnalysisService
         }
         case FuncTypeEnum.EXPONENTIAL:
         {
+          // console.log(a0, a1, X)
+
           YxArr[i] = a0 * a1 ** X;
           
           // this.utilsService.roundNum(

@@ -68,7 +68,8 @@ export const WORD_FONT_HEADER_SIZE = 32;
 export const FILENAME = 'sr-analysis';
 // export const FILENAME = `${BASE_FILENAME}-${new Date().valueOf()}`;
 
-export const DIGIT_ACCURACY = 5;
+export const DIGIT_ACCURACY = 3;//5;
+export const DIGIT_ACCURACY_FOR_SMALL_NUMS = 8;
 
 export const INITIAL_ANALYSIS_PARAMS: IAnalysisParams = {
   meanSqrOffX: { 

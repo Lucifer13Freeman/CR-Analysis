@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FILENAME, INITIAL_ANALYSIS_DATA, INITIAL_ANALYSIS_PARAMS, INITIAL_GET_ANALYSIS_DATA, INITIAL_TABLE_DATA, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
+import { DIGIT_ACCURACY, FILENAME, INITIAL_ANALYSIS_DATA, INITIAL_ANALYSIS_PARAMS, INITIAL_GET_ANALYSIS_DATA, INITIAL_TABLE_DATA, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
 import { DownloadButtonLabelsEnum, ExcelExtEnum, FTableSelectValueEnum, FullFileDataHeaderWordEnum, SignificanceSelectValueEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
@@ -106,7 +106,7 @@ export class AnalysisParamsComponent implements OnInit, OnChanges
       },
       tTable: {
         name: this.analysisParams.tTable.name,
-        value: tTable
+        value: this.utilsService.roundNum(tTable, DIGIT_ACCURACY)
       },
       coefCorrSign: {
         name: this.analysisParams.coefCorrSign.name,
@@ -145,11 +145,11 @@ export class AnalysisParamsComponent implements OnInit, OnChanges
       },
       fisherCrit: {
         name: this.analysisParams.fisherCrit.name,
-        value: fisherCrit
+        value: this.utilsService.roundNum(fisherCrit, DIGIT_ACCURACY)
       },
       fTableValLvl: {
         name: this.analysisParams.fTableValLvl.name,
-        value: fTableValLvl
+        value: this.utilsService.roundNum(fTableValLvl, DIGIT_ACCURACY)
       },
       fTableValLvlCheck: {
         name: this.analysisParams.fTableValLvlCheck.name,

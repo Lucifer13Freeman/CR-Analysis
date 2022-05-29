@@ -38,7 +38,7 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
               public dialog: MatDialog) { }
 
   @Input()
-  columnsSchema: Array<IColumnSchemaElement> = [];
+  columnsSchema: IColumnSchemaElement[] = [];
 
   @Input()
   tableData: ITableData<any> = {...INITIAL_TABLE_DATA};
@@ -174,7 +174,9 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
 
   private createTable() 
   {
-    this.dataSource = new MatTableDataSource(this.tableData.data);
+    this.dataSource = new MatTableDataSource(
+      this.dataTableService.roundTableDataNums(this.tableData.data)
+    );
 
     // console.log(this.tableData.data)
     // console.log(this.data);
@@ -186,6 +188,8 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
 
     // if (this.columnsSchema.length === 0)
     // {
+    
+
     this.columnsSchema = this.dataTableService.generateColumnSchema(this.tableData.header , this.tableData.data /*this.tableData.header*/);
     this.displayedColumns = this.columnsSchema.map((col) => col.key);
     // }
