@@ -409,8 +409,9 @@ export class AnalysisService
 
       HeaderLabelsEnum.YxY2,
       HeaderLabelsEnum.YAvgY2,
-      HeaderLabelsEnum.YAvgYx2,
-      HeaderLabelsEnum.AvgYxAvgY2
+
+      // HeaderLabelsEnum.YAvgYx2,
+      // HeaderLabelsEnum.AvgYxAvgY2
     ];
 
     analysisData = {
@@ -669,7 +670,7 @@ export class AnalysisService
 
     data[count] = sumRow;
     data[count + 1] = avgRow;
-    
+
 
     // for (let i = 0; i < data.length; i++)
     // {

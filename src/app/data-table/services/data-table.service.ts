@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Associations, DIGIT_ACCURACY, DIGIT_ACCURACY_FOR_SMALL_NUMS } from 'src/app/shared/constants/constants';
+import { Associations, COLS_WITH_SMALL_NUMS, DIGIT_ACCURACY, DIGIT_ACCURACY_FOR_SMALL_NUMS } from 'src/app/shared/constants/constants';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { IColumnSchemaElement } from '../interfaces/column-schema-element.interface';
 
@@ -100,8 +100,7 @@ export class DataTableService
         {
           if (!Number.isNaN(parseFloat(newData[i][keys[j] as string])))
           {
-            const digitAccuracy = keys[j] as string === 'div1X' 
-                                || keys[j] as string === 'div1X2' 
+            const digitAccuracy = COLS_WITH_SMALL_NUMS.includes(keys[j] as string) 
                                   ? DIGIT_ACCURACY_FOR_SMALL_NUMS 
                                   : DIGIT_ACCURACY;
             newData[i][keys[j] as string] = this.utilsService.roundNum(newData[i][keys[j] as string], digitAccuracy);

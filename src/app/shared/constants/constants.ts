@@ -241,77 +241,7 @@ export const FUNC_TYPE_VALUES: IFuncTypeValues[] = [
   { value: FuncTypeEnum.LOGARITHM, viewValue: FuncTypeViewValuesEnum.LOGARITHM }
 ]
 
-
-// export type KeysHeaderAssociationType = {
-//   id: string,
-  
-//   X: 'X',
-//   Y: 'Y',
-
-//   X2: 'X^2',
-//   Y2: 'Y^2',
-//   XY: 'XY',
-//   X3: 'X^3',
-//   X4: 'X^4',
-//   X2Y: 'X^2 * Y',
-//   lnY: 'ln(Y)',
-//   XlnY: 'X * ln(Y)',
-
-//   Nx: 'Ранги Nx',
-//   Ny: 'Ранги Ny',
-//   d: 'd = Nx - Ny',
-//   d2: 'd^2'
-// }
-
-// export enum HeaderLabelsEnum
-// {
-//   id = '№',
-
-//   X = 'X',
-//   Y = 'Y',
-
-//   X2 = 'X^2',
-//   Y2 = 'Y^2',
-//   XY = 'XY',
-//   X3 = 'X^3',
-//   X4 = 'X^4',
-//   X2Y = 'X^2 * Y',
-//   lnY = 'ln(Y)',
-//   XlnY = 'X * ln(Y)',
-
-//   Nx = 'Ранги Nx',
-//   Ny = 'Ранги Ny',
-//   d = 'd = Nx - Ny',
-//   d2 = 'd^2',
-
-//   Yx = 'F(X)',
-//   YYx = '|Y - F(X)|',
-//   YxY2 = '(F(X) - Y)^2',
-//   YAvgY2 = '(Y - avg(Y))^2',
-//   YAvgYx2 = '(Y - avg(F(X)))^2',
-//   AvgYxAvgY2 = '(avg(F(X)) - avg(Y))^2'
-// }
-
-// export interface KeysHeaderLabelsType {
-//   id: HeaderLabelsEnum.id,
-
-//   X: HeaderLabelsEnum.X,
-//   Y: HeaderLabelsEnum.Y,
-
-//   X2: HeaderLabelsEnum.X2,
-//   Y2: HeaderLabelsEnum.Y2,
-//   XY: HeaderLabelsEnum.XY,
-//   X3: HeaderLabelsEnum.X3,
-//   X4: HeaderLabelsEnum.X4,
-//   X2Y: HeaderLabelsEnum.X2Y,
-//   lnY: HeaderLabelsEnum.lnY,
-//   XlnY: HeaderLabelsEnum.XlnY,
-
-//   Nx: HeaderLabelsEnum.Nx,
-//   Ny: HeaderLabelsEnum.Ny,
-//   d: HeaderLabelsEnum.d,
-//   d2: HeaderLabelsEnum.d2
-// }
+export const COLS_WITH_SMALL_NUMS = ['div1X', 'div1X2'];
 
 export class Associations
 {
