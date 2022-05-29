@@ -30,7 +30,9 @@ export class DataTableService
     {
       if (i % dataKeys.length === 0) columnSchema.push(selectCheckBox);
 
-      const label = header.find((label: string) => label === Associations.keysHeaderLabels[dataKeys[i]]);
+      const label = header.find((label: string) => 
+        label === Associations.keysHeaderLabels[dataKeys[i]]
+      );
 
       if (label)
       {
