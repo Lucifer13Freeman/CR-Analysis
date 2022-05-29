@@ -26,17 +26,22 @@ export class DataTableService
 
     const dataKeys = Object.keys(data[0]);
 
-    for (let i = 0; i < header.length; i++)
+    for (let i = 0; i < dataKeys.length; i++)
     {
-      const col: IColumnSchemaElement = {
-        key: dataKeys[i],
-        label: Associations.keysHeaderLabels[dataKeys[i]],
-        type: 'text'
+      if (i % dataKeys.length === 0) columnSchema.push(selectCheckBox);
+
+      const label = header.find((label: string) => label === Associations.keysHeaderLabels[dataKeys[i]]);
+
+      if (label)
+      {
+        const col: IColumnSchemaElement = {
+          key: dataKeys[i],
+          label: label, //Associations.keysHeaderLabels[dataKeys[i]],
+          type: 'text'
+        }
+
+        columnSchema.push(col);
       }
-
-      if (i % header.length === 0) columnSchema.push(selectCheckBox);
-
-      columnSchema.push(col);
     }
 
     // header.forEach((str: string, index: number) => 
