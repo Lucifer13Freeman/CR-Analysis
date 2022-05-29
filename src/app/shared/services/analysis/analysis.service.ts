@@ -764,24 +764,11 @@ export class AnalysisService
       {
         a0 = (sumRow.Y * sumRow.X2 - sumRow.XY * sumRow.X) 
             / (count * sumRow.X2 - sumRow.X ** 2);
-        
-        // this.utilsService.roundNum(
-        //   (sumRow.Y * sumRow.X2 - sumRow.XY * sumRow.X) 
-        //   / (count * sumRow.X2 - sumRow.X ** 2)
-        // , DIGIT_ACCURACY);
 
         a1 = (count * sumRow.XY - sumRow.X * sumRow.Y) 
               / (count * sumRow.X2 - sumRow.X ** 2);
-        // this.utilsService.roundNum(
-        //   (count * sumRow.XY - sumRow.X * sumRow.Y) 
-        //   / (count * sumRow.X2 - sumRow.X ** 2)
-        // , DIGIT_ACCURACY);
 
         elasticity = a1 * (avgRow.X / (a0 + a1 * avgRow.X));
-        
-        // this.utilsService.roundNum(
-        //   a1 * (avgRow.X / (a0 + a1 * avgRow.X))
-        // , DIGIT_ACCURACY);
           
         funcParamsCount = 2;
 
@@ -789,45 +776,13 @@ export class AnalysisService
       }
       case FuncTypeEnum.PARABOLA:
       {
-
-        // const sum = (xs: number[]) =>
-        //   xs.reduce ((a, b) => a + b, 0)
-          
-        // const excluding = (i: number) => (xs: number[]) => 
-        //   [... xs.slice (0, i), ...xs.slice (i + 1)]
-
-        // const determinant = ([xs, ...xss]: number[][]): number => 
-        //   xs.length == 1
-        //     ? xs [0]
-        //     : sum (xs .map (
-        //     (x, i) => (-1) ** i * x * determinant(xss.map(excluding(i)))
-        //     )
-        //   )
-
-        // const matrA = [
-        //   [ sumRow.X2, sumRow.X, count ],
-        //   [ sumRow.X3, sumRow.X2, sumRow.X ],
-        //   [ sumRow.X4, sumRow.X3, sumRow.X2 ],
-        // ];
-
         const matrA = [
           [ count, sumRow.X, sumRow.X2 ],
           [ sumRow.X, sumRow.X2, sumRow.X3 ],
           [ sumRow.X2, sumRow.X3, sumRow.X4 ],
         ];
 
-        // console.table(matrA)
-
-        // a = //this.utilsService.roundNum(
-        //       matrA[0][0] * matrA[1][1] * matrA[2][2] 
-        //         + matrA[1][0] * matrA[2][1] * matrA[0][2] 
-        //         + matrA[2][0] * matrA[0][1] * matrA[1][2] 
-        //       - (matrA[2][0] * matrA[1][1] * matrA[0][2] 
-        //         + matrA[1][2] * matrA[2][1] * matrA[0][0] 
-        //         + matrA[2][2] * matrA[0][1] * matrA[1][0])
-        //, DIGIT_ACCURACY);
-
-        a = this.utilsService.matrDeterminant(matrA) // determinant(matrA)
+        a = this.utilsService.matrDeterminant(matrA);
 
           
         const matrA0 = [
@@ -836,21 +791,7 @@ export class AnalysisService
           [ sumRow.X2Y, sumRow.X3, sumRow.X4 ]
         ];
 
-        // const matrA0 = [
-        //   [ sumRow.X2, sumRow.X, sumRow.Y ],
-        //   [ sumRow.X3, sumRow.X2, sumRow.XY ],
-        //   [ sumRow.X4, sumRow.X3, sumRow.X2Y ]
-        // ];
-
-        a0 = //this.utilsService.roundNum(
-            //   (matrA0[0][0] * matrA0[1][1] * matrA0[2][2] 
-            //   + matrA0[1][0] * matrA0[2][1] * matrA0[0][2]
-            //   + matrA0[2][0] * matrA0[0][1] * matrA0[1][2] 
-            // - (matrA0[2][0] * matrA0[1][1] * matrA0[0][2] 
-            //   + matrA0[1][2] * matrA0[2][1] * matrA0[0][0] 
-            //   + matrA0[2][2] * matrA0[0][1] * matrA0[1][0])) / a
-            this.utilsService.matrDeterminant(matrA0) / a;
-        //, DIGIT_ACCURACY);
+        a0 = this.utilsService.matrDeterminant(matrA0) / a;
 
 
         const matrA1 = [
@@ -859,21 +800,7 @@ export class AnalysisService
           [ sumRow.X2, sumRow.X2Y, sumRow.X4 ]
         ];
 
-        // const matrA1 = [
-        //   [ sumRow.X2, sumRow.Y, count ],
-        //   [ sumRow.X3, sumRow.XY, sumRow.X ],
-        //   [ sumRow.X4, sumRow.X2Y, sumRow.X2 ]
-        // ];
-
-        a1 = //this.utilsService.roundNum(
-            //   (matrA1[0][0] * matrA1[1][1] * matrA1[2][2] 
-            //   + matrA1[1][0] * matrA1[2][1] * matrA1[0][2] 
-            //   + matrA1[2][0] * matrA1[0][1] * matrA1[1][2] 
-            // - (matrA1[2][0] * matrA1[1][1] * matrA1[0][2] 
-            //   + matrA1[1][2] * matrA1[2][1] * matrA1[0][0] 
-            //   + matrA1[2][2] * matrA1[0][1] * matrA1[1][0])) / a
-            this.utilsService.matrDeterminant(matrA1) / a;
-        //, DIGIT_ACCURACY);
+        a1 = this.utilsService.matrDeterminant(matrA1) / a;
 
 
         const matrA2 = [
@@ -882,31 +809,10 @@ export class AnalysisService
           [ sumRow.X2, sumRow.X3, sumRow.X2Y ]
         ];
 
-        // const matrA2 = [
-        //   [ sumRow.Y, sumRow.X, count ],
-        //   [ sumRow.XY, sumRow.X2, sumRow.X ],
-        //   [ sumRow.X2Y, sumRow.X3, sumRow.X2 ]
-        // ];
-          
-        a2 = //this.utilsService.roundNum(
-              //   (matrA2[0][0] * matrA2[1][1] * matrA2[2][2] 
-              //   + matrA2[1][0] * matrA2[2][1] * matrA2[0][2] 
-              //   + matrA2[2][0] * matrA2[0][1] * matrA2[1][2] 
-              // - (matrA2[2][0] * matrA2[1][1] * matrA2[0][2] 
-              //   + matrA2[1][2] * matrA2[2][1] * matrA2[0][0] 
-              //   + matrA2[2][2] * matrA2[0][1] * matrA2[1][0])) / a
-              this.utilsService.matrDeterminant(matrA2) / a;
-        //, DIGIT_ACCURACY);
+        a2 = this.utilsService.matrDeterminant(matrA2) / a;
 
         elasticity = (a1 * avgRow.X + (2 * a2 * avgRow.X ** 2)) / avgRow.Y;
         
-        // console.log(a, a0, a1, a2)
-
-        // this.utilsService.roundNum(
-          // (a1 * avgRow.X + (2 * a0 * avgRow.X ** 2)) / avgRow.Y
-        //   (a1 * avgRow.X + (2 * a2 * avgRow.X ** 2)) / avgRow.Y
-        // , DIGIT_ACCURACY);
-
         funcParamsCount = 3;
 
         break;
@@ -951,75 +857,20 @@ export class AnalysisService
         a1 = (count * sumRow.YdivX - sumRow.div1X * sumRow.Y) 
             / (count * sumRow.div1X2 - sumRow.div1X ** 2);
         
-        // this.utilsService.roundNum(
-        //   (count * sumRow.YdivX - sumRow.div1X * sumRow.Y) 
-        //   / (count * sumRow.div1X2 - sumRow.div1X ** 2)
-        // , DIGIT_ACCURACY);
-
         a0 = avgRow.Y - a1 * avgRow.div1X;
-        
-        // this.utilsService.roundNum(
-        //     avgRow.Y - a1 * avgRow.div1X
-        // , DIGIT_ACCURACY);
-
-        // console.log(avgRow.div1X, sumRow.div1X, sumRow.div1X2, sumRow.YdivX, a1, a0)
-        // console.log(count, sumRow.YdivX, sumRow.div1X, sumRow.Y)
-        // console.log(count, sumRow.div1X2, sumRow.div1X)
 
         elasticity = -a1 / (a0 * avgRow.X + a1);
         
-        // this.utilsService.roundNum(
-        //   - (a1 / (a0 * avgRow.X + a1))
-        // , DIGIT_ACCURACY);
-          
         funcParamsCount = 2;
 
         break;
       }
       case FuncTypeEnum.LOGARITHM:
       {
-        // a1 = this.utilsService.roundNum(
-        //   (count * sumRow.YdivX - sumRow.lnX * sumRow.Y) 
-        //   / (count * sumRow.lnX2 - sumRow.lnX ** 2)
-        // , DIGIT_ACCURACY);
-
-        // a0 = this.utilsService.roundNum(
-        //   (1 / count) * (sumRow.Y) - 
-        //   ((1 / count) * a1 * sumRow.lnX)
-        // , DIGIT_ACCURACY);
-
-        // elasticity = this.utilsService.roundNum(
-        //   - (a1 / (a0 * avgRow.X + a1))
-        // , DIGIT_ACCURACY);
-
-        // a0 = (sumRow.Y * sumRow.lnX2 - sumRow.lnXY * sumRow.lnX) 
-        //     / (count * sumRow.lnX2 - sumRow.Xln ** 2)
-
-        // this.utilsService.roundNum(
-        //   (sumRow.Y * sumRow.lnX2 - sumRow.lnXY * sumRow.lnX) 
-        //   / (count * sumRow.lnX2 - sumRow.Xln ** 2)
-        // , DIGIT_ACCURACY);
-
-        // a1 = (count * sumRow.lnXY - sumRow.lnX * sumRow.Y) 
-        //     / (count * sumRow.lnX2 - sumRow.lnX ** 2)
-        
-        // this.utilsService.roundNum(
-        //   (count * sumRow.lnXY - sumRow.lnX * sumRow.Y) 
-        //   / (count * sumRow.lnX2 - sumRow.lnX ** 2)
-        // , DIGIT_ACCURACY);
-
-        // elasticity = a1 * (avgRow.lnX / (a0 + a1 * avgRow.lnX))
-        
-        // this.utilsService.roundNum(
-        //   a1 * (avgRow.lnX / (a0 + a1 * avgRow.lnX))
-        // , DIGIT_ACCURACY);
-
         a1 = (count * sumRow.YlnX - sumRow.lnX * sumRow.Y) 
             / (count * sumRow.lnX2 - sumRow.lnX ** 2);
         
         a0 = avgRow.Y - a1 * avgRow.lnX;
-
-        // console.log(a1, a0)
 
         elasticity = a1 / (a0 + a1 * avgRow.lnX);
           
@@ -1052,72 +903,30 @@ export class AnalysisService
         default:
         {
           YxArr[i] = a0 + a1 * X;
-          
-          // this.utilsService.roundNum(
-          //       a0 + (a1 * X)
-          // , DIGIT_ACCURACY);
-          // console.log(a0, a1, Yx[i], elasticity)
-
           break;
         }
         case FuncTypeEnum.PARABOLA:
         {
           YxArr[i] = a0 + a1 * X + a2 * X ** 2;
-          
-          // this.utilsService.roundNum(
-          //       a0 + (a1 * X) + (a2 * X ** 2)
-          // , DIGIT_ACCURACY);
-          // console.log(a0, a1, a2)
-
           break;
         }
         case FuncTypeEnum.EXPONENTIAL:
         {
-          // console.log(a0, a1, X)
-
           YxArr[i] = a0 * a1 ** X;
           
           // this.utilsService.roundNum(
           //       Math.exp(a0) * Math.exp(a1) ** X
           // , DIGIT_ACCURACY);
-
-          // YxArr[i] = this.utilsService.roundNum(
-          //       a0 * a1 ** X
-          // , DIGIT_ACCURACY);//?
-          // console.log(a0, a1, Yx[i], elasticity)
-
           break;
         }
         case FuncTypeEnum.HYPERBOLA:
         {
-          // YxArr[i] = this.utilsService.roundNum(
-          //       a0 + (a1 * 1 / X) + (a2 * 1/ X ** 2)
-          // , DIGIT_ACCURACY);
-
           YxArr[i] = a0 + a1 / X;
-          
-          // this.utilsService.roundNum(
-          //     a0 + a1 / X
-          // , DIGIT_ACCURACY);
-
-          // YxArr[i] = this.utilsService.roundNum(
-          //   a0 + (a1 * X)
-          // , DIGIT_ACCURACY);
-
           break;
         }
         case FuncTypeEnum.LOGARITHM:
         {
-          // YxArr[i] = this.utilsService.roundNum(
-          //       a0 + (a1 * Math.log(X)) + (a2 * Math.log(X) ** 2)
-          // , DIGIT_ACCURACY);
-
           YxArr[i] = a0 + a1 * Math.log(X);
-          
-          // this.utilsService.roundNum(
-          //     a0 + (a1 * Math.log(X))
-          // , DIGIT_ACCURACY);
-
           break;
         }
       }
@@ -1241,12 +1050,6 @@ export class AnalysisService
 
     for (let i = 0; i < data.length; i++)
     {
-      // sumRow.x += +(data[i] as any).x;
-      // sumRow.y += +(data[i] as any).y;
-      // sumRow.x2 += +(data[i] as any).x2;
-      // sumRow.y2 += +(data[i] as any).y2;
-      // sumRow.xy += +(data[i] as any).xy;
-
       for (let j = 1; j < keys.length; j++)
       {
         if (!sumRow[keys[j] as string]) sumRow[keys[j] as string] = 0;
