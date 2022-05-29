@@ -34,11 +34,17 @@ export const INITIAL_FILE_DATA = {
 // export const OUTPUT_CALC_TABLE_TYPE = 'output_calc';
 // export const OUTPUT_RANG_TABLE_TYPE = 'output_rang';
 
-export const READ_FILE_TIMOUT: number = 100;
-export const READ_FILE_INTERVAL: number = 100;
-export const READ_FILE_SPEED: number = 20;
+// export const READ_FILE_TIMOUT: number = 100;
+// export const READ_FILE_INTERVAL: number = 100;
+// export const READ_FILE_SPEED: number = 20;
 
-export const WRITE_FILE_TIMOUT: number = 100;
+// export const WRITE_FILE_TIMOUT: number = 100;
+
+export const READ_FILE_TIMOUT: number = 50;
+export const READ_FILE_INTERVAL: number = 50;
+export const READ_FILE_SPEED: number = 50;
+
+export const WRITE_FILE_TIMOUT: number = 50;
 
 export const CSV_DELIMITER = ';';
 export const CSV_POSSIBLE_SEPARATORS = [',', ';', '|', '\t'];
