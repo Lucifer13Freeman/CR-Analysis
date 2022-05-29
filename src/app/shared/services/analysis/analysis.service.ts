@@ -221,7 +221,8 @@ export class AnalysisService
     // console.table(YxArr)
 
     const YxArrGraph: number[] = this.getYxArray({ funcType, a0, a1, a2, xArr: xArrSorted });
-    console.log({YxArr, YxArrGraph})
+    
+    // console.log({YxArr, YxArrGraph})
 
     const resChartData: Point[] = this.utilsService.getPointsArray(xArrSorted, YxArrGraph);
     const stdChartData: Point[] = this.utilsService.getPointsArray(xArr, yArr);
@@ -662,7 +663,7 @@ export class AnalysisService
       header
     }
 
-    console.log(extCalcTableData)
+    // console.log(extCalcTableData)
 
     return extCalcTableData;
   }

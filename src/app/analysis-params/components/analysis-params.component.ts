@@ -75,7 +75,16 @@ export class AnalysisParamsComponent implements OnInit, OnChanges
 
   ngOnChanges(changes: SimpleChanges): void 
   {
-    this.analysisParams = this.analysisData.params;
+    // let selectedSignLvlValChange = changes['selectedSignLvlVal'];
+    // let selectedFTableValLvlValChange = changes['selectedFTableValLvlVal'];
+
+    // console.log(selectedSignLvlValChange, selectedFTableValLvlValChange)
+
+    // if (selectedSignLvlValChange.previousValue !== selectedSignLvlValChange.currentValue 
+    //   || selectedFTableValLvlValChange.previousValue !== selectedFTableValLvlValChange.currentValue)
+    // {
+      this.analysisParams = this.analysisData.params;
+    // }
   }
 
   editCorrCoefValLvl()
