@@ -345,13 +345,17 @@ export class Associations
     d2: HeaderLabelsEnum.d2,
 
     Yx: HeaderLabelsEnum.Yx,
-    YYx:HeaderLabelsEnum.YYx,
-    YxY2: HeaderLabelsEnum.YxY2,
+    YYx: HeaderLabelsEnum.YYx,
+
+    YYx2: HeaderLabelsEnum.YYx2,
+
     YAvgY2: HeaderLabelsEnum.YAvgY2,
     YAvgYx2: HeaderLabelsEnum.YAvgYx2,
+
+    YxAvgY2: HeaderLabelsEnum.YxAvgY2,
+
     AvgYxAvgY2: HeaderLabelsEnum.AvgYxAvgY2,
     
-
     name: HeaderLabelsEnum.name,
     value: HeaderLabelsEnum.value
   }

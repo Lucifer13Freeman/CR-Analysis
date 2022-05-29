@@ -289,8 +289,12 @@ export class AnalysisService
     // console.log(sumRow.YYx / sumRow.Y / count)
 
     const totalDispersion: number = this.getTotalDispersion(sumRow.YAvgY2, count); 
-    const factorDispersion: number = this.getFactorDispersion(sumRow.AvgYxAvgY2, count); //?
-    const residualDispersion: number = this.getResidualDispersion(sumRow.YAvgYx2, count); //?
+
+    // const factorDispersion: number = this.getFactorDispersion(sumRow.AvgYxAvgY2, count); //?
+    // const residualDispersion: number = this.getResidualDispersion(sumRow.YAvgYx2, count); //?
+
+    const factorDispersion: number = this.getFactorDispersion(sumRow.YxAvgY2, count); //?
+    const residualDispersion: number = this.getResidualDispersion(sumRow.YYx2, count); //?
 
     // const factorDispersion: number = this.getFactorDispersion(sumRow.YYx2, count); //?
     // const residualDispersion: number = this.getResidualDispersion(sumRow.YxY2, count); //?
@@ -398,6 +402,11 @@ export class AnalysisService
 
       HeaderLabelsEnum.Yx,
       HeaderLabelsEnum.YYx,
+
+      HeaderLabelsEnum.YYx2,
+
+      HeaderLabelsEnum.YxAvgY2,
+
       HeaderLabelsEnum.YxY2,
       HeaderLabelsEnum.YAvgY2,
       HeaderLabelsEnum.YAvgYx2,
@@ -575,11 +584,14 @@ export class AnalysisService
       YYx: 0,
       YxY2: 0,
       YAvgY2: 0,
+
       YAvgYx2: 0,
       AvgYxAvgY2: 0,
 
+      YxAvgY2: 0,
+
       // lnYx: 0
-      // YYx2: 0
+      YYx2: 0
     }
 
     // let corCoefArr = [3][f];
@@ -598,14 +610,20 @@ export class AnalysisService
       data[i].YYx = Math.abs(data[i].Y - data[i].Yx);
       sumRow.YYx += data[i].YYx;
 
+      data[i].YYx2 = (data[i].Y - data[i].Yx) ** 2;
+      sumRow.YYx2 += data[i].YYx2;
+
+      // data[i].YxY2 = (data[i].Yx - data[i].Y) ** 2;
+      // sumRow.YxY2 += data[i].YxY2;
+
       // data[i].YYx = Math.abs(data[i].Y - data[i].Yx);
       // sumRow.YYx += data[i].YYx;
 
-      data[i].YxY2 = (YxArr[i] - data[i].Y) ** 2;
-      sumRow.YxY2 += data[i].YxY2;
-
       data[i].YAvgY2 = (data[i].Y - avgRow.Y) ** 2;
       sumRow.YAvgY2 += data[i].YAvgY2;
+
+      data[i].YxAvgY2 = (data[i].Yx - avgRow.Y) ** 2;
+      sumRow.YxAvgY2 += data[i].YxAvgY2;
 
       //TODO: research this
       // data[i].YAvgYx2 = (data[i].Y - avgRow.Yx) ** 2;
@@ -644,12 +662,14 @@ export class AnalysisService
       YAvgY2: sumRow.YAvgY2 / count,
       YAvgYx2: sumRow.YAvgYx2 / count,
       AvgYxAvgY2: sumRow.AvgYxAvgY2 / count,
-
-      // YYx2: sumRow.YYx2 / count
+      
+      YxAvgY2: sumRow.YxAvgY2 / count,
+      YYx2: sumRow.YYx2 / count
     }
 
     data[count] = sumRow;
     data[count + 1] = avgRow;
+    
 
     // for (let i = 0; i < data.length; i++)
     // {

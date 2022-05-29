@@ -42,69 +42,6 @@ export enum MimeTypeEnum
     PDF = 'application/pdf'
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export enum HeaderLabelsEnum {
   id = '№',
 
@@ -127,9 +64,15 @@ export enum HeaderLabelsEnum {
 
   Yx = 'F(X)',
   YYx = '|Y - F(X)|',
+
+  YYx2 = '(Y - F(X)) ^ 2',
+
   YxY2 = '(F(X) - Y)^2',
   YAvgY2 = '(Y - avg(Y))^2',
   YAvgYx2 = '(Y - avg(F(X)))^2',
+
+  YxAvgY2 = '(F(X) - avg(Y)^2',
+
   AvgYxAvgY2 = '(avg(F(X)) - avg(Y))^2',
 
   name = 'Параметр',
