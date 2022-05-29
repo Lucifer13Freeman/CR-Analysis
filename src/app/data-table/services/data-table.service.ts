@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Associations } from 'src/app/shared/constants/constants';
 import { IColumnSchemaElement } from '../interfaces/column-schema-element.interface';
 
 
@@ -10,9 +11,9 @@ export class DataTableService
 {
   constructor() { }
 
-  public generateColumnSchema(header: Array<string>, data: Array<any>): Array<IColumnSchemaElement>
+  public generateColumnSchema(header: string[], data: any[]): IColumnSchemaElement[]
   {
-    let columnSchema: Array<IColumnSchemaElement> = [];
+    let columnSchema: IColumnSchemaElement[] = [];
 
     const selectCheckBox: IColumnSchemaElement = {
       key: 'isSelected',
@@ -28,7 +29,7 @@ export class DataTableService
     {
       const col: IColumnSchemaElement = {
         key: dataKeys[i],
-        label: header[i],
+        label: Associations.keysHeaderLabels[dataKeys[i]],
         type: 'text'
       }
 

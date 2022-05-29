@@ -49,4 +49,8 @@ export interface IAnalysisParams
     fTableValLvl: AnalysisParamsType;
     fTableValLvlSelectVal: AnalysisParamsType;
     fTableValLvlCheck: AnalysisParamsType;
+
+    V1: number;
+    V2: number;
+    count: number;
 }

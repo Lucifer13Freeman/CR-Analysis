@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FILENAME, INITIAL_ANALYSIS_PARAMS, INITIAL_GET_ANALYSIS_DATA, INITIAL_TABLE_DATA, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
+import { FILENAME, INITIAL_ANALYSIS_DATA, INITIAL_ANALYSIS_PARAMS, INITIAL_GET_ANALYSIS_DATA, INITIAL_TABLE_DATA, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
 import { DownloadButtonLabelsEnum, ExcelExtEnum, FTableSelectValueEnum, FullFileDataHeaderWordEnum, SignificanceSelectValueEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
@@ -24,7 +24,7 @@ import { ISelectValues } from '../interfaces/select-values.interface';
   templateUrl: './analysis-params.component.html',
   styleUrls: ['./analysis-params.component.scss']
 })
-export class AnalysisParamsComponent implements OnInit
+export class AnalysisParamsComponent implements OnInit, OnChanges
 {
   constructor(private readonly analysisService: AnalysisService, 
               private readonly writeAnalysisDataService: WriteAnalysisDataService,
@@ -41,10 +41,13 @@ export class AnalysisParamsComponent implements OnInit
   title: FullFileDataHeaderWordEnum = FullFileDataHeaderWordEnum.ANALYSIS_PARAMS;
   downloadButtonLabels = DownloadButtonLabelsEnum;
 
-  @Input()
-  getAanalysisData: GetAnalysisDataDto<any> = {...INITIAL_GET_ANALYSIS_DATA};
+  // @Input()
+  // getAanalysisData: GetAnalysisDataDto<any> = {...INITIAL_GET_ANALYSIS_DATA};
 
   @Input()
+  analysisData: AnalysisDataDto<any> = {...INITIAL_ANALYSIS_DATA}; 
+
+  // @Input()
   analysisParams: IAnalysisParams = {...INITIAL_ANALYSIS_PARAMS};
 
   // wordExt: WordPdfExtEnum = WordPdfExtEnum.DOCX;
@@ -65,26 +68,114 @@ export class AnalysisParamsComponent implements OnInit
     { value: FTableSelectValueEnum.VALUE_2, viewValue: FTableSelectValueEnum.VALUE_2 }
   ]
 
-  ngOnInit(): void { }
-
-  editData()
-  {
-    const analysisData = this.analysisService.getAnalysisData({ ...this.getAanalysisData,
-                                                              calcTableData: this.getAanalysisData.calcTableData, 
-                                                              rangTableData: this.getAanalysisData.rangTableData, 
-                                                              signLvlSelectVal: this.selectedSignLvlVal, 
-                                                              fTableValLvlSelectVal: this.selectedFTableValLvlVal});
-    this.writeAnalysisDataService.setWriteAnalysisData(analysisData);
+  ngOnInit(): void 
+  { 
+    this.analysisParams = this.analysisData.params;
   }
 
+  ngOnChanges(changes: SimpleChanges): void 
+  {
+    this.analysisParams = this.analysisData.params;
+  }
+
+  editCorrCoefValLvl()
+  {
+    if (!this.analysisParams) return;
+
+    const { tTable, 
+      coefCorrSign } = this.analysisService.getCorrCoeffSignificent(
+                        { signLvlSelectVal: this.selectedSignLvlVal, 
+                          coefCorrSignCheck: this.analysisParams.coefCorrSignCheck.value as number, 
+                          count: this.analysisParams.count});
+
+                          
+    const analysisParams: IAnalysisParams = {
+      ...this.analysisParams,
+      signLvlSelectVal: {
+        name: this.analysisParams.signLvlSelectVal.name,
+        value: this.selectedSignLvlVal
+      },
+      tTable: {
+        name: this.analysisParams.tTable.name,
+        value: tTable
+      },
+      coefCorrSign: {
+        name: this.analysisParams.coefCorrSign.name,
+        value: coefCorrSign
+      }
+    }
+
+    const updatedAnalysisData: AnalysisDataDto<any> = {
+      ...this.analysisData,
+      params: analysisParams
+    }
+
+    this.writeAnalysisDataService.setWriteAnalysisData(updatedAnalysisData);
+  }
+
+  editFisherCritValLvl()
+  {
+    if (!this.analysisParams) return;
+
+    const { fisherCrit, 
+      fTableValLvl, 
+      fTableValueLevelCheck } = this.analysisService.getFisherCriterion({ 
+        V1: this.analysisParams.V1, 
+        V2: this.analysisParams.V2, 
+        count: this.analysisParams.count, 
+        fTableValLvlSelectVal: this.selectedFTableValLvlVal, 
+        factorDispersion: this.analysisParams.factorDispersion.value as number, 
+        residualDispersion: this.analysisParams.residualDispersion.value as number 
+      });
+                          
+    const analysisParams: IAnalysisParams = {
+      ...this.analysisParams,
+      fTableValLvlSelectVal: {
+        name: this.analysisParams.fTableValLvlSelectVal.name,
+        value: this.selectedFTableValLvlVal
+      },
+      fisherCrit: {
+        name: this.analysisParams.fisherCrit.name,
+        value: fisherCrit
+      },
+      fTableValLvl: {
+        name: this.analysisParams.fTableValLvl.name,
+        value: fTableValLvl
+      },
+      fTableValLvlCheck: {
+        name: this.analysisParams.fTableValLvlCheck.name,
+        value: fTableValueLevelCheck
+      }
+    }
+
+    const updatedAnalysisData: AnalysisDataDto<any> = {
+      ...this.analysisData,
+      params: analysisParams
+    }
+
+    this.writeAnalysisDataService.setWriteAnalysisData(updatedAnalysisData);
+  }
+
+  // editData()
+  // {
+  //   // const 
+
+  //   // const analysisData = this.analysisService.getAnalysisData({ ...this.getAanalysisData,
+  //   //                                                           calcTableData: this.getAanalysisData.calcTableData, 
+  //   //                                                           rangTableData: this.getAanalysisData.rangTableData, 
+  //   //                                                           signLvlSelectVal: this.selectedSignLvlVal, 
+  //   //                                                           fTableValLvlSelectVal: this.selectedFTableValLvlVal});
+  //   // this.writeAnalysisDataService.setWriteAnalysisData(analysisData);
+  // }
+
   async downloadWord(filename = FILENAME, 
-                    extension: WordPdfExtEnum = WordPdfExtEnum.PDF)
+                    extension: WordPdfExtEnum = WordPdfExtEnum.DOCX)
   {
     await this.wordService.writeAnalysisParamsToWordPdf({ analysisParams: this.analysisParams, filename, extension });
   }
 
   async downloadPdf(filename = FILENAME, 
-                    extension: WordPdfExtEnum = WordPdfExtEnum.DOCX)
+                    extension: WordPdfExtEnum = WordPdfExtEnum.PDF)
   {
     await this.wordService.writeAnalysisParamsToWordPdf({ analysisParams: this.analysisParams, filename, extension });
   }
@@ -94,8 +185,8 @@ export class AnalysisParamsComponent implements OnInit
   {
     const tableData = this.utilsService.makeTableDataFromAnalysisParams(this.analysisParams);
 
-    console.log(this.analysisParams)
-    console.log(tableData)
+    // console.log(this.analysisParams)
+    // console.log(tableData)
 
     // setTimeout(() => 
     // {

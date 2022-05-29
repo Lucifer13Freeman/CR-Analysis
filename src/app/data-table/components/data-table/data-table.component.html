@@ -64,7 +64,7 @@
           <button 
             mat-raised-button 
             class="button-edit"
-            (click)="isEditable = !isEditable"
+            (click)="editData()"
           >
             Редактировать
           </button>
@@ -116,7 +116,6 @@
                       [type]="col.type" 
                       matInput
                       [(ngModel)]="element[col.key]"
-                      (change)="editData()"
                       required="true"
                     />
                   </mat-form-field>

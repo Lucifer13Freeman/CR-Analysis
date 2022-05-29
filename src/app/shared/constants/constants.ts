@@ -192,7 +192,10 @@ export const INITIAL_ANALYSIS_PARAMS: IAnalysisParams = {
   fTableValLvlCheck: {
       name: '',
       value: 0
-  }
+  },
+  count: 0,
+  V1: 0,
+  V2: 0
 }
 
 export const INITIAL_CHART_DATA: ChartDataDto = {
@@ -320,6 +323,15 @@ export class Associations
     lnY: HeaderLabelsEnum.lnY,
     XlnY: HeaderLabelsEnum.XlnY,
 
+    lnX: HeaderLabelsEnum.lnX,
+    lnX2: HeaderLabelsEnum.lnX2,
+    YlnX: HeaderLabelsEnum.YlnX,
+
+    div1X: HeaderLabelsEnum.div1X,
+    div1X2: HeaderLabelsEnum.div1X2,
+    YdivX: HeaderLabelsEnum.YdivX,
+
+
     Nx: HeaderLabelsEnum.Nx,
     Ny: HeaderLabelsEnum.Ny,
     d: HeaderLabelsEnum.d,
@@ -331,6 +343,7 @@ export class Associations
     YAvgY2: HeaderLabelsEnum.YAvgY2,
     YAvgYx2: HeaderLabelsEnum.YAvgYx2,
     AvgYxAvgY2: HeaderLabelsEnum.AvgYxAvgY2,
+    
 
     name: HeaderLabelsEnum.name,
     value: HeaderLabelsEnum.value

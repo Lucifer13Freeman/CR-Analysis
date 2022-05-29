@@ -207,6 +207,12 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
     // console.log(($event.target as HTMLInputElement).value)
     // const data: any[] = [...this.dataSource.data];
 
+    if (!this.isEditable)
+    {
+      this.isEditable = !this.isEditable;
+      return;
+    }
+
     const data: any[] = this.dataTableService.extractData([...this.dataSource.data]);
     const tableData: ITableData<any> = { data, header: this.tableData.header} 
 
@@ -221,6 +227,8 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
       //   // this.writeAnalysisDataService.setWriteAnalysisData<any>() 
       // }
     });
+
+    this.isEditable = !this.isEditable;
 
     // console.log(this.data);
   }
@@ -256,7 +264,7 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
     for (let i = 0; i < currData.length; i++) currData[i][keys[0]]++;
 
     this.dataSource.data = [newRow, ...currData];
-    this.editData();
+    // this.editData();
   }
 
   // removeRow(id) 
@@ -281,7 +289,7 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
         if (confirm) 
         {
           this.dataSource.data = this.dataSource.data.filter((row: any) => !row.isSelected);
-          this.editData();
+          // this.editData();
         }
       });
   }

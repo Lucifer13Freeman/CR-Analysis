@@ -13,6 +13,10 @@ import { Point } from 'chart.js';
 import { GetAnalysisDataDto } from '../../dto/get-analysis-data.dto';
 import { IGetAnalysisData } from '../../interfaces/get-analysis-data.interface';
 import { RelationType } from '../../types/types';
+import { ICorrCoefSignificent } from '../../interfaces/corr-coef-significent.interface';
+import { IFisherCriterion } from '../../interfaces/fisher-criterion.interface';
+import { GetFisherCriterionDto } from '../../dto/get-fisher-criterion.dto';
+import { GetCorrCoefSignificentDto } from '../../dto/get-corr-coef-significent.dto';
 
 
 @Injectable(
@@ -154,7 +158,7 @@ export class AnalysisService
                             rangTableData, 
                             signLvlSelectVal = SignificanceSelectValueEnum.VALUE_1,
                             fTableValLvlSelectVal = FTableSelectValueEnum.VALUE_1,
-                            funcType = FuncTypeEnum.LINE}: IGetAnalysisData<T>)
+                            funcType = FuncTypeEnum.LINE }: IGetAnalysisData<T>)
   {
     // const { calcTableData, rangTableData, 
     //         signLvlSelectVal, fTableValLvlSelectVal, 
@@ -208,14 +212,16 @@ export class AnalysisService
 
     const aValuesAndElasticity: IAValuesAndElasticy = this.getAValuesAndElasticity(funcType, sumRow, avgRow, count);
 
-    const { a0, a1, a2, elasticity, m } = aValuesAndElasticity;
+    const { a0, a1, a2, elasticity, funcParamsCount } = aValuesAndElasticity;
 
     const xArrSorted = [...xArr].sort((a, b) => a - b);
 
     const YxArr: number[] = this.getYxArray({ funcType, a0, a1, a2, xArr });
 
+    // console.table(YxArr)
+
     const YxArrGraph: number[] = this.getYxArray({ funcType, a0, a1, a2, xArr: xArrSorted });
-    // console.log({YxArr, xArr})
+    console.log({YxArr, YxArrGraph})
 
     const resChartData: Point[] = this.utilsService.getPointsArray(xArrSorted, YxArrGraph);
     const stdChartData: Point[] = this.utilsService.getPointsArray(xArr, yArr);
@@ -249,16 +255,21 @@ export class AnalysisService
 
     const relXY: RelationType = this.getRelationXY(linearCorrCoef);
 
-
     
     //TODO: signLvlSelectType: selection index of comboBox with values: 0.05, 0.01, 0.01 for example
-    const signLvlSelectValIdx = signLvlSelectVal === SignificanceSelectValueEnum.VALUE_3 ? 2 
-                                : signLvlSelectVal === SignificanceSelectValueEnum.VALUE_1 ? 0 
-                                : 1;
+    // const signLvlSelectValIdx = signLvlSelectVal === SignificanceSelectValueEnum.VALUE_3 ? 2 
+    //                             : signLvlSelectVal === SignificanceSelectValueEnum.VALUE_1 ? 0 
+    //                             : 1;
 
-    const tTable: number = this.getTtable(signLvlSelectValIdx, count);
+    // const tTable: number = this.getTtable(signLvlSelectValIdx, count);
 
-    const coefCorrSign: SignificentTypeEnum = this.coefCorrelSignificance(coefCorrSignCheck, tTable);
+    // const coefCorrSign: SignificentTypeEnum = this.coefCorrelSignificance(coefCorrSignCheck, tTable);
+
+    const { tTable, 
+          coefCorrSign } = this.getCorrCoeffSignificent({ signLvlSelectVal, 
+                                                        coefCorrSignCheck, 
+                                                        count });
+
 
     const spearmanCoeff: number = this.getSpiermanCoef(d2Sum, count);
 
@@ -270,11 +281,18 @@ export class AnalysisService
     // console.log(sumRow)
     // console.log(avgRow)
 
-    const avgApproxErr: number = this.getAvgApproximationError(sumRow.Y, sumRow.YYx);
+    const avgApproxErr: number = this.getAvgApproximationError(sumRow.YYx, sumRow.Y);
+
+    // console.log(sumRow.YYx / sumRow.Y)
+    // console.log(count)
+    // console.log(sumRow.YYx / sumRow.Y / count)
 
     const totalDispersion: number = this.getTotalDispersion(sumRow.YAvgY2, count); 
     const factorDispersion: number = this.getFactorDispersion(sumRow.AvgYxAvgY2, count); //?
     const residualDispersion: number = this.getResidualDispersion(sumRow.YAvgYx2, count); //?
+
+    // const factorDispersion: number = this.getFactorDispersion(sumRow.YYx2, count); //?
+    // const residualDispersion: number = this.getResidualDispersion(sumRow.YxY2, count); //?
 
     const residualDispersionSqrt: number = this.getResidualDispersionSqrt(residualDispersion);
 
@@ -292,13 +310,19 @@ export class AnalysisService
     const tA0Check: SignificentTypeEnum | "" = this.getTaCheck(tA0, tTable, count); 
     const tA1Check: SignificentTypeEnum | "" = this.getTaCheck(tA1, tTable, count); 
 
-    const V1 = parseInt((m - 1).toString()); 
-    const V2 = parseInt((count - m).toString());
+    const V1 = parseInt((funcParamsCount - 1).toString()); 
+    const V2 = parseInt((count - funcParamsCount).toString());
 
-    const fisherCrit: number = this.getFisherCrit(factorDispersion, residualDispersion, V1, V2);
+    const { fisherCrit, 
+          fTableValLvl, 
+          fTableValueLevelCheck } = this.getFisherCriterion({ V1, V2, count, 
+                                                            fTableValLvlSelectVal, 
+                                                            factorDispersion, 
+                                                            residualDispersion });
 
-    const fTableValLvl: number = this.getFtableValueLevel(V1 - 1, V2 - 1, fTableValLvlSelectVal, count); //?
-    const fTableValueLevelCheck: FTableValueLevelTypeEnum = this.getFTableValueLevelCheck(fisherCrit, fTableValLvl); //?
+    // const fisherCrit: number = this.getFisherCrit(factorDispersion, residualDispersion, V1, V2);
+    // const fTableValLvl: number = this.getFtableValueLevel(V1 - 1, V2 - 1, fTableValLvlSelectVal, count); //?
+    // const fTableValueLevelCheck: FTableValueLevelTypeEnum = this.getFTableValueLevelCheck(fisherCrit, fTableValLvl); //?
     
 
     // const fTableValLvlCheck = this.getFTableValueLevelCheck(fisherCrit, fTableValLvl);
@@ -346,6 +370,10 @@ export class AnalysisService
     params.fTableValLvl.value = this.utilsService.roundNum(fTableValLvl, DIGIT_ACCURACY);
     params.fTableValLvlSelectVal.value = fTableValLvlSelectVal;
     params.fTableValLvlCheck.value = fTableValueLevelCheck;
+
+    params.count = count;
+    params.V1 = V1;
+    params.V2 = V2;
     
     // console.log(params);
 
@@ -358,6 +386,15 @@ export class AnalysisService
       HeaderLabelsEnum.X2Y,
       HeaderLabelsEnum.lnY,
       HeaderLabelsEnum.XlnY,
+
+      HeaderLabelsEnum.lnX,
+      HeaderLabelsEnum.lnX2,
+      HeaderLabelsEnum.YlnX,
+
+      HeaderLabelsEnum.div1X,
+      HeaderLabelsEnum.div1X2,
+      HeaderLabelsEnum.YdivX,
+
       HeaderLabelsEnum.Yx,
       HeaderLabelsEnum.YYx,
       HeaderLabelsEnum.YxY2,
@@ -380,7 +417,57 @@ export class AnalysisService
     return analysisData;
   }
 
-  private getAvgApproximationError(sumY: number, sumYYx: number)
+  // private getFuncParamsCount(funcType: FuncTypeEnum = FuncTypeEnum.LINE)
+  // {
+
+  // }
+
+  public getFisherCriterion(dto: GetFisherCriterionDto): IFisherCriterion
+  {
+    const { fTableValLvlSelectVal, 
+          factorDispersion, 
+          residualDispersion, 
+          count, V1, V2 } = dto;
+
+    // const V1 = parseInt((funcParamsCount - 1).toString()); 
+    // const V2 = parseInt((count - funcParamsCountm).toString());
+
+    const fisherCrit: number = this.getFisherCrit(factorDispersion, residualDispersion, V1, V2);
+
+    const fTableValLvl: number = this.getFtableValueLevel(V1 - 1, V2 - 1, fTableValLvlSelectVal, count); //?
+    const fTableValueLevelCheck: FTableValueLevelTypeEnum = this.getFTableValueLevelCheck(fisherCrit, fTableValLvl); //
+  
+    const fisherCriterion = {
+      fisherCrit,
+      fTableValLvl,
+      fTableValueLevelCheck
+    }
+
+    return fisherCriterion;
+  }
+
+  public getCorrCoeffSignificent(dto: GetCorrCoefSignificentDto): ICorrCoefSignificent
+  {
+    const { signLvlSelectVal, coefCorrSignCheck, count} = dto;
+
+    const signLvlSelectValIdx: number = signLvlSelectVal === SignificanceSelectValueEnum.VALUE_3 ? 2 
+                                      : signLvlSelectVal === SignificanceSelectValueEnum.VALUE_1 ? 0 
+                                      : 1;
+
+    const tTable: number = this.getTtable(signLvlSelectValIdx, count);
+
+    const coefCorrSign: SignificentTypeEnum = this.coefCorrelSignificance(coefCorrSignCheck, tTable);
+    
+    const coefCorrSignificent: ICorrCoefSignificent = {
+      signLvlSelectValIdx,
+      tTable,
+      coefCorrSign
+    }
+
+    return coefCorrSignificent;
+  }
+
+  private getAvgApproximationError(sumYYx: number, sumY: number)
   {
     const avgApproxErr = sumYYx / sumY;
     return avgApproxErr;
@@ -490,19 +577,19 @@ export class AnalysisService
       YAvgYx2: 0,
       AvgYxAvgY2: 0,
 
-      lnYx: 0
+      // lnYx: 0
+      // YYx2: 0
     }
 
     // let corCoefArr = [3][f];
 
     for (let i = 0; i < count; i++)
     {
-      data[i].Yx = YxArr[i];
+      data[i].Yx = +YxArr[i];
       sumRow.Yx += +data[i].Yx;
     }
 
     avgRow.Yx = sumRow.Yx / count;
-
 
     for (let i = 0; i < count; i++)
     {
@@ -528,13 +615,25 @@ export class AnalysisService
       //TODO: research this
       // data[i].AvgYxAvgY2 = (avgRow.Yx - avgRow.Y) ** 2;
       data[i].AvgYxAvgY2 = (data[i].Yx - avgRow.Y) ** 2; //?
+      // data[i].AvgYxAvgY2 = (data[i].Yx - data[i].Y) ** 2;
       sumRow.AvgYxAvgY2 += data[i].AvgYxAvgY2;
+
+      // console.log(data[i].Y, avgRow.Yx, data[i].YAvgYx2, avgRow.Yx, avgRow.Y, data[i].AvgYxAvgY2)
+      // console.log(sumRow.AvgYxAvgY2, sumRow.YAvgYx2)
+
+      // data[i].YYx2 = (data[i].Y - data[i].Yx) ** 2;
+      // sumRow.YYx2 += data[i].YYx2;
+
+      // data[i].YxY2 = (data[i].Yx - data[i].Y) ** 2;
+      // sumRow.YxY2 += data[i].YxY2;
 
       // console.log(data[i].YAvgYx2, data[i].AvgYxAvgY2)
     }
 
     // console.log(sumRow.YAvgYx2)
 
+    // console.table(sumRow.AvgYxAvgY2)
+    // console.table(sumRow.YAvgYx2)
     // console.log(sumRow.YAvgYx2, sumRow.AvgYxAvgY2)
 
     avgRow = {
@@ -543,7 +642,9 @@ export class AnalysisService
       YxY2: sumRow.YxY2 / count,
       YAvgY2: sumRow.YAvgY2 / count,
       YAvgYx2: sumRow.YAvgYx2 / count,
-      AvgYxAvgY2: sumRow.AvgYxAvgY2 / count
+      AvgYxAvgY2: sumRow.AvgYxAvgY2 / count,
+
+      // YYx2: sumRow.YYx2 / count
     }
 
     data[count] = sumRow;
@@ -560,6 +661,8 @@ export class AnalysisService
       data,
       header
     }
+
+    console.log(extCalcTableData)
 
     return extCalcTableData;
   }
@@ -622,7 +725,7 @@ export class AnalysisService
     } else return 0;
   }
 
-  private getAValuesAndElasticity<T>(funcVariant: FuncTypeEnum = FuncTypeEnum.LINE, 
+  private getAValuesAndElasticity<T>(funcType: FuncTypeEnum = FuncTypeEnum.LINE, 
                                     sumRow: T | any, avgRow: T | any, count: number)
   {
     let a: number = 0;
@@ -630,9 +733,9 @@ export class AnalysisService
     let a1: number = 0;
     let a2: number = 0;
     let elasticity: number = 0;
-    let m = 2;
+    let funcParamsCount = 2;
 
-    switch (funcVariant)
+    switch (funcType)
     {
       case FuncTypeEnum.LINE:
       default:
@@ -645,7 +748,7 @@ export class AnalysisService
         //   / (count * sumRow.X2 - sumRow.X ** 2)
         // , DIGIT_ACCURACY);
 
-        a1 =  (count * sumRow.XY - sumRow.X * sumRow.Y) 
+        a1 = (count * sumRow.XY - sumRow.X * sumRow.Y) 
               / (count * sumRow.X2 - sumRow.X ** 2);
         // this.utilsService.roundNum(
         //   (count * sumRow.XY - sumRow.X * sumRow.Y) 
@@ -658,7 +761,7 @@ export class AnalysisService
         //   a1 * (avgRow.X / (a0 + a1 * avgRow.X))
         // , DIGIT_ACCURACY);
           
-        m = 2;
+        funcParamsCount = 2;
 
         break;
       }
@@ -782,27 +885,30 @@ export class AnalysisService
         //   (a1 * avgRow.X + (2 * a2 * avgRow.X ** 2)) / avgRow.Y
         // , DIGIT_ACCURACY);
 
-        m = 3;
+        funcParamsCount = 3;
 
         break;
       }
       case FuncTypeEnum.EXPONENTIAL:
       {
-        a1 = (avgRow.XlnY - (avgRow.X * avgRow.lnY))
-            / (avgRow.X2 - avgRow.X ** 2);
+        // a1 = Math.exp((avgRow.XlnY - (avgRow.X * avgRow.lnY))
+        //             / (avgRow.X2 - avgRow.X ** 2));
+
+        a1 = Math.exp((count * sumRow.XlnY - sumRow.X * sumRow.lnY)
+                    / (count * sumRow.X2 - sumRow.X ** 2));
 
         // this.utilsService.roundNum(
         //       (avgRow.XlnY - (avgRow.X * avgRow.lnY))
         //       / (avgRow.X2 - avgRow.X ** 2)
         // , DIGIT_ACCURACY);
 
-        a0 = avgRow.lnY - a1 * avgRow.X;
+        a0 = Math.exp(avgRow.lnY - Math.log(a1) * avgRow.X);
         
         // this.utilsService.roundNum(avgRow.lnY - a1 * avgRow.X, DIGIT_ACCURACY);
 
-        elasticity = avgRow.X * a1; 
+        // elasticity = avgRow.X * a1; 
 
-        // elasticity = avgRow.X * Math.log(a1); 
+        elasticity = avgRow.X * Math.log(a1); 
 
         //  this.utilsService.roundNum(avgRow.X * a1, DIGIT_ACCURACY);
 
@@ -814,7 +920,7 @@ export class AnalysisService
 
         // elasticity = this.utilsService.roundNum(avgRow.X * a1, DIGIT_ACCURACY);
 
-        m = 2;
+        funcParamsCount = 2;
 
         break;
       }
@@ -838,13 +944,13 @@ export class AnalysisService
         // console.log(count, sumRow.YdivX, sumRow.div1X, sumRow.Y)
         // console.log(count, sumRow.div1X2, sumRow.div1X)
 
-        elasticity = - a1 / (a0 * avgRow.X + a1)
+        elasticity = -a1 / (a0 * avgRow.X + a1);
         
         // this.utilsService.roundNum(
         //   - (a1 / (a0 * avgRow.X + a1))
         // , DIGIT_ACCURACY);
           
-        m = 2;
+        funcParamsCount = 2;
 
         break;
       }
@@ -893,15 +999,15 @@ export class AnalysisService
 
         // console.log(a1, a0)
 
-        elasticity = a1 / (a0 + a1 * avgRow.lnX)
+        elasticity = a1 / (a0 + a1 * avgRow.lnX);
           
-        m = 2;
+        funcParamsCount = 2;
 
         break;
       }
     }
 
-    const values: IAValuesAndElasticy = { a, a0, a1, a2, elasticity, m }
+    const values: IAValuesAndElasticy = { a, a0, a1, a2, elasticity, funcParamsCount }
 
     return values;
   }
@@ -923,7 +1029,7 @@ export class AnalysisService
         case FuncTypeEnum.LINE:
         default:
         {
-          YxArr[i] = a0 + (a1 * X);
+          YxArr[i] = a0 + a1 * X;
           
           // this.utilsService.roundNum(
           //       a0 + (a1 * X)
@@ -945,7 +1051,7 @@ export class AnalysisService
         }
         case FuncTypeEnum.EXPONENTIAL:
         {
-          YxArr[i] = Math.exp(a0) * Math.exp(a1) ** X;
+          YxArr[i] = a0 * a1 ** X;
           
           // this.utilsService.roundNum(
           //       Math.exp(a0) * Math.exp(a1) ** X
@@ -982,7 +1088,7 @@ export class AnalysisService
           //       a0 + (a1 * Math.log(X)) + (a2 * Math.log(X) ** 2)
           // , DIGIT_ACCURACY);
 
-          YxArr[i] = a0 + (a1 * Math.log(X));
+          YxArr[i] = a0 + a1 * Math.log(X);
           
           // this.utilsService.roundNum(
           //     a0 + (a1 * Math.log(X))
@@ -998,9 +1104,7 @@ export class AnalysisService
 
   private getMeanSqrOff(avgX: number, avgX2: number)
   {
-    const mean_sqr_off = //this.utilsService.roundNum(
-      Math.sqrt(avgX2 - avgX ** 2)
-      // , DIGIT_ACCURACY);
+    const mean_sqr_off = Math.sqrt(avgX2 - avgX ** 2);
     return mean_sqr_off;
   }
 
@@ -1011,40 +1115,27 @@ export class AnalysisService
                             meanSqrOffY: number)
   {
     const linearCorrCoef = (avgXY - avgX * avgY) 
-                          / (meanSqrOffX * meanSqrOffY)
-    
-    // this.utilsService.roundNum(
-    //     (avgXY - avgX * avgY) / (meanSqrOffX * meanSqrOffY)
-    // , DIGIT_ACCURACY);
-
+                          / (meanSqrOffX * meanSqrOffY);
     return linearCorrCoef;
   }
 
   private getAvgCorrelCoefError(linearCorrCoef: number, count: number)
   {
-    const avg_corr_coef_err = count > 50 && !(count < 30)
-                            ? //this.utilsService.roundNum(
-                                (1 - linearCorrCoef ** 2) / Math.sqrt(count)//, DIGIT_ACCURACY)
-                            : //this.utilsService.roundNum(
-                                Math.sqrt(1 - linearCorrCoef ** 2) / Math.sqrt(count - 2)//, DIGIT_ACCURACY);
-    
-    return avg_corr_coef_err;
+    const avgCorrelCoefError = count > 50 //&& !(count < 30)
+                            ? (1 - linearCorrCoef ** 2) / Math.sqrt(count)
+                            : Math.sqrt(1 - linearCorrCoef ** 2) / Math.sqrt(count - 2);
+    return avgCorrelCoefError;
   }
 
   private getCoefCorrelSignCheck(linearCorrCoef: number, avgCorrCoefErr: number)
   {
-    const coef_corr_sign_check = Math.abs(linearCorrCoef) / avgCorrCoefErr
-    
-    // this.utilsService.roundNum(Math.abs(linearCorrCoef) / avgCorrCoefErr, DIGIT_ACCURACY);
-    return coef_corr_sign_check;
+    const coefCorrSignCheck = Math.abs(linearCorrCoef) / avgCorrCoefErr;
+    return coefCorrSignCheck;
   }
 
   private getSpiermanCoef(d2Sum: number, count: number)
   {
-    const spearmanCoeff = //this.utilsService.roundNum(
-        1 - ((6 * d2Sum) 
-        / (count * (count ** 2 - 1)))
-    // , DIGIT_ACCURACY);
+    const spearmanCoeff = 1 - ((6 * d2Sum) / (count * (count ** 2 - 1)));
     return spearmanCoeff;
   }
 
@@ -1084,8 +1175,8 @@ export class AnalysisService
   private coefCorrelSignificance(x: number, tTable: number)
   {
     const coefCorrelSignificance = x > tTable
-                              ? SignificentTypeEnum.SIGNIFICANCE 
-                              : SignificentTypeEnum.NOT_SIGNIFICANCE;
+                                  ? SignificentTypeEnum.SIGNIFICANCE 
+                                  : SignificentTypeEnum.NOT_SIGNIFICANCE;
     return coefCorrelSignificance;
   }
 
@@ -1093,8 +1184,8 @@ export class AnalysisService
   private getFTableValueLevelCheck(fisherCrit: number, fTableValLvl: number)
   {
     const fTableValueLevelCheck = fisherCrit > fTableValLvl 
-                                    ? FTableValueLevelTypeEnum.SIGNIFICANCE
-                                    : FTableValueLevelTypeEnum.NOT_SIGNIFICANCE;
+                                  ? FTableValueLevelTypeEnum.SIGNIFICANCE
+                                  : FTableValueLevelTypeEnum.NOT_SIGNIFICANCE;
     return fTableValueLevelCheck;
   }
   

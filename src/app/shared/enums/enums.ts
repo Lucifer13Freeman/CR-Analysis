@@ -42,8 +42,70 @@ export enum MimeTypeEnum
     PDF = 'application/pdf'
 }
 
-export enum HeaderLabelsEnum
-{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export enum HeaderLabelsEnum {
   id = '№',
 
   X = 'X',
@@ -71,7 +133,15 @@ export enum HeaderLabelsEnum
   AvgYxAvgY2 = '(avg(F(X)) - avg(Y))^2',
 
   name = 'Параметр',
-  value = 'Значение'
+  value = 'Значение',
+
+  lnX = "ln(X)",
+  div1X = "1 / X",
+  lnX2 = "(ln(X)) ^ 2",
+
+  YlnX = "Y * ln(X)",
+  div1X2 = "1 / X ^ 2",
+  YdivX = "Y / X"
 }
 
 export enum DownloadButtonLabelsEnum

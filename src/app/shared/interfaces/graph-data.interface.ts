@@ -7,5 +7,5 @@ export interface IAValuesAndElasticy
     a1: number;
     a2: number;
     elasticity: number;
-    m: number;
+    funcParamsCount: number;
 }
