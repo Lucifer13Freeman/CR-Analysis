@@ -1,11 +1,11 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FUNC_TYPE_VALUES, INITIAL_ANALYSIS_DATA, INITIAL_CHART_DATA, INITIAL_GET_ANALYSIS_DATA, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
 import { ChartDataDto } from 'src/app/shared/dto/chart-data.dto';
 import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
 import { WriteAnalysisDataService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
-import { DownloadButtonLabelsEnum, FullFileDataHeaderWordEnum, FuncTypeEnum, FuncTypeViewValuesEnum, ImageExtEnum } from 'src/app/shared/enums/enums';
+import { DownloadButtonLabelsEnum, FullFileDataHeaderWordEnum, FuncTypeEnum, ImageExtEnum } from 'src/app/shared/enums/enums';
 import { IFuncTypeValues } from '../../shared/interfaces/func-type-values.interface';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
@@ -17,7 +17,8 @@ import { FileDataWriteImageService } from 'src/app/shared/services/file-data/wri
 {
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.scss']
+  styleUrls: ['./chart.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChartComponent implements OnInit, OnDestroy
 {
@@ -30,8 +31,6 @@ export class ChartComponent implements OnInit, OnDestroy
   private chartRef!: ElementRef;
 
   private chart?: Chart;
-
-  // private data: Point[] = [];
 
   title: FullFileDataHeaderWordEnum = FullFileDataHeaderWordEnum.CHART_DATA;
   downloadButtonLabels = DownloadButtonLabelsEnum;
@@ -58,6 +57,8 @@ export class ChartComponent implements OnInit, OnDestroy
 
   pngExt: ImageExtEnum = ImageExtEnum.PNG;
   jpgExt: ImageExtEnum = ImageExtEnum.JPG;
+
+  timer: any;
 
   ngOnInit(): void 
   {
@@ -98,7 +99,20 @@ export class ChartComponent implements OnInit, OnDestroy
     {
       next: () =>
       {
-        setTimeout(() => this.setAnalysisData(), WRITE_FILE_TIMOUT);
+        // this.timer = true
+
+        // setTimeout(() => this.timer = true, 0)
+
+        // console.log(this.timer)
+        
+        
+        setTimeout(() => 
+          this.setAnalysisData()
+        , WRITE_FILE_TIMOUT);
+
+        // setTimeout(() => this.timer = false, 0)
+        
+        // console.log(this.timer)
       }
     });
   }

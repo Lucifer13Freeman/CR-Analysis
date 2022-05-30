@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { INITIAL_MANUAL_READ_TABLE_DATA, INITIAL_TABLE_DATA } from 'src/app/shared/constants/constants';
+import { BehaviorSubject, delay, Observable } from 'rxjs';
+import { INITIAL_MANUAL_READ_TABLE_DATA, INITIAL_TABLE_DATA, READ_FILE_TIMOUT } from 'src/app/shared/constants/constants';
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 
 
@@ -16,7 +16,7 @@ export class FileDataReadService
 
   public getReadFileData(): Observable<IFileData<any>>
   {
-    return this.readFileDataSubject$.asObservable();
+    return this.readFileDataSubject$.asObservable().pipe(delay(READ_FILE_TIMOUT));
   }
 
   public setReadFileData<T>(fileData: IFileData<T>)

@@ -38,7 +38,7 @@ export const READ_FILE_TIMOUT: number = 100;
 export const READ_FILE_INTERVAL: number = 100;
 export const READ_FILE_SPEED: number = 20;
 
-export const WRITE_FILE_TIMOUT: number = 100;
+export const WRITE_FILE_TIMOUT: number = 10;//100;
 
 // export const READ_FILE_TIMOUT: number = 50;
 // export const READ_FILE_INTERVAL: number = 50;

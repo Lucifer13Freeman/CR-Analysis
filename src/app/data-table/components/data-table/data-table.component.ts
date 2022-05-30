@@ -104,7 +104,9 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
         {
           next: () => 
           { 
-            setTimeout(() => this.createTable(), READ_FILE_TIMOUT);
+            // setTimeout(() => 
+            this.createTable()
+            // , READ_FILE_TIMOUT );
           }
         }); 
       },
@@ -114,7 +116,9 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
         {
           next: () =>
           {
-            setTimeout(() => this.createTable(), WRITE_FILE_TIMOUT);
+            // setTimeout(() => 
+            this.createTable()
+            // , WRITE_FILE_TIMOUT);
           }
         });
       },
@@ -124,7 +128,9 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
         {
           next: () => 
           {
-            setTimeout(() => this.createTable(), WRITE_FILE_TIMOUT);
+            // setTimeout(() => 
+            this.createTable()
+            // , WRITE_FILE_TIMOUT);
           }
         });
       },
@@ -134,7 +140,9 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
         {
           next: () =>
           {
-            setTimeout(() => this.createTable(), WRITE_FILE_TIMOUT);
+            // setTimeout(() => 
+            this.createTable()
+            // , WRITE_FILE_TIMOUT);
           }
         });
       }

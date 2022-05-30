@@ -95,7 +95,7 @@ export class AnalysisParamsComponent implements OnInit, OnChanges
       coefCorrSign } = this.analysisService.getCorrCoeffSignificent(
                         { signLvlSelectVal: this.selectedSignLvlVal, 
                           coefCorrSignCheck: this.analysisParams.coefCorrSignCheck.value as number, 
-                          count: this.analysisParams.count});
+                          count: this.analysisParams.count });
 
                           
     const analysisParams: IAnalysisParams = {

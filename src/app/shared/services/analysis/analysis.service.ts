@@ -61,6 +61,13 @@ export class AnalysisService
       return false;
     }
 
+    if (tableData.data.length < 4)
+    {
+      // alert(`Alert: Incorrect file data format: missing X and Y columns!`);
+      alert('Уведомление: количество наблюдений (строк) слишком мало,\nнекоторые функции могут работать некорректно!');
+      // return false;
+    }
+
     return true;
   }
 

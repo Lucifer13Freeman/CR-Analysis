@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, delay, Observable } from 'rxjs';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
 
 
