@@ -67,7 +67,7 @@ export class FileDndComponent implements OnInit
   {
     const fileData = await this.excelService.readExcel({ file: this.files[0] });
 
-    if (!fileData) return
+    if (!fileData) return;
 
     // const isCorrect = this.analysisService.checkReadFileData(fileData);
 
@@ -75,7 +75,7 @@ export class FileDndComponent implements OnInit
     
     setTimeout(() => 
     { 
-      const isCorrect = this.analysisService.checkReadFileData(fileData);
+      const isCorrect = fileData ? this.analysisService.checkReadFileData(fileData) : false;
 
       // console.log(this.analysisService.checkReadFileData(fileData))
 

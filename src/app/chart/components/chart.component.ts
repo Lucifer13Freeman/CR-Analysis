@@ -106,9 +106,7 @@ export class ChartComponent implements OnInit, OnDestroy
         // console.log(this.timer)
         
         
-        setTimeout(() => 
-          this.setAnalysisData()
-        , WRITE_FILE_TIMOUT);
+        setTimeout(() => this.setAnalysisData(), WRITE_FILE_TIMOUT);
 
         // setTimeout(() => this.timer = false, 0)
         
