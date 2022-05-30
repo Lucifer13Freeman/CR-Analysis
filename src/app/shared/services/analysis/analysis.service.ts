@@ -306,8 +306,8 @@ export class AnalysisService
     const theorCoefDeterm: number = this.getTheorCoefDetermination(factorDispersion, totalDispersion);
     const theorCorrRel: number = this.getTheorCorrelRelation(theorCoefDeterm);
 
-    const avgA0Err: number = this.getAvgA0Error(residualDispersionSqrt, count);
-    const avgA1Err: number = this.getAvgA1Error(residualDispersionSqrt, meanSqrOffX, count);
+    const avgA0Err: number = this.getAvgA0Error(residualDispersionSqrt, count, funcParamsCount);
+    const avgA1Err: number = this.getAvgA1Error(residualDispersionSqrt, meanSqrOffX, count, funcParamsCount);
 
     const tA0: number = this.getTa(a0, avgA0Err);
     const tA1: number = this.getTa(a1, avgA1Err);
@@ -526,16 +526,21 @@ export class AnalysisService
     return theorCoefRel;
   }
 
-  private getAvgA0Error(residualDispersionSqrt: number, count: number)
+  private getAvgA0Error(residualDispersionSqrt: number, 
+                        count: number, 
+                        funcParamsCount: number)
   {
-    const avgA0Err = residualDispersionSqrt / Math.sqrt(count - 2);
+    const avgA0Err = residualDispersionSqrt / Math.sqrt(count - funcParamsCount);
     return avgA0Err;
   }
 
-  private getAvgA1Error(residualDispersionSqrt: number, meanSqrOffX: number, count: number)
+  private getAvgA1Error(residualDispersionSqrt: number, 
+                      meanSqrOffX: number, 
+                      count: number, 
+                      funcParamsCount: number)
   {
-    const avgA0Err = residualDispersionSqrt / (meanSqrOffX * Math.sqrt(count - 2));
-    return avgA0Err;
+    const avgA1Err = residualDispersionSqrt / (meanSqrOffX * Math.sqrt(count - funcParamsCount));
+    return avgA1Err;
   }
 
   private getTa(a: number, avgAError: number)
