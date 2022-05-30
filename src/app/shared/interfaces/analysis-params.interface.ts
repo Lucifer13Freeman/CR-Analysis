@@ -32,18 +32,23 @@ export interface IAnalysisParams
     theorCoefDeterm: AnalysisParamsType;
     theorCorrRel: AnalysisParamsType;
 
-    // a0: AnalysisParamsType;
-    // a1: AnalysisParamsType;
-    // a2: AnalysisParamsType;
+    func: AnalysisParamsType;
+
+    a0: AnalysisParamsType;
+    a1: AnalysisParamsType;
+    a2: AnalysisParamsType;
 
     avgA0Err: AnalysisParamsType;
     avgA1Err: AnalysisParamsType;
+    avgA2Err: AnalysisParamsType;
 
     tA0: AnalysisParamsType;
     tA1: AnalysisParamsType;
+    tA2: AnalysisParamsType;
 
     tA0Check: AnalysisParamsType;
     tA1Check: AnalysisParamsType;
+    tA2Check: AnalysisParamsType;
 
     fisherCrit: AnalysisParamsType;
     fTableValLvl: AnalysisParamsType;

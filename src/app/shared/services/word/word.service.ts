@@ -296,6 +296,57 @@ export class WordService
 
   createDocParagraphFromJson(analysisParams: IAnalysisParams)
   {
+    const a2Paragraphs: Paragraph[] = analysisParams.a2.name !== undefined ? 
+    [
+      new Paragraph(
+      {
+        children: [ 
+            new TextRun({
+              text: `${analysisParams.a2.name}: ${analysisParams.a2.value}\n`,
+              size: WORD_FONT_SIZE
+          })
+        ]
+      }),
+      new Paragraph({ children: [] })
+    ] :
+    [
+      new Paragraph({ children: [] })
+    ];
+
+    const avgA2ErrParagraphs: Paragraph[] = analysisParams.avgA2Err.name !== undefined ? 
+    [
+      new Paragraph(
+      {
+        children: [ 
+            new TextRun({
+              text: `${analysisParams.avgA2Err.name}: ${analysisParams.avgA2Err.value}\n`,
+              size: WORD_FONT_SIZE
+          })
+        ]
+      }),
+      new Paragraph({ children: [] })
+    ] :
+    [
+      new Paragraph({ children: [] })
+    ];
+
+    const tA2Paragraphs: Paragraph[] = analysisParams.tA2.name !== undefined ? 
+    [
+      new Paragraph(
+        {
+          children: [
+            new TextRun({
+              text: `${analysisParams.tA2.name}: ${analysisParams.tA2.value} - ${analysisParams.tA2Check.value}\n`,
+              size: WORD_FONT_SIZE
+            })
+          ]
+        }),
+      new Paragraph({ children: [] })
+    ] :
+    [
+      new Paragraph({ children: [] })
+    ];
+
     const paragraphs: Paragraph[] = [
       new Paragraph({ children: []}),
       // new Paragraph(
@@ -490,6 +541,35 @@ export class WordService
       {
         children: [
           new TextRun({
+            text: `${analysisParams.func.name}: ${analysisParams.func.value}\n`,
+            size: WORD_FONT_SIZE
+          })
+        ]
+      }),
+      new Paragraph({ children: [] }),
+      new Paragraph(
+      {
+        children: [
+          new TextRun({
+            text: `${analysisParams.a0.name}: ${analysisParams.a0.value}\n`,
+            size: WORD_FONT_SIZE
+          })
+        ]
+      }),
+      new Paragraph(
+      {
+        children: [ 
+          new TextRun({
+            text: `${analysisParams.a1.name}: ${analysisParams.a1.value}\n`,
+            size: WORD_FONT_SIZE
+          })
+        ]
+      }),
+      ...a2Paragraphs,
+      new Paragraph(
+      {
+        children: [
+          new TextRun({
             text: `${analysisParams.avgA0Err.name}: ${analysisParams.avgA0Err.value}\n`,
             size: WORD_FONT_SIZE
           })
@@ -504,6 +584,7 @@ export class WordService
           })
         ]
       }),
+      ...avgA2ErrParagraphs,
       new Paragraph(
       {
         children: [
@@ -522,7 +603,7 @@ export class WordService
           })
         ]
       }),
-      new Paragraph({ children: [] }),
+      ...tA2Paragraphs,
       new Paragraph(
       {
         children: [

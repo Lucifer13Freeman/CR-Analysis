@@ -62,15 +62,15 @@ export enum HeaderLabelsEnum {
   d = 'd = Nx - Ny',
   d2 = 'd^2',
 
-  Yx = 'F(X)',
-  YYx = '|Y - F(X)|',
+  Yx = 'f(X)',
+  YYx = '|Y - f(X)|',
 
-  YYx2 = '(Y - F(X)) ^ 2',
+  YYx2 = '(Y - f(X)) ^ 2',
 
-  YxY2 = '(F(X) - Y)^2',
+  YxY2 = '(f(X) - Y)^2',
   YAvgY2 = '(Y - avg(Y))^2',
   
-  YxAvgY2 = '(F(X) - avg(Y)^2',
+  YxAvgY2 = '(f(X) - avg(Y)^2',
 
 //   YAvgYx2 = '(Y - avg(F(X)))^2',
 //   AvgYxAvgY2 = '(avg(F(X)) - avg(Y))^2',
@@ -175,47 +175,61 @@ export enum FTableSelectValueEnum
     VALUE_2 = '0.01'
 }
 
-export enum AnalisysDataNamesEnum {
-  MEAN_SQUARE_OFF_X = 'Среднеквадратичное отклонение для признака X',
-  MEAN_SQUARE_OFF_Y = 'Среднеквадратичное отклонение для признака Y',
+export enum RegressionFuncEnum
+{
+    LINE = 'f(x) = a0 + a1 * x',
+    PARABOLA = 'f(x) = a0 + a1 * x + a2 * x ^ 2',
+    EXPONENTIAL = 'f(x) = a0 * a1 ^ x',
+    HYPERBOLA = 'f(x) = a0 + a1 / x',
+    LOGARITHM = 'f(x) = a0 + a1 * ln(x)'
+}
 
-  LINEAR_CORREL_COEF = 'Линейный коэффициент корреляции',
-  AVG_CORREL_COEF_ERROR = 'Средняя ошибка коэффициента корреляции',
+export enum AnalisysDataNamesEnum 
+{
+    MEAN_SQUARE_OFF_X = 'Среднеквадратичное отклонение для признака X',
+    MEAN_SQUARE_OFF_Y = 'Среднеквадратичное отклонение для признака Y',
 
-  COEF_CORREL_SIGNIFICANCE_LEVEL_CHECK = 'Проверка коэффициента корреляции на значимость',
+    LINEAR_CORREL_COEF = 'Линейный коэффициент корреляции',
+    AVG_CORREL_COEF_ERROR = 'Средняя ошибка коэффициента корреляции',
 
-  SIGNIFICANCE_LEVEL = 'Уровень значимости',
-  T_TABLE = 't - таблицы',
+    COEF_CORREL_SIGNIFICANCE_LEVEL_CHECK = 'Проверка коэффициента корреляции на значимость',
 
-  RELATION_XY = 'Связь между признаками X и Y по коэффициенту корреляции',
-  COEF_CORREL_SIGNIFICANCE = 'Коэффициент корреляции',
+    SIGNIFICANCE_LEVEL = 'Уровень значимости',
+    T_TABLE = 't - таблицы',
 
-  RELATION_XY_SPEARMAN = 'Связь между признаками X и Y по коэффициенту Спирмена',
-  SPEARMAN_COEF = 'Коэффициент Спирмена',
-  ELASTICITY = 'Эластичность',
+    RELATION_XY = 'Связь между признаками X и Y по коэффициенту корреляции',
+    COEF_CORREL_SIGNIFICANCE = 'Коэффициент корреляции',
 
-  AVG_APPROXIMATION_ERROR = 'Средняя ошибка аппроксимации',
+    RELATION_XY_SPEARMAN = 'Связь между признаками X и Y по коэффициенту Спирмена',
+    SPEARMAN_COEF = 'Коэффициент Спирмена',
+    ELASTICITY = 'Эластичность',
 
-  FACTOR_DISPERSION = 'Факторная дисперсия',
-  RESIDUAL_DISPERSION = 'Остаточная дисперсия',
+    AVG_APPROXIMATION_ERROR = 'Средняя ошибка аппроксимации',
 
-  TOTAL_DISPERSION = 'Общая дисперсия',
-  TOTAL_DISPERSION_CHECK = 'Проверка общей дисперсии',
+    FACTOR_DISPERSION = 'Факторная дисперсия',
+    RESIDUAL_DISPERSION = 'Остаточная дисперсия',
 
-  THEOR_COEF_DETERMINATION = 'Теоретический коэффициент детерминации',
-  THEOR_CORREL_RELATION = 'Теоретическое корреляционное отношение',
+    TOTAL_DISPERSION = 'Общая дисперсия',
+    TOTAL_DISPERSION_CHECK = 'Проверка общей дисперсии',
 
-  AVG_PARAM_A0_ERROR = 'Средняя ошибка параметров а0',
-  AVG_PARAM_A1_ERROR = 'Средняя ошибка параметров а1',
+    THEOR_COEF_DETERMINATION = 'Теоретический коэффициент детерминации',
+    THEOR_CORREL_RELATION = 'Теоретическое корреляционное отношение',
 
-  T_A0 = 't a0',
-  T_A1 = 't a1',
+    FUNC = 'Уравнение регрессии',
 
-  FISHER_CRITERION = 'F-критерий Фишера',
+    A0 = "Параметр a0",
+    A1 = "Параметр a1",
+    A2 = "Параметр a2",
 
-  F_TABLE_VAL_LEVEL = 'Уровень значений F-таблицы',
+    AVG_PARAM_A0_ERROR = 'Средняя ошибка параметров а0',
+    AVG_PARAM_A1_ERROR = 'Средняя ошибка параметров а1',
+    AVG_PARAM_A2_ERROR = 'Средняя ошибка параметров а2',
 
-  A0 = "Параметр a0",
-  A1 = "Параметр a1",
-  A2 = "Параметр a2"
+    T_A0 = 't a0',
+    T_A1 = 't a1',
+    T_A2 = 't a2',
+
+    FISHER_CRITERION = 'F-критерий Фишера',
+
+    F_TABLE_VAL_LEVEL = 'Уровень значений F-таблицы',
 }

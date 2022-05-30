@@ -3,7 +3,7 @@ import { ChartDataDto } from '../dto/chart-data.dto';
 import { GetAnalysisDataDto } from '../dto/get-analysis-data.dto';
 import { ImageDataDto } from '../dto/image-data.dto';
 import { TableDataDto } from '../dto/table-data.dto';
-import { AnalisysDataNamesEnum, FTableSelectValueEnum, FuncTypeEnum, FuncTypeViewValuesEnum, HeaderLabelsEnum, ImageExtEnum, SignificanceSelectValueEnum } from '../enums/enums';
+import { AnalisysDataNamesEnum, FTableSelectValueEnum, FuncTypeEnum, FuncTypeViewValuesEnum, HeaderLabelsEnum, ImageExtEnum, RegressionFuncEnum, SignificanceSelectValueEnum } from '../enums/enums';
 import { IAnalysisParams } from '../interfaces/analysis-params.interface';
 import { IFuncTypeValues } from '../interfaces/func-type-values.interface';
 import { ITableData } from '../interfaces/table-data.interface';
@@ -70,6 +70,9 @@ export const FILENAME = 'sr-analysis';
 
 export const DIGIT_ACCURACY = 3;//5;
 export const DIGIT_ACCURACY_FOR_SMALL_NUMS = 8;
+
+export const HIDDEN_PARAM_NAME = undefined;
+export const HIDDEN_PARAM_VALUE = '';
 
 export const INITIAL_ANALYSIS_PARAMS: IAnalysisParams = {
   meanSqrOffX: { 
@@ -148,25 +151,33 @@ export const INITIAL_ANALYSIS_PARAMS: IAnalysisParams = {
       name: AnalisysDataNamesEnum.THEOR_CORREL_RELATION, 
       value: 0 
   },
-  // a0: {
-  //   name: AnalisysDataNamesEnum.A0, 
-  //   value: 0 
-  // },
-  // a1: {
-  //   name: AnalisysDataNamesEnum.A1, 
-  //   value: 0 
-  // },
-  // a2: {
-  //   name: AnalisysDataNamesEnum.A2, 
-  //   value: 0 
-  // },
+  func: {
+    name: AnalisysDataNamesEnum.FUNC,
+    value: RegressionFuncEnum.LINE
+  },
+  a0: {
+    name: AnalisysDataNamesEnum.A0, 
+    value: 0
+  },
+  a1: {
+    name: AnalisysDataNamesEnum.A1, 
+    value: 0
+  },
+  a2: {
+    name: HIDDEN_PARAM_NAME, 
+    value: 0
+  },
   avgA0Err: { 
       name: AnalisysDataNamesEnum.AVG_PARAM_A0_ERROR, 
-      value: 0 
+      value: HIDDEN_PARAM_VALUE 
   },
   avgA1Err: { 
       name: AnalisysDataNamesEnum.AVG_PARAM_A1_ERROR, 
       value: 0 
+  },
+  avgA2Err: { 
+    name: HIDDEN_PARAM_NAME, 
+    value: HIDDEN_PARAM_VALUE 
   },
   tA0: { 
       name: AnalisysDataNamesEnum.T_A0, 
@@ -176,6 +187,10 @@ export const INITIAL_ANALYSIS_PARAMS: IAnalysisParams = {
       name: AnalisysDataNamesEnum.T_A1, 
       value: 0 
   },
+  tA2: { 
+    name: HIDDEN_PARAM_NAME, 
+    value: HIDDEN_PARAM_VALUE 
+  },
   tA0Check: { 
       name: '', 
       value: 0 
@@ -183,6 +198,10 @@ export const INITIAL_ANALYSIS_PARAMS: IAnalysisParams = {
   tA1Check: { 
       name: '', 
       value: 0 
+  },
+  tA2Check: { 
+    name: HIDDEN_PARAM_NAME, 
+    value: HIDDEN_PARAM_VALUE 
   },
   fisherCrit: { 
       name: AnalisysDataNamesEnum.FISHER_CRITERION, 

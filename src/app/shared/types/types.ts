@@ -1,4 +1,4 @@
-import { AnalisysDataNamesEnum, ExcelExtEnum, FTableSelectValueEnum, FTableValueLevelTypeEnum, RelationTypeEnum, SignificentTypeEnum, SignificanceSelectValueEnum, WordPdfExtEnum, ImageExtEnum, RelationDirectionEnum } from "../enums/enums";
+import { AnalisysDataNamesEnum, ExcelExtEnum, FTableSelectValueEnum, FTableValueLevelTypeEnum, RelationTypeEnum, SignificentTypeEnum, SignificanceSelectValueEnum, WordPdfExtEnum, ImageExtEnum, RelationDirectionEnum, RegressionFuncEnum } from "../enums/enums";
 
 // export type ExcelType = 'xlsx' | 'csv';
 export type CsvSeparatorType = ExcelExtEnum | undefined;
@@ -13,10 +13,11 @@ export type AnalysisParamsValueType = number
                                 | RelationDirectionEnum
                                 | SignificentTypeEnum 
                                 | RelationType
+                                | RegressionFuncEnum
                                 | '';
 
 export type AnalysisParamsType = {
-    name: AnalisysDataNamesEnum | string;
+    name: AnalisysDataNamesEnum | string | undefined;
     value: AnalysisParamsValueType;
 }
 

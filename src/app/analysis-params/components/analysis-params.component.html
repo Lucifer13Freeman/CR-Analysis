@@ -45,10 +45,25 @@
     <h4>{{analysisParams.theorCoefDeterm.name}}: {{analysisParams.theorCoefDeterm.value}}</h4>
     <h4>{{analysisParams.theorCorrRel.name}}: {{analysisParams.theorCorrRel.value}}</h4>
     <br/>
+    <h4>{{analysisParams.func.name}}: {{analysisParams.func.value}}</h4>
+    <br/>
+    <h4>{{analysisParams.a0.name}}: {{analysisParams.a0.value}}</h4>
+    <h4>{{analysisParams.a1.name}}: {{analysisParams.a1.value}}</h4>
+    <ng-container *ngIf="analysisParams.a2.name !== undefined">
+        <h4>{{analysisParams.a2.name}}: {{analysisParams.a2.value}}</h4>
+    </ng-container>
+    <br/>
     <h4>{{analysisParams.avgA0Err.name}}: {{analysisParams.avgA0Err.value}}</h4>
     <h4>{{analysisParams.avgA1Err.name}}: {{analysisParams.avgA1Err.value}}</h4>
+    <ng-container *ngIf="analysisParams.avgA2Err.name !== undefined">
+        <h4>{{analysisParams.avgA2Err.name}}: {{analysisParams.avgA2Err.value}}</h4>
+    </ng-container>
+    <br/>
     <h4>{{analysisParams.tA0.name}}: {{analysisParams.tA0.value}} - {{analysisParams.tA0Check.value}}</h4>
     <h4>{{analysisParams.tA1.name}}: {{analysisParams.tA1.value}} - {{analysisParams.tA1Check.value}}</h4>
+    <ng-container *ngIf="analysisParams.tA2.name !== undefined">
+        <h4>{{analysisParams.tA2.name}}: {{analysisParams.tA2.value}} - {{analysisParams.tA2Check.value}}</h4>
+    </ng-container>
     <br/>
     <h4>{{analysisParams.fisherCrit.name}}: {{analysisParams.fisherCrit.value}}</h4>
     <h4>{{analysisParams.fTableValLvl.name}}: 

@@ -110,6 +110,27 @@ export class UtilsService
 
   makeTableDataFromAnalysisParams(analysisParams: IAnalysisParams)
   {
+    const nullRow = {
+      name: undefined,
+      value: undefined
+    }
+
+    const a2 = analysisParams.a2.name !== undefined ? { 
+      name: analysisParams.a2.name,
+      value: analysisParams.a2.value
+    } : nullRow;
+
+    const avgA2Err = analysisParams.avgA2Err.name !== undefined ? { 
+      name: analysisParams.avgA2Err.name,
+      value: analysisParams.avgA2Err.value
+    } : nullRow;
+
+    const tA2 = analysisParams.tA2.name !== undefined ? { 
+      name: analysisParams.tA2.name,
+      value: `${analysisParams.tA2.value} - ${analysisParams.tA2Check.value}`
+    } : nullRow;
+
+
     const tableData: ITableData<any> = {
       header: [
         HeaderLabelsEnum.name,
@@ -193,6 +214,19 @@ export class UtilsService
           value: analysisParams.theorCorrRel.value
         },
         { 
+          name: analysisParams.func.name,
+          value: analysisParams.func.value
+        },
+        { 
+          name: analysisParams.a0.name,
+          value: analysisParams.a0.value
+        },
+        { 
+          name: analysisParams.a1.name,
+          value: analysisParams.a1.value
+        },
+        {...a2},
+        { 
           name: analysisParams.avgA0Err.name,
           value: analysisParams.avgA0Err.value
         },
@@ -200,6 +234,7 @@ export class UtilsService
           name: analysisParams.avgA1Err.name,
           value: analysisParams.avgA1Err.value
         },
+        {...avgA2Err},
         { 
           name: analysisParams.tA0.name,
           value: `${analysisParams.tA0.value} - ${analysisParams.tA0Check.value}`
@@ -208,6 +243,7 @@ export class UtilsService
           name: analysisParams.tA1.name,
           value: `${analysisParams.tA1.value} - ${analysisParams.tA1Check.value}`
         },
+        {...tA2},
         { 
           name: analysisParams.fisherCrit.name,
           value: analysisParams.fisherCrit.value

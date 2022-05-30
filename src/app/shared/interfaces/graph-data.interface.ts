@@ -1,4 +1,4 @@
-import { FuncTypeEnum } from "../enums/enums";
+import { FuncTypeEnum, RegressionFuncEnum } from "../enums/enums";
 
 export interface IAValuesAndElasticy
 {
@@ -8,4 +8,5 @@ export interface IAValuesAndElasticy
     a2: number;
     elasticity: number;
     funcParamsCount: number;
+    func: RegressionFuncEnum;
 }

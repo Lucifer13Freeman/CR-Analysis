@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { argv0 } from 'process';
-import { DIGIT_ACCURACY, TCrit } from '../../constants/constants';
+import { DIGIT_ACCURACY, HIDDEN_PARAM_NAME, HIDDEN_PARAM_VALUE, INITIAL_ANALYSIS_PARAMS, TCrit } from '../../constants/constants';
 import { AnalysisDataDto } from '../../dto/analysis-data.dto';
 import { GetYxArrayDto } from '../../dto/get-yx-array.dto';
 import { ChartDataDto } from '../../dto/chart-data.dto';
-import { ExcelExtEnum, FTableSelectValueEnum, FTableValueLevelTypeEnum, FuncTypeEnum, HeaderLabelsEnum, RelationDirectionEnum, RelationTypeEnum, SignificanceSelectValueEnum, SignificentTypeEnum } from '../../enums/enums';
+import { AnalisysDataNamesEnum, ExcelExtEnum, FTableSelectValueEnum, FTableValueLevelTypeEnum, FuncTypeEnum, HeaderLabelsEnum, RegressionFuncEnum, RelationDirectionEnum, RelationTypeEnum, SignificanceSelectValueEnum, SignificentTypeEnum } from '../../enums/enums';
 import { IFileData } from '../../interfaces/file-data.interface';
 import { IAValuesAndElasticy } from '../../interfaces/graph-data.interface';
 import { ITableData } from '../../interfaces/table-data.interface';
@@ -212,7 +212,7 @@ export class AnalysisService
 
     const aValuesAndElasticity: IAValuesAndElasticy = this.getAValuesAndElasticity(funcType, sumRow, avgRow, count);
 
-    const { a0, a1, a2, elasticity, funcParamsCount } = aValuesAndElasticity;
+    const { a0, a1, a2, elasticity, funcParamsCount, func } = aValuesAndElasticity;
 
     const xArrSorted = [...xArr].sort((a, b) => a - b);
 
@@ -305,12 +305,22 @@ export class AnalysisService
 
     const avgA0Err: number = this.getAvgA0Error(residualDispersionSqrt, count, funcParamsCount);
     const avgA1Err: number = this.getAvgA1Error(residualDispersionSqrt, meanSqrOffX, count, funcParamsCount);
+    const avgA2Err: number = this.getAvgA2Error(residualDispersionSqrt, meanSqrOffX, count, funcParamsCount);
 
     const tA0: number = this.getTa(a0, avgA0Err);
     const tA1: number = this.getTa(a1, avgA1Err);
+    const tA2: number = this.getTa(a2, avgA2Err);
+
 
     const tA0Check: SignificentTypeEnum | "" = this.getTaCheck(tA0, tTable, count); 
     const tA1Check: SignificentTypeEnum | "" = this.getTaCheck(tA1, tTable, count); 
+    const tA2Check: SignificentTypeEnum | "" = this.getTaCheck(tA2, tTable, count); 
+
+    // console.log(a2, avgA2Err, tA2, tA2Check)
+
+    // console.table([[a0, avgA0Err, tA0, tA0Check], 
+    //               [a1, avgA1Err, tA1, tA1Check], 
+    //               [a2, avgA2Err, tA2, tA2Check]])
 
     const V1 = parseInt((funcParamsCount - 1).toString()); 
     const V2 = parseInt((count - funcParamsCount).toString());
@@ -376,8 +386,40 @@ export class AnalysisService
     params.count = count;
     params.V1 = V1;
     params.V2 = V2;
-    
-    // console.log(params);
+
+    params.func.value = func;
+
+    params.a0.value = this.utilsService.roundNum(a1, DIGIT_ACCURACY);
+    params.a1.value = this.utilsService.roundNum(a0, DIGIT_ACCURACY);
+
+    if (funcType === FuncTypeEnum.PARABOLA)
+    {
+      params.a2.name = AnalisysDataNamesEnum.A2;
+      params.a2.value = this.utilsService.roundNum(a2, DIGIT_ACCURACY);
+
+      params.avgA2Err.name = AnalisysDataNamesEnum.AVG_PARAM_A2_ERROR;
+      params.avgA2Err.value = this.utilsService.roundNum(avgA2Err, DIGIT_ACCURACY);
+
+      params.tA2.name = AnalisysDataNamesEnum.T_A2,
+      params.tA2.value = this.utilsService.roundNum(tA2, DIGIT_ACCURACY);
+
+      params.tA2Check.name = '';
+      params.tA2Check.value = tA2Check;
+    }
+    else
+    {
+      params.a2.name = HIDDEN_PARAM_NAME;
+      params.a2.value = HIDDEN_PARAM_VALUE;
+
+      params.avgA2Err.name = HIDDEN_PARAM_NAME;
+      params.avgA2Err.value = HIDDEN_PARAM_VALUE;
+
+      params.tA2.name = HIDDEN_PARAM_NAME;
+      params.tA2.value = HIDDEN_PARAM_VALUE;
+
+      params.tA2Check.name = HIDDEN_PARAM_NAME;
+      params.tA2Check.value = HIDDEN_PARAM_VALUE;
+    }
 
     const newExtCalcDataHeader = [
       HeaderLabelsEnum.id,
@@ -538,6 +580,15 @@ export class AnalysisService
   {
     const avgA1Err = residualDispersionSqrt / (meanSqrOffX * Math.sqrt(count - funcParamsCount));
     return avgA1Err;
+  }
+
+  private getAvgA2Error(residualDispersionSqrt: number, 
+                        meanSqrOffX: number, 
+                        count: number, 
+                        funcParamsCount: number = 3)
+  {
+    const avgA2Err = residualDispersionSqrt / (meanSqrOffX ** 2 * Math.sqrt(count - funcParamsCount));
+    return avgA2Err;
   }
 
   private getTa(a: number, avgAError: number)
@@ -765,6 +816,7 @@ export class AnalysisService
     let a2: number = 0;
     let elasticity: number = 0;
     let funcParamsCount = 2;
+    let func = RegressionFuncEnum.LINE;
 
     switch (funcType)
     {
@@ -780,6 +832,7 @@ export class AnalysisService
         elasticity = a1 * (avgRow.X / (a0 + a1 * avgRow.X));
           
         funcParamsCount = 2;
+        func = RegressionFuncEnum.LINE;
 
         break;
       }
@@ -823,6 +876,7 @@ export class AnalysisService
         elasticity = (a1 * avgRow.X + (2 * a2 * avgRow.X ** 2)) / avgRow.Y;
         
         funcParamsCount = 3;
+        func = RegressionFuncEnum.PARABOLA;
 
         break;
       }
@@ -858,6 +912,7 @@ export class AnalysisService
         // elasticity = this.utilsService.roundNum(avgRow.X * a1, DIGIT_ACCURACY);
 
         funcParamsCount = 2;
+        func = RegressionFuncEnum.EXPONENTIAL;
 
         break;
       }
@@ -871,6 +926,7 @@ export class AnalysisService
         elasticity = -a1 / (a0 * avgRow.X + a1);
         
         funcParamsCount = 2;
+        func = RegressionFuncEnum.HYPERBOLA;
 
         break;
       }
@@ -884,12 +940,13 @@ export class AnalysisService
         elasticity = a1 / (a0 + a1 * avgRow.lnX);
           
         funcParamsCount = 2;
+        func = RegressionFuncEnum.LOGARITHM;
 
         break;
       }
     }
 
-    const values: IAValuesAndElasticy = { a, a0, a1, a2, elasticity, funcParamsCount }
+    const values: IAValuesAndElasticy = { a, a0, a1, a2, elasticity, funcParamsCount, func }
 
     return values;
   }
