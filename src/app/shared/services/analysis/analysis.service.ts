@@ -296,9 +296,6 @@ export class AnalysisService
     const factorDispersion: number = this.getFactorDispersion(sumRow.YxAvgY2, count); //?
     const residualDispersion: number = this.getResidualDispersion(sumRow.YYx2, count); //?
 
-    // const factorDispersion: number = this.getFactorDispersion(sumRow.YYx2, count); //?
-    // const residualDispersion: number = this.getResidualDispersion(sumRow.YxY2, count); //?
-
     const residualDispersionSqrt: number = this.getResidualDispersionSqrt(residualDispersion);
 
     const totalDispersionCheck: number = this.getTotalDispersionCheck(factorDispersion, residualDispersion); //?
@@ -591,8 +588,8 @@ export class AnalysisService
       YxY2: 0,
       YAvgY2: 0,
 
-      YAvgYx2: 0,
-      AvgYxAvgY2: 0,
+      // YAvgYx2: 0,
+      // AvgYxAvgY2: 0,
 
       YxAvgY2: 0,
 
@@ -633,15 +630,21 @@ export class AnalysisService
 
       //TODO: research this
       // data[i].YAvgYx2 = (data[i].Y - avgRow.Yx) ** 2;
-      data[i].YAvgYx2 = (data[i].Y - data[i].Yx) ** 2; //?
-      sumRow.YAvgYx2 += data[i].YAvgYx2;
+
+      // data[i].YAvgYx2 = (data[i].Y - data[i].Yx) ** 2; //?
+
+      // sumRow.YAvgYx2 += data[i].YAvgYx2;
       // console.log(data[i].Y, avgRow.Yx, data[i].YAvgYx2)
 
       //TODO: research this
+
       // data[i].AvgYxAvgY2 = (avgRow.Yx - avgRow.Y) ** 2;
-      data[i].AvgYxAvgY2 = (data[i].Yx - avgRow.Y) ** 2; //?
+
+      // data[i].AvgYxAvgY2 = (data[i].Yx - avgRow.Y) ** 2; //?
+
       // data[i].AvgYxAvgY2 = (data[i].Yx - data[i].Y) ** 2;
-      sumRow.AvgYxAvgY2 += data[i].AvgYxAvgY2;
+
+      // sumRow.AvgYxAvgY2 += data[i].AvgYxAvgY2;
 
       // console.log(data[i].Y, avgRow.Yx, data[i].YAvgYx2, avgRow.Yx, avgRow.Y, data[i].AvgYxAvgY2)
       // console.log(sumRow.AvgYxAvgY2, sumRow.YAvgYx2)
@@ -666,8 +669,9 @@ export class AnalysisService
       YYx: sumRow.YYx / count,
       YxY2: sumRow.YxY2 / count,
       YAvgY2: sumRow.YAvgY2 / count,
-      YAvgYx2: sumRow.YAvgYx2 / count,
-      AvgYxAvgY2: sumRow.AvgYxAvgY2 / count,
+
+      // YAvgYx2: sumRow.YAvgYx2 / count,
+      // AvgYxAvgY2: sumRow.AvgYxAvgY2 / count,
       
       YxAvgY2: sumRow.YxAvgY2 / count,
       YYx2: sumRow.YYx2 / count
