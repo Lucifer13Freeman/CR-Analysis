@@ -75,6 +75,14 @@
     // min-width: 442px;
   }
 
+  @media screen and (max-width: 600px) 
+  {
+    .content 
+    {
+      padding: 0 10px;
+    }
+  }
+
   .data-container {
     width: 100%;
     min-width: 320px;
