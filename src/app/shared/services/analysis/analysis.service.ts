@@ -528,7 +528,7 @@ export class AnalysisService
 
   private getAvgA0Error(residualDispersionSqrt: number, 
                         count: number, 
-                        funcParamsCount: number)
+                        funcParamsCount: number = 2)
   {
     const avgA0Err = residualDispersionSqrt / Math.sqrt(count - funcParamsCount);
     return avgA0Err;
@@ -537,7 +537,7 @@ export class AnalysisService
   private getAvgA1Error(residualDispersionSqrt: number, 
                       meanSqrOffX: number, 
                       count: number, 
-                      funcParamsCount: number)
+                      funcParamsCount: number = 2)
   {
     const avgA1Err = residualDispersionSqrt / (meanSqrOffX * Math.sqrt(count - funcParamsCount));
     return avgA1Err;
