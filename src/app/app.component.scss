@@ -42,8 +42,11 @@
     font-weight: 600;
   }
 
-  .toolbar img {
+  .toolbar h1 {
+    display: flex;
     margin: 0 16px;
+    align-items: center;
+    font-weight: 500;
   }
 
   // .toolbar #twitter-logo {
