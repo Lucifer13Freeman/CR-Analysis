@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FUNC_TYPE_VALUES, INITIAL_ANALYSIS_DATA, INITIAL_CHART_DATA, INITIAL_GET_ANALYSIS_DATA, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
+import { FUNC_TYPE_VALUES, INITIAL_ANALYSIS_DATA, INITIAL_CHART_DATA, INITIAL_GET_ANALYSIS_DATA, LOADING_TIMEOUT, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
 import { ChartDataDto } from 'src/app/shared/dto/chart-data.dto';
 import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
@@ -58,7 +58,7 @@ export class ChartComponent implements OnInit, OnDestroy
   pngExt: ImageExtEnum = ImageExtEnum.PNG;
   jpgExt: ImageExtEnum = ImageExtEnum.JPG;
 
-  timer: any;
+  isLoading: boolean = false;
 
   ngOnInit(): void 
   {
@@ -90,7 +90,13 @@ export class ChartComponent implements OnInit, OnDestroy
 
     this.chart?.destroy();
 
-    this.writeAnalysisDataService.setWriteAnalysisData(analysisData);
+    this.isLoading = true;
+
+    setTimeout(() => 
+    {
+      this.writeAnalysisDataService.setWriteAnalysisData(analysisData);
+      this.isLoading = false;
+    }, LOADING_TIMEOUT);
   }
 
   getAnalysisData()
@@ -99,14 +105,17 @@ export class ChartComponent implements OnInit, OnDestroy
     {
       next: () =>
       {
-        // this.timer = true
+        this.isLoading = true;
 
         // setTimeout(() => this.timer = true, 0)
 
         // console.log(this.timer)
-        
-        
-        setTimeout(() => this.setAnalysisData(), WRITE_FILE_TIMOUT);
+
+        setTimeout(() => 
+        {
+          this.setAnalysisData();
+          this.isLoading = false;
+        }, WRITE_FILE_TIMOUT);
 
         // setTimeout(() => this.timer = false, 0)
         
@@ -200,7 +209,7 @@ export class ChartComponent implements OnInit, OnDestroy
       }
     });
 
-    this.chart.update();
+    if (!this.isLoading) this.chart.update();
 
     this.fileDataWriteImageService.setWriteImageFileData({ canvasElement: this.chartRef.nativeElement });
   }

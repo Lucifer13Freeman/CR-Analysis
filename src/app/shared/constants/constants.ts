@@ -40,6 +40,8 @@ export const READ_FILE_SPEED: number = 20;
 
 export const WRITE_FILE_TIMOUT: number = 10;//100;
 
+export const LOADING_TIMEOUT = 500;
+
 // export const READ_FILE_TIMOUT: number = 50;
 // export const READ_FILE_INTERVAL: number = 50;
 // export const READ_FILE_SPEED: number = 50;
