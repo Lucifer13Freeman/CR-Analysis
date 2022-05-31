@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { DIGIT_ACCURACY, FILENAME, INITIAL_ANALYSIS_DATA, INITIAL_ANALYSIS_PARAMS, INITIAL_GET_ANALYSIS_DATA, INITIAL_TABLE_DATA, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
-import { DownloadButtonLabelsEnum, ExcelExtEnum, FTableSelectValueEnum, FullFileDataHeaderWordEnum, SignificanceSelectValueEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
+import { DownloadButtonLabelsEnum, ExcelExtEnum, FTableSelectValueEnum, FullFileDataHeaderEnum, SignificanceSelectValueEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
 import { IAnalysisParams } from 'src/app/shared/interfaces/analysis-params.interface';
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
@@ -38,7 +38,7 @@ export class AnalysisParamsComponent implements OnInit, OnChanges
   // @Input()
   // rangTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
 
-  title: FullFileDataHeaderWordEnum = FullFileDataHeaderWordEnum.ANALYSIS_PARAMS;
+  title: FullFileDataHeaderEnum = FullFileDataHeaderEnum.ANALYSIS_PARAMS;
   downloadButtonLabels = DownloadButtonLabelsEnum;
 
   // @Input()

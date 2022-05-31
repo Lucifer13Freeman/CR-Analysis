@@ -3,7 +3,7 @@ import { interval, map, Observable, Subscription } from 'rxjs';
 import { TableTypeEnum } from 'src/app/data-table/enums/table-type.enum';
 import { IColumnSchemaElement } from 'src/app/data-table/interfaces/column-schema-element.interface';
 import { INITIAL_MANUAL_READ_TABLE_DATA, INITIAL_TABLE_DATA } from 'src/app/shared/constants/constants';
-import { FullFileDataHeaderWordEnum } from 'src/app/shared/enums/enums';
+import { FullFileDataHeaderEnum } from 'src/app/shared/enums/enums';
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
 import { ExcelService } from 'src/app/shared/services/excel/excel.service';
@@ -21,7 +21,7 @@ export class InputDataComponent implements OnInit, OnDestroy
 {
   constructor(private readonly fileDataReadService: FileDataReadService) { }
 
-  title: FullFileDataHeaderWordEnum = FullFileDataHeaderWordEnum.READ_TABLE_DATA;
+  title: FullFileDataHeaderEnum = FullFileDataHeaderEnum.READ_TABLE_DATA;
 
   subs?: Subscription;
 

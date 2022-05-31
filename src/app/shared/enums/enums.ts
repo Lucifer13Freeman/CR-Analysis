@@ -29,6 +29,12 @@ export enum WordPdfExtEnum
     PDF = 'pdf'
 }
 
+export enum PPTXExtEnum
+{
+    PPTX = 'pptx',
+    PPT = 'ppt'
+}
+
 export enum ImageExtEnum
 {
     PNG = 'png',
@@ -93,10 +99,11 @@ export enum DownloadButtonLabelsEnum
     EXCEL = 'Скачать Excel',
     PDF = 'Скачать PDF',
     PNG = 'Скачать PNG',
-    JPG = 'Скачать JPG'
+    JPG = 'Скачать JPG',
+    PPTX = 'Скачать PPTX'
 }
 
-export enum FullFileDataHeaderWordEnum 
+export enum FullFileDataHeaderEnum 
 {
     MAIN_HEADER = "Результаты корреляционно-регрессионного анализа",
     READ_TABLE_DATA = "Таблица входных данных",

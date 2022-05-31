@@ -5,7 +5,7 @@ import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
 import { WriteAnalysisDataService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
-import { DownloadButtonLabelsEnum, FullFileDataHeaderWordEnum, FuncTypeEnum, ImageExtEnum } from 'src/app/shared/enums/enums';
+import { DownloadButtonLabelsEnum, FullFileDataHeaderEnum, FuncTypeEnum, ImageExtEnum } from 'src/app/shared/enums/enums';
 import { IFuncTypeValues } from '../../shared/interfaces/func-type-values.interface';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
@@ -32,7 +32,7 @@ export class ChartComponent implements OnInit, OnDestroy
 
   private chart?: Chart;
 
-  title: FullFileDataHeaderWordEnum = FullFileDataHeaderWordEnum.CHART_DATA;
+  title: FullFileDataHeaderEnum = FullFileDataHeaderEnum.CHART_DATA;
   downloadButtonLabels = DownloadButtonLabelsEnum;
 
   @Input()
@@ -105,7 +105,7 @@ export class ChartComponent implements OnInit, OnDestroy
     {
       next: () =>
       {
-        this.isLoading = true;
+        // this.isLoading = true;
 
         // setTimeout(() => this.timer = true, 0)
 
@@ -114,7 +114,7 @@ export class ChartComponent implements OnInit, OnDestroy
         setTimeout(() => 
         {
           this.setAnalysisData();
-          this.isLoading = false;
+          // this.isLoading = false;
         }, WRITE_FILE_TIMOUT);
 
         // setTimeout(() => this.timer = false, 0)
@@ -209,7 +209,8 @@ export class ChartComponent implements OnInit, OnDestroy
       }
     });
 
-    if (!this.isLoading) this.chart.update();
+    // if (!this.isLoading) 
+    this.chart.update();
 
     this.fileDataWriteImageService.setWriteImageFileData({ canvasElement: this.chartRef.nativeElement });
   }

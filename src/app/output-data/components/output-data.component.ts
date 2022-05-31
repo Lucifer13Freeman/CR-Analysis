@@ -7,7 +7,7 @@ import { ChartDataDto } from 'src/app/shared/dto/chart-data.dto';
 import { FullFileDataDto } from 'src/app/shared/dto/full-file-data.dto';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
 import { ImageDataDto } from 'src/app/shared/dto/image-data.dto';
-import { DownloadButtonLabelsEnum, ExcelExtEnum, FTableSelectValueEnum, FullFileDataHeaderWordEnum, SignificanceSelectValueEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
+import { DownloadButtonLabelsEnum, ExcelExtEnum, FTableSelectValueEnum, FullFileDataHeaderEnum, PPTXExtEnum, SignificanceSelectValueEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
 import { IAnalysisParams } from 'src/app/shared/interfaces/analysis-params.interface';
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
@@ -18,6 +18,7 @@ import { WriteAnalysisDataService } from 'src/app/shared/services/file-data/writ
 import { FileDataWriteCalcService } from 'src/app/shared/services/file-data/write-calc/file-data-write-calc.service';
 import { FileDataWriteImageService } from 'src/app/shared/services/file-data/write-image/file-data-write-image.service';
 import { FileDataWriteRangService } from 'src/app/shared/services/file-data/write-rang/file-data-write-rang.service';
+import { PptxService } from 'src/app/shared/services/pptx/pptx.service';
 // import { FileDataService } from 'src/app/shared/services/file-data/file-data.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { WordService } from 'src/app/shared/services/word/word.service';
@@ -62,6 +63,7 @@ export class OutputDataComponent implements OnInit, OnDestroy
               private readonly analysisService: AnalysisService,
               private readonly excelService: ExcelService,
               private readonly wordService: WordService,
+              private readonly pptxService: PptxService,
               private readonly utilsService: UtilsService) { }
 
   subsReadFileData?: Subscription;
@@ -71,7 +73,7 @@ export class OutputDataComponent implements OnInit, OnDestroy
   subsWriteAnalysisData?: Subscription;
   subsWriteImageFileData?: Subscription;
 
-  header = FullFileDataHeaderWordEnum;
+  header = FullFileDataHeaderEnum;
   downloadButtonLabels = DownloadButtonLabelsEnum;
 
 
@@ -141,6 +143,13 @@ export class OutputDataComponent implements OnInit, OnDestroy
   {
     const fullFileData: FullFileDataDto<any> = this.getFullFileData(filename, extension);
     await this.wordService.writeFullDataToWordPdf(fullFileData);
+  }
+
+  async downloadPPTX(filename: string = FILENAME, 
+                    extension: PPTXExtEnum = PPTXExtEnum.PPTX)
+  {
+    const fullFileData: FullFileDataDto<any> = this.getFullFileData(filename, extension);
+    await this.pptxService.writeFullDataToPPTX(fullFileData);
   }
 
   private getFullFileData(filename: string = FILENAME, 
