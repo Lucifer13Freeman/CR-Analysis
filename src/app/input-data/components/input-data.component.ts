@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TableTypeEnum } from 'src/app/data-table/enums/table-type.enum';
-import { INITIAL_MANUAL_READ_TABLE_DATA, INITIAL_TABLE_DATA } from 'src/app/shared/constants/constants';
+import { EXAMPLE_DATA_1, EXAMPLE_DATA_2, INITIAL_MANUAL_READ_TABLE_DATA, INITIAL_TABLE_DATA } from 'src/app/shared/constants/constants';
 import { FullFileDataHeaderEnum } from 'src/app/shared/enums/enums';
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
@@ -50,6 +50,17 @@ export class InputDataComponent implements OnInit, OnDestroy
   {
     this.isManual = false;
     this.fileDataReadService.clearReadFileData();
+  }
+
+  loadExampleData(exampleNum: 1 | 2)
+  {
+    this.isManual = true;
+    
+    this.fileDataReadService.setReadFileData<any>({ 
+      tableData: exampleNum === 1 
+                    ? EXAMPLE_DATA_1.tableData 
+                    : EXAMPLE_DATA_2.tableData 
+    });
   }
 
   private getReadFileData()

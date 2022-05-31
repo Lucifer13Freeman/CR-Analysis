@@ -1,10 +1,36 @@
 <div class="data-container">
     <div class="buttons-container"> 
         <ng-container *ngIf="!isManual">
-            <button mat-raised-button color="primary" (click)="manualDataInput()">Ручной ввод</button>
+            <button mat-raised-button 
+                color="primary" 
+                class="button-input"
+                (click)="manualDataInput()"
+            >
+                Ручной ввод
+            </button>
+            <button mat-raised-button 
+                color="primary" 
+                class="button-input"
+                (click)="loadExampleData(1)"
+            >
+                Пример 1
+            </button>
+            <button mat-raised-button 
+                color="primary" 
+                class="button-input"
+                (click)="loadExampleData(2)"
+            >
+                Пример 2
+            </button>
         </ng-container>
         <ng-container *ngIf="isManual">
-            <button mat-raised-button color="primary" (click)="fileDataInput()">Загрузка из файла</button>
+            <button mat-raised-button 
+                color="primary" 
+                class="button-input"
+                (click)="fileDataInput()"
+            >
+                Загрузка из файла
+            </button>
         </ng-container>
     </div>
     <div>
