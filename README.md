@@ -1,6 +1,6 @@
 # CR-Analysis
 
-Correlation-regression Analysis APP
+Correlation-regression Analysis App: https://cr-analysis.netlify.app
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.4.
 
