@@ -38,7 +38,7 @@ export enum PPTXExtEnum
 export enum ImageExtEnum
 {
     PNG = 'png',
-    JPG = 'jpeg'
+    JPG = 'jpg'
 }
 
 export enum MimeTypeEnum
