@@ -26,17 +26,7 @@ export class PptxService
 
     let pptx = new pptxgen();
 
-    let slides: pptxgen.Slide[] = [];
-
-    let slide0 = pptx.addSlide();
-
-    slide0.addText(FullFileDataHeaderEnum.MAIN_HEADER, {
-        x: 1.5,
-        y: 1.5,
-        color: "363636",
-        fill: { color: "F1F1F1" },
-        align: pptx.AlignH.center,
-    });
+    this.addTitleSlide(pptx, FullFileDataHeaderEnum.MAIN_HEADER);
 
     this.addTable(pptx, readTableData, FullFileDataHeaderEnum.READ_TABLE_DATA, 15);
     this.addTable(pptx, calcTableData, FullFileDataHeaderEnum.CALC_TABLE_DATA, 5);
@@ -51,8 +41,23 @@ export class PptxService
     {
       this.addImage(pptx, chartImageURL);
     }
-    
+
     await this.saveFile(pptx, filename, extension);
+  }
+
+  addTitleSlide(pptx: any, title: string = FullFileDataHeaderEnum.MAIN_HEADER)
+  {
+    let slide = pptx.addSlide();
+
+    slide.addText(title, {
+        x: 1.5,
+        y: 1.5,
+        h: 2,
+        // color: "363636",
+        // fill: { color: "F1F1F1" },
+        align: 'center',
+        fontSize: 32
+    });
   }
 
   addImage(pptx: any, imageURL: string, title: string = FullFileDataHeaderEnum.CHART_DATA)
@@ -338,11 +343,15 @@ export class PptxService
 
         if (i === 0) slide.addText(title,
         {
-          x: 0,
-          y: 0.2,
-          color: "363636",
-          fill: { color: "F1F1F1" },
-          align: pptx.AlignH.center
+          x: 1,
+          y: 0,
+          w: 8,
+          h: 0.4,
+          fontSize: 16,
+          // color: "363636",
+          // fill: { color: "F1F1F1" },
+          bold: true,
+          align: 'center'
         });
 
         slide.addTable(rowsChunk, { 
