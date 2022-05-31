@@ -32,27 +32,13 @@ export class AnalysisParamsComponent implements OnInit, OnChanges
               private readonly excelService: ExcelService,
               private readonly utilsService: UtilsService) { }
   
-  // @Input()
-  // calcTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
-
-  // @Input()
-  // rangTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
-
   title: FullFileDataHeaderEnum = FullFileDataHeaderEnum.ANALYSIS_PARAMS;
   downloadButtonLabels = DownloadButtonLabelsEnum;
-
-  // @Input()
-  // getAanalysisData: GetAnalysisDataDto<any> = {...INITIAL_GET_ANALYSIS_DATA};
 
   @Input()
   analysisData: AnalysisDataDto<any> = {...INITIAL_ANALYSIS_DATA}; 
 
-  // @Input()
   analysisParams: IAnalysisParams = {...INITIAL_ANALYSIS_PARAMS};
-
-  // wordExt: WordPdfExtEnum = WordPdfExtEnum.DOCX;
-  // pdfExt: WordPdfExtEnum = WordPdfExtEnum.PDF;
-  // excelExt: ExcelExtEnum = ExcelExtEnum.XLSX;
 
   selectedSignLvlVal: SignificanceSelectValueEnum = this.analysisParams.signLvlSelectVal.value as SignificanceSelectValueEnum;
   selectedFTableValLvlVal: FTableSelectValueEnum = this.analysisParams.fTableValLvlSelectVal.value as FTableSelectValueEnum;
@@ -75,16 +61,7 @@ export class AnalysisParamsComponent implements OnInit, OnChanges
 
   ngOnChanges(changes: SimpleChanges): void 
   {
-    // let selectedSignLvlValChange = changes['selectedSignLvlVal'];
-    // let selectedFTableValLvlValChange = changes['selectedFTableValLvlVal'];
-
-    // console.log(selectedSignLvlValChange, selectedFTableValLvlValChange)
-
-    // if (selectedSignLvlValChange.previousValue !== selectedSignLvlValChange.currentValue 
-    //   || selectedFTableValLvlValChange.previousValue !== selectedFTableValLvlValChange.currentValue)
-    // {
-      this.analysisParams = this.analysisData.params;
-    // }
+    this.analysisParams = this.analysisData.params;
   }
 
   editCorrCoefValLvl()
@@ -165,18 +142,6 @@ export class AnalysisParamsComponent implements OnInit, OnChanges
     this.writeAnalysisDataService.setWriteAnalysisData(updatedAnalysisData);
   }
 
-  // editData()
-  // {
-  //   // const 
-
-  //   // const analysisData = this.analysisService.getAnalysisData({ ...this.getAanalysisData,
-  //   //                                                           calcTableData: this.getAanalysisData.calcTableData, 
-  //   //                                                           rangTableData: this.getAanalysisData.rangTableData, 
-  //   //                                                           signLvlSelectVal: this.selectedSignLvlVal, 
-  //   //                                                           fTableValLvlSelectVal: this.selectedFTableValLvlVal});
-  //   // this.writeAnalysisDataService.setWriteAnalysisData(analysisData);
-  // }
-
   async downloadWord(filename = FILENAME, 
                     extension: WordPdfExtEnum = WordPdfExtEnum.DOCX)
   {
@@ -193,15 +158,6 @@ export class AnalysisParamsComponent implements OnInit, OnChanges
                       extension: ExcelExtEnum = ExcelExtEnum.XLSX)
   {
     const tableData = this.utilsService.makeTableDataFromAnalysisParams(this.analysisParams);
-
-    // console.log(this.analysisParams)
-    // console.log(tableData)
-
-    // setTimeout(() => 
-    // {
-    //   this.excelService.writeTableToExcel({ tableData, filename, extension });
-    // }, WRITE_FILE_TIMOUT)
-
     await this.excelService.writeTableToExcel({ tableData, filename, extension });
   }
 }

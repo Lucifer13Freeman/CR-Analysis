@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Associations, COLS_WITH_SMALL_NUMS, DIGIT_ACCURACY, DIGIT_ACCURACY_FOR_SMALL_NUMS } from 'src/app/shared/constants/constants';
+import { Associations, COLS_WITH_SMALL_NUMS, 
+      DIGIT_ACCURACY, DIGIT_ACCURACY_FOR_SMALL_NUMS } from 'src/app/shared/constants/constants';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { IColumnSchemaElement } from '../interfaces/column-schema-element.interface';
 
@@ -38,26 +39,13 @@ export class DataTableService
       {
         const col: IColumnSchemaElement = {
           key: dataKeys[i],
-          label: label, //Associations.keysHeaderLabels[dataKeys[i]],
+          label: label,
           type: 'text'
         }
 
         columnSchema.push(col);
       }
     }
-
-    // header.forEach((str: string, index: number) => 
-    // { 
-    //   const col: IColumnSchemaElement = {
-    //     key: str.toLowerCase(),
-    //     label: str,
-    //     type: 'text'
-    //   }
-
-    //   if (index % header.length === 0) columnSchema.push(selectCheckBox);
-
-    //   columnSchema.push(col);
-    // });
 
     return columnSchema;
   }

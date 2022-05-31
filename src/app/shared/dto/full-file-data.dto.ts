@@ -12,7 +12,6 @@ export class FullFileDataDto<T>
     readonly calcTableData: ITableData<T> = INITIAL_TABLE_DATA;
     readonly rangTableData: ITableData<T> = INITIAL_TABLE_DATA;
     readonly extCalcTableData: ITableData<T> = INITIAL_TABLE_DATA;
-    // readonly analysisData: AnalysisDataDto<any> = INITIAL_ANALYSIS_DATA;
     readonly analysisParams: IAnalysisParams = INITIAL_ANALYSIS_PARAMS;
     readonly funcType: FuncTypeEnum = FuncTypeEnum.LINE;
     readonly canvasElement?: HTMLCanvasElement;

@@ -1,5 +1,6 @@
-import { INITIAL_TABLE_DATA } from "../constants/constants";
-import { FTableSelectValueEnum, FuncTypeEnum, SignificanceSelectValueEnum } from "../enums/enums";
+import { FTableSelectValueEnum, 
+        FuncTypeEnum, 
+        SignificanceSelectValueEnum } from "../enums/enums";
 import { ITableData } from "./table-data.interface";
 
 

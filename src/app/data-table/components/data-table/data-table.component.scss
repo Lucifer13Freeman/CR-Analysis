@@ -1,7 +1,3 @@
-.table-container
-{
-    // padding: 10px;
-}
 
 p 
 {
@@ -12,7 +8,6 @@ table
 {
     width: 100%;
     margin: auto;
-    // margin-top: 15px;
     overflow: auto;
 }
 
@@ -20,7 +15,6 @@ table
 {
     text-align: right;
     margin-top: 10px;
-    // margin-left: auto;
 }
 
 h2 
@@ -53,16 +47,6 @@ h2
     margin-top: 10px;
 }
 
-// .button-remove 
-// {
-//     color: red;
-// }
-
-// .buttons
-// {
-//     margin: 10px;
-// }
-
 ::ng-deep .mat-form-field-infix 
 {
     width: 100% !important;
@@ -77,7 +61,6 @@ h2
 .form-input 
 {
     padding-right: 20px;
-    // margin-right: 20px;
     max-width: 150px;
 }
 
@@ -97,14 +80,9 @@ h2
 .table-size 
 {
     max-height: 500px;
-    // min-width: 400px;
-    // max-width: 100vw;
-    // max-width: 100%;
     min-width: 100%; 
     width: 100%;
     overflow: auto;
-    // overflow-x: scroll;
-    // overflow-y: scroll;
 }
 
 .text-input
@@ -114,58 +92,22 @@ h2
 
 .data-input 
 {
-    // padding-right: 20px;
-    // max-width: 150px;
-    // word-wrap: break-word;
-    // width: fit-content;
-    // margin: 0 10px;
-    // width: fit-content;
-    // padding-right: 10px;
     min-width: 60px;
 }
-
-// .mat-table
-// {
-//     // background-color: rgba(255, 255, 255, 0.959);
-//     // height : 100vh;
-//     // overflow: auto;   
-//     // overflow: auto;  
-//     // word-wrap: initial;
-//     // width: 1123px;
-//     // overflow-x: scroll;
-// }
-
-// .hidden
-// {
-//     display: none;
-// }
 
 th.mat-header-cell:first-of-type, 
 td.mat-cell:first-of-type, 
 td.mat-footer-cell:first-of-type
 {
-    // padding-left: 24px;
-    padding: 0;//10px;
+    padding: 0;
     padding-left: 10px;
-    // min-width: 30px;
-    // display: none;
     min-width: 20px;
 }
-
-// th.mat-header-cell:last-of-type, 
-// td.mat-cell:last-of-type, 
-// td.mat-footer-cell:last-of-type  
-// {
-    
-// }
 
 .mat-header-cell, .mat-cell, .mat-footer-cell 
 {
     min-width: 60px;
     padding-right: 10px;
-    // word-break: break-all;
-    // word-wrap: initial;
-    // padding: 0;
     display: table-cell;
 }
 

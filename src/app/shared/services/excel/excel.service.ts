@@ -11,7 +11,9 @@ import { CSV_POSSIBLE_SEPARATORS,
   INITIAL_TABLE_DATA } from '../../constants/constants';
 import { ITableData } from '../../interfaces/table-data.interface';
 import { CsvSeparatorType, PossibleExtEnum } from '../../types/types';
-import { CsvSeparatorTypeEnum, ExcelExtEnum, FullFileDataHeaderExcelEnum } from '../../enums/enums';
+import { CsvSeparatorTypeEnum, 
+      ExcelExtEnum, 
+      FullFileDataHeaderExcelEnum } from '../../enums/enums';
 import { FullFileDataDto } from '../../dto/full-file-data.dto';
 
 
@@ -79,7 +81,7 @@ export class ExcelService
     return hasHeader;
   }
 
-  public getWorksheetWithHeaderAndCheck(worksheet: XLSX.WorkSheet/*, forKeys: boolean = false*/): XLSX.WorkSheet
+  public getWorksheetWithHeaderAndCheck(worksheet: XLSX.WorkSheet): XLSX.WorkSheet
   {
     const hasHeader = this.checkHeader(worksheet);
 
@@ -115,7 +117,7 @@ export class ExcelService
 
       if (i === 0)
       {
-        const header = this.generateHeader(columnCount/*, forKeys*/);
+        const header = this.generateHeader(columnCount);
         if (header) aoaData.push(header);
       }
 
@@ -130,13 +132,9 @@ export class ExcelService
         return item;
       });
 
-      // console.log(rowData)
-
       if (rowData.length === columnCount) aoaData.push(rowData);
       else isCorrect = false;
     }
-
-    // console.log(aoaData)
 
     if (!isCorrect) alert('Уведомление: проверьте данные файла!');
     // Alert: Please, check your file data!
@@ -146,15 +144,14 @@ export class ExcelService
     return newWorksheet;
   }
 
-  private generateHeader(columnCount: number/*, forKeys: boolean = false*/): string[] | null
+  private generateHeader(columnCount: number): string[] | null
   {
-    let header = [...HEADER_LABLES_FROM_FILE[0]]; // [forKeys ? HEADER_LABLES_FOR_KEYS_FROM_FILE[0] : HEADER_LABLES_FROM_FILE[0]];
+    let header = [...HEADER_LABLES_FROM_FILE[0]];
     if (columnCount === 0) return null;
 
     for (let i = 0; i < columnCount - header.length; i++)
     {
       header.push(HEADER_LABLES_FROM_FILE[i + 1]); 
-        // forKeys ? HEADER_LABLES_FOR_KEYS_FROM_FILE[i + 1] : HEADER_LABLES_FROM_FILE[i + 1]);
     }
 
     return header;
@@ -198,7 +195,6 @@ export class ExcelService
         }
 
         const workbook: XLSX.WorkBook = XLSX.read(binaryString, { type: 'binary', FS: csvSep });
-        // let worksheet: XLSX.WorkSheet = workbook.Sheets[workbook.SheetNames[0]];
         const worksheet = this.getWorksheetWithHeaderAndCheck(workbook.Sheets[workbook.SheetNames[0]]/*, true*/);
 
         let data = XLSX.utils.sheet_to_json(worksheet);
@@ -209,9 +205,6 @@ export class ExcelService
         fileData.tableData.header = this.utilsService.makeHeaderFromObj(fileData.tableData.data[0]); 
       }
     }
-
-    // console.log(data)
-    // console.log(extension)
     
     return fileData;
   }
@@ -240,8 +233,7 @@ export class ExcelService
   public async writeFullFileDataToExcel<T>(dto: FullFileDataDto<T>): Promise<void>
   {
     const { readTableData, calcTableData, rangTableData, 
-            extCalcTableData, analysisParams, 
-            funcType, canvasElement, filename } = dto;
+            extCalcTableData, analysisParams, filename } = dto;
     
     let { extension } = dto; 
     extension = this.checkExtension(extension);
@@ -262,22 +254,6 @@ export class ExcelService
     const filteredAnalysisParamsTableData = this.utilsService.filterDataByHeader(analysisParamsTableData);
     const worksheetAnalysisParamsTable: XLSX.WorkSheet = this.createWsFromJson(filteredAnalysisParamsTableData);
 
-    // const worksheetChartData: any = {
-    //   { name: 'image1.jpg',
-    //     data: this.picBlob,
-    //     opts: { base64: true },
-    //     position: {
-    //       type: 'twoCellAnchor',
-    //       attrs: { editAs: 'oneCell' },
-    //       from: { col: 2, row : 2 },
-    //       to: { col: 6, row: 5 }
-    //   }
-    // }
-
-    // FULL_FILE_DATA_HEADER_EXCEL.analysisParams
-    // FULL_FILE_DATA_HEADER_EXCEL.chartData
-
-    const worksheetChartData: any = {}
 
     const sheets: any = {}
     
@@ -296,27 +272,10 @@ export class ExcelService
         FullFileDataHeaderExcelEnum.CALC_TABLE_DATA,
         FullFileDataHeaderExcelEnum.RANG_TABLE_DATA,
         FullFileDataHeaderExcelEnum.EXT_CALC_TABLE_DATA,
-        FullFileDataHeaderExcelEnum.ANALYSIS_PARAMS//,
-        // 'График'
+        FullFileDataHeaderExcelEnum.ANALYSIS_PARAMS
       ]
     };
 
-    // const blob = canvasElement?.toDataURL().split(',')[1];
-
-    // workbook.Sheets['График']['!images']= [
-    // {
-    //       name: filename,
-    //       data: blob,
-    //       opts: { base64: true },
-    //       position: {
-    //           type: 'twoCellAnchor',
-    //           attrs: { editAs: 'oneCell' },
-    //           from: { col: 8, row : 2 },
-    //           to: { col: 8, row: 4 }
-    //       }
-    //   }
-    // ]
- 
     const excelBuffer = XLSX.write(workbook, { bookType: extension, type: 'array' });
 
     this.saveFile(excelBuffer, filename, extension);
@@ -343,26 +302,13 @@ export class ExcelService
     for (let i = range.s.c; i <= range.e.c; i++) 
     {
       const col = XLSX.utils.encode_col(i) + '1';
-      // ws[col].v = header[ ws[col].v ];
+
       worksheet[col].v = header[i];
       worksheet[col].s = { font: { sz: 14, bold: true }};
     }
     
     return worksheet;
   }
-
-  // private jsonToSheet<T>(worksheet: Worksheet, data: T[])
-  // {
-  //   for (let obj of data)
-  //   {
-  //     let keys: Array<keyof T> = Object.keys(obj) as Array<keyof T>;
-  //     let row: Array<Partial<T>> = [];
-
-  //     for (let key of keys) row.push(obj[key]);
-
-  //     worksheet.addRow(row);
-  //   }
-  // }
 
   private saveFile(buffer: any, 
                   filename: string = FILENAME,

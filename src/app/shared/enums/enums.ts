@@ -1,14 +1,4 @@
 
-// export enum TableTypeEnum
-// {
-//     INPUT_TABLE_TYPE = 'INPUT_TABLE_TYPE',
-//     OUTPUT_CALC_TABLE_TYPE = 'OUTPUT_CALC_TABLE_TYPE',
-//     OUTPUT_RANG_TABLE_TYPE = 'OUTPUT_RANG_TABLE_TYPE',
-//     OUTPUT_EXT_CALC_TABLE_TYPE = 'OUTPUT_EXT_CALC_TABLE_TYPE'
-// }
-
-// export type ExcelType = 'xlsx' | 'csv';
-// export type CsvSeparatorType = ';' | ',' | undefined;
 
 export enum CsvSeparatorTypeEnum
 {

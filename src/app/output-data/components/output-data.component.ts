@@ -1,14 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TableTypeEnum } from 'src/app/data-table/enums/table-type.enum';
-import { FILENAME, INITIAL_ANALYSIS_DATA, INITIAL_GET_ANALYSIS_DATA, INITIAL_IMAGE_DATA, INITIAL_TABLE_DATA, READ_FILE_TIMOUT } from 'src/app/shared/constants/constants';
+import { FILENAME, INITIAL_ANALYSIS_DATA, 
+      INITIAL_GET_ANALYSIS_DATA, 
+      INITIAL_IMAGE_DATA, INITIAL_TABLE_DATA } from 'src/app/shared/constants/constants';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
-import { ChartDataDto } from 'src/app/shared/dto/chart-data.dto';
 import { FullFileDataDto } from 'src/app/shared/dto/full-file-data.dto';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
 import { ImageDataDto } from 'src/app/shared/dto/image-data.dto';
-import { DownloadButtonLabelsEnum, ExcelExtEnum, FTableSelectValueEnum, FullFileDataHeaderEnum, PPTXExtEnum, SignificanceSelectValueEnum, WordPdfExtEnum } from 'src/app/shared/enums/enums';
-import { IAnalysisParams } from 'src/app/shared/interfaces/analysis-params.interface';
+import { DownloadButtonLabelsEnum, ExcelExtEnum, 
+        FTableSelectValueEnum, FullFileDataHeaderEnum, 
+        PPTXExtEnum, SignificanceSelectValueEnum, 
+        WordPdfExtEnum } from 'src/app/shared/enums/enums';
 import { IFileData } from 'src/app/shared/interfaces/file-data.interface';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
@@ -19,33 +22,9 @@ import { FileDataWriteCalcService } from 'src/app/shared/services/file-data/writ
 import { FileDataWriteImageService } from 'src/app/shared/services/file-data/write-image/file-data-write-image.service';
 import { FileDataWriteRangService } from 'src/app/shared/services/file-data/write-rang/file-data-write-rang.service';
 import { PptxService } from 'src/app/shared/services/pptx/pptx.service';
-// import { FileDataService } from 'src/app/shared/services/file-data/file-data.service';
-import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { WordService } from 'src/app/shared/services/word/word.service';
 import { PossibleExtEnum } from 'src/app/shared/types/types';
 
-// interface Element  
-// {
-//   name: string;
-//   position: number;
-//   weight: number;
-//   symbol: string;
-// }
-
-// const ELEMENT_DATA_MOCK: Element[] = [
-//   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-//   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-//   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-//   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-//   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-//   {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-//   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-//   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-//   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-//   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-// ];
-
-// const HEADER_MOCK = ['Position', 'Name', 'Weight', 'Symbol'];
 
 @Component(
 {
@@ -63,8 +42,7 @@ export class OutputDataComponent implements OnInit, OnDestroy
               private readonly analysisService: AnalysisService,
               private readonly excelService: ExcelService,
               private readonly wordService: WordService,
-              private readonly pptxService: PptxService,
-              private readonly utilsService: UtilsService) { }
+              private readonly pptxService: PptxService) { }
 
   subsReadFileData?: Subscription;
   subsWriteCalcFileData?: Subscription;
@@ -76,21 +54,12 @@ export class OutputDataComponent implements OnInit, OnDestroy
   header = FullFileDataHeaderEnum;
   downloadButtonLabels = DownloadButtonLabelsEnum;
 
-
-  // calcTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
-  // rangTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
-
   readTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
   analysisData: AnalysisDataDto<any> = {...INITIAL_ANALYSIS_DATA};
   imageData: ImageDataDto = {...INITIAL_IMAGE_DATA};
 
   getAnalysisData: GetAnalysisDataDto<any> = INITIAL_GET_ANALYSIS_DATA;
 
-  // analysisParams: IAnalysisParams = new AnalysisDataDto().params;
-  // extCalcTableData: ITableData<any> = {...INITIAL_TABLE_DATA};
-  // graphData: GraphDataDto = new GraphDataDto();
-
-  // isCompleted?: boolean = false;
   isVisible?: boolean = false;
 
   readonly outputCalcTableType: TableTypeEnum = TableTypeEnum.OUTPUT_CALC_TABLE_TYPE;
@@ -100,14 +69,6 @@ export class OutputDataComponent implements OnInit, OnDestroy
 
   ngOnInit(): void 
   {
-    // this.fileDataService.setWriteFileData(
-    // {
-    //   tableData: {
-    //     header: this.utilsService.makeHeaderFromObj(ELEMENT_DATA_MOCK[0]),
-    //     data: ELEMENT_DATA_MOCK
-    //   }
-    // });
-
     this.checkReadFileData();
     this.getWriteCalcFileData();
     this.getWriteRangFileData();
@@ -178,10 +139,6 @@ export class OutputDataComponent implements OnInit, OnDestroy
       {
         this.isVisible = fileData.tableData.data.length !== 0;
 
-        // setTimeout(() => 
-        // {
-        // this.fileDataWriteCalcService.clearWriteCalcFileData();
-        // this.fileDataWriteRangService.clearWriteRangFileData();
 
         this.readTableData = fileData.tableData;
 
@@ -194,8 +151,6 @@ export class OutputDataComponent implements OnInit, OnDestroy
         const analysisData = this.analysisService.getAnalysisData({ calcTableData, rangTableData });
         this.getAnalysisData = { ...this.getAnalysisData, calcTableData, rangTableData }
         this.writeAnalysisDataService.setWriteAnalysisData(analysisData);
-        // }, READ_FILE_TIMOUT)
-        // console.log(fileData.tableData.data.length === 0)
       }
     });
   }
@@ -212,7 +167,6 @@ export class OutputDataComponent implements OnInit, OnDestroy
   private setWriteCalcFileData(fileData: IFileData<any>)
   {
     const { data, header } = fileData.tableData;
-    // this.calcTableData = { data, header }
     this.getAnalysisData.calcTableData = { data, header };
   }
 
@@ -228,7 +182,6 @@ export class OutputDataComponent implements OnInit, OnDestroy
   private setWriteRangFileData(fileData: IFileData<any>)
   {
     const { data, header } = fileData.tableData;
-    // this.rangTableData = { data, header }
     this.getAnalysisData.rangTableData = { data, header };
   }
 
@@ -244,7 +197,6 @@ export class OutputDataComponent implements OnInit, OnDestroy
   private setWriteAnalysisData(analysisData: AnalysisDataDto<any>)
   {
     this.analysisData = analysisData;
-    // this.getAanalysisData.funcType = analysisData.chartData.funcType;
     this.getAnalysisData = {
       ...this.getAnalysisData,
       funcType: analysisData.chartData.funcType,
@@ -265,7 +217,6 @@ export class OutputDataComponent implements OnInit, OnDestroy
   private setWriteImageFileData(imageData: ImageDataDto)
   {
     this.imageData = imageData;
-    // console.log(imageData)
   }
 
   private handleError(error: any)

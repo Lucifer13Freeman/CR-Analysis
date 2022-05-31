@@ -5,7 +5,10 @@ import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
 import { AnalysisDataDto } from 'src/app/shared/dto/analysis-data.dto';
 import { WriteAnalysisDataService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
-import { DownloadButtonLabelsEnum, FullFileDataHeaderEnum, FuncTypeEnum, ImageExtEnum } from 'src/app/shared/enums/enums';
+import { DownloadButtonLabelsEnum, 
+        FullFileDataHeaderEnum, 
+        FuncTypeEnum, 
+        ImageExtEnum } from 'src/app/shared/enums/enums';
 import { IFuncTypeValues } from '../../shared/interfaces/func-type-values.interface';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
 import { GetAnalysisDataDto } from 'src/app/shared/dto/get-analysis-data.dto';
@@ -48,12 +51,7 @@ export class ChartComponent implements OnInit, OnDestroy
 
   selectedFuncType: FuncTypeEnum = this.chartData.funcType;
 
-  funcTypeValues: IFuncTypeValues[] = FUNC_TYPE_VALUES
-  //  [
-  //   { value: FuncTypeEnum.LINE, viewValue: FuncTypeViewValuesEnum.LINE },
-  //   { value: FuncTypeEnum.PARABOLA, viewValue: FuncTypeViewValuesEnum.PARABOLA },
-  //   { value: FuncTypeEnum.EXPONENTIAL, viewValue: FuncTypeViewValuesEnum.EXPONENTIAL }
-  // ]
+  funcTypeValues: IFuncTypeValues[] = FUNC_TYPE_VALUES;
 
   pngExt: ImageExtEnum = ImageExtEnum.PNG;
   jpgExt: ImageExtEnum = ImageExtEnum.JPG;
@@ -105,30 +103,13 @@ export class ChartComponent implements OnInit, OnDestroy
     {
       next: () =>
       {
-        // this.isLoading = true;
-
-        // setTimeout(() => this.timer = true, 0)
-
-        // console.log(this.timer)
-
-        setTimeout(() => 
-        {
-          this.setAnalysisData();
-          // this.isLoading = false;
-        }, WRITE_FILE_TIMOUT);
-
-        // setTimeout(() => this.timer = false, 0)
-        
-        // console.log(this.timer)
+        setTimeout(() => this.setAnalysisData(), WRITE_FILE_TIMOUT);
       }
     });
   }
 
   setAnalysisData()
   {
-    // console.log(this.chartData.resChartData)
-    // console.log(this.chartData.stdChartData)
-
     this.chart?.destroy();
 
     this.selectedFuncType = this.chartData.funcType;
@@ -159,14 +140,6 @@ export class ChartComponent implements OnInit, OnDestroy
           borderColor: "#3e95cd"
         }, 
       ]
-      // datasets: [
-      // {
-      //   data: [{x: 1, y: 5}, {x: 2, y: 10}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 4.1, y: 6}],   // Example data
-      //   backgroundColor: [
-      //     "#1fc8f8",
-      //     "#76a346"
-      //   ]
-      // }]
     };
 
     this.chart = new Chart(this.chartRef.nativeElement, 
@@ -209,7 +182,6 @@ export class ChartComponent implements OnInit, OnDestroy
       }
     });
 
-    // if (!this.isLoading) 
     this.chart.update();
 
     this.fileDataWriteImageService.setWriteImageFileData({ canvasElement: this.chartRef.nativeElement });

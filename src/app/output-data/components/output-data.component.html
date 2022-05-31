@@ -1,14 +1,4 @@
-<!-- <div class="card highlight-card card-small"> -->
-<!-- <div class="data-container"> -->
-    <!-- <div class="buttons-container">  -->
-        <!-- <ng-container *ngIf="!isManual">
-            <button mat-button class="button-input" (click)="manualDataInput()">Manual Input</button>
-        </ng-container>
-        <ng-container *ngIf="isManual">
-            <button mat-button class="button-input" (click)="fileDataInput()">Send File</button>
-        </ng-container> -->
-        <!-- <button mat-button>Analyze</button> -->
-    <!-- </div> -->
+
     <ng-container *ngIf="isVisible">
         <div class="data-container">
             <mat-card>
@@ -27,17 +17,6 @@
                     ></app-file-writer> 
                 </mat-card-actions>
             </mat-card>
-            <!-- <div class="table">
-                <app-data-table 
-                    [tableData]="getAnalysisData.calcTableData"
-                    [tableType]="outputCalcTableType"
-                ></app-data-table>
-            </div>
-            <div class="download">
-                <app-file-writer
-                    [tableData]="getAnalysisData.calcTableData"
-                ></app-file-writer> 
-            </div> -->
         </div>
 
         <div class="data-container">
@@ -141,4 +120,3 @@
         
         </div>
     </ng-container>
-<!-- </div> -->

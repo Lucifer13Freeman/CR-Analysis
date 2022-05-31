@@ -1,15 +1,15 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, 
+        OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { interval, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DataTableService } from '../../services/data-table.service';
 import { IColumnSchemaElement } from '../../interfaces/column-schema-element.interface';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ITableData } from 'src/app/shared/interfaces/table-data.interface';
-import { DIGIT_ACCURACY, INITIAL_TABLE_DATA, READ_FILE_TIMOUT, WRITE_FILE_TIMOUT } from 'src/app/shared/constants/constants';
+import { INITIAL_TABLE_DATA } from 'src/app/shared/constants/constants';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { ICheckTableType } from '../../interfaces/check-table-type.interface';
 import { UseOnTableDto } from '../../dto/use-on-table-type.dto';
 import { FileDataReadService } from 'src/app/shared/services/file-data/read/file-data-read.service';
 import { FileDataWriteCalcService } from 'src/app/shared/services/file-data/write-calc/file-data-write-calc.service';
@@ -17,7 +17,6 @@ import { FileDataWriteRangService } from 'src/app/shared/services/file-data/writ
 import { WriteAnalysisDataService } from 'src/app/shared/services/file-data/write-analysis/write-analysis.service';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
 import { TableTypeEnum } from '../../enums/table-type.enum';
-// import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle } from '@angular/cdk/drag-drop';
 
 
 @Component(
@@ -33,7 +32,6 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
               private readonly fileDataWriteCalcService: FileDataWriteCalcService,
               private readonly fileDataWriteRangService: FileDataWriteRangService,
               private readonly writeAnalysisDataService: WriteAnalysisDataService,
-              private readonly analysisService: AnalysisService,
               private readonly utilsService: UtilsService,
               public dialog: MatDialog) { }
 
@@ -60,7 +58,7 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
 
   isEditable: boolean = false;
 
-  displayedColumns: string[] = []; //this.columnsSchema.map((col) => col.key);
+  displayedColumns: string[] = [];
 
   dataSource: MatTableDataSource<Array<any>> = new MatTableDataSource();
 
@@ -71,11 +69,6 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
 
   ngOnInit(): void 
   {
-    // this.createTable();
-    // this.updateInterval = setInterval(()=>{ this.createTable(); }, 1000);
-
-    // setTimeout(() => this.createTable(), 1000);
-    
     this.subscribeOn();
   }
 
@@ -88,11 +81,6 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
   {
     this.subs?.unsubscribe();
   }
-
-  // round(num: number): number
-  // {
-  //   return this.utilsService.roundNum(num, DIGIT_ACCURACY);
-  // }
 
   private subscribeOn()
   {
@@ -186,26 +174,16 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
       this.dataTableService.roundTableDataNums(this.tableData.data)
     );
 
-    // console.log(this.tableData.data)
-    // console.log(this.data);
-
     if (this.tableData.header.length === 0 && this.tableData.data[0]) 
     {
       this.tableData.header = this.utilsService.makeHeaderFromObj(this.tableData.data[0]);
     }
 
-    // if (this.columnsSchema.length === 0)
-    // {
-    
-
     this.columnsSchema = this.dataTableService.generateColumnSchema(this.tableData.header , this.tableData.data /*this.tableData.header*/);
     this.displayedColumns = this.columnsSchema.map((col) => col.key);
-    // }
 
     if (this.isPageble) this.dataSource.paginator = this.paginator;
 
-    // console.log(this.columnsSchema)
-    // console.log(this.displayedColumns)
   }
 
   applyFilter($event: Event) 
@@ -216,9 +194,6 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
 
   editData()
   {
-    // console.log(($event.target as HTMLInputElement).value)
-    // const data: any[] = [...this.dataSource.data];
-
     if (!this.isEditable)
     {
       this.isEditable = !this.isEditable;
@@ -241,8 +216,6 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit
     });
 
     this.isEditable = !this.isEditable;
-
-    // console.log(this.data);
   }
 
   // confirmChanges()

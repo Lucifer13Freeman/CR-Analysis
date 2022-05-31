@@ -1,9 +1,19 @@
-import { AnalisysDataNamesEnum, ExcelExtEnum, FTableSelectValueEnum, FTableValueLevelTypeEnum, RelationTypeEnum, SignificentTypeEnum, SignificanceSelectValueEnum, WordPdfExtEnum, ImageExtEnum, RelationDirectionEnum, RegressionFuncEnum, PPTXExtEnum } from "../enums/enums";
+import { AnalisysDataNamesEnum, 
+        ExcelExtEnum, 
+        FTableSelectValueEnum, 
+        FTableValueLevelTypeEnum, 
+        RelationTypeEnum, 
+        SignificentTypeEnum, 
+        SignificanceSelectValueEnum, 
+        WordPdfExtEnum, 
+        ImageExtEnum, 
+        RelationDirectionEnum, 
+        RegressionFuncEnum, 
+        PPTXExtEnum } from "../enums/enums";
 
-// export type ExcelType = 'xlsx' | 'csv';
+        
 export type CsvSeparatorType = ExcelExtEnum | undefined;
 export type PossibleExtEnum = ExcelExtEnum | WordPdfExtEnum | ImageExtEnum | PPTXExtEnum;
-// export type TableType = 'input' | 'output_calc' | 'output_rang';
 
 export type AnalysisParamsValueType = number 
                                 | SignificanceSelectValueEnum

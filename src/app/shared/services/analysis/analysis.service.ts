@@ -469,15 +469,8 @@ export class AnalysisService
       chartData
     }
 
-    // console.log(analysisData)
-
     return analysisData;
   }
-
-  // private getFuncParamsCount(funcType: FuncTypeEnum = FuncTypeEnum.LINE)
-  // {
-
-  // }
 
   public getFisherCriterion(dto: GetFisherCriterionDto): IFisherCriterion
   {
@@ -686,7 +679,7 @@ export class AnalysisService
       data[i].YxAvgY2 = (data[i].Yx - avgRow.Y) ** 2;
       sumRow.YxAvgY2 += data[i].YxAvgY2;
 
-      //TODO: research this
+      
       // data[i].YAvgYx2 = (data[i].Y - avgRow.Yx) ** 2;
 
       // data[i].YAvgYx2 = (data[i].Y - data[i].Yx) ** 2; //?
@@ -694,7 +687,7 @@ export class AnalysisService
       // sumRow.YAvgYx2 += data[i].YAvgYx2;
       // console.log(data[i].Y, avgRow.Yx, data[i].YAvgYx2)
 
-      //TODO: research this
+      
 
       // data[i].AvgYxAvgY2 = (avgRow.Yx - avgRow.Y) ** 2;
 
@@ -703,24 +696,7 @@ export class AnalysisService
       // data[i].AvgYxAvgY2 = (data[i].Yx - data[i].Y) ** 2;
 
       // sumRow.AvgYxAvgY2 += data[i].AvgYxAvgY2;
-
-      // console.log(data[i].Y, avgRow.Yx, data[i].YAvgYx2, avgRow.Yx, avgRow.Y, data[i].AvgYxAvgY2)
-      // console.log(sumRow.AvgYxAvgY2, sumRow.YAvgYx2)
-
-      // data[i].YYx2 = (data[i].Y - data[i].Yx) ** 2;
-      // sumRow.YYx2 += data[i].YYx2;
-
-      // data[i].YxY2 = (data[i].Yx - data[i].Y) ** 2;
-      // sumRow.YxY2 += data[i].YxY2;
-
-      // console.log(data[i].YAvgYx2, data[i].AvgYxAvgY2)
     }
-
-    // console.log(sumRow.YAvgYx2)
-
-    // console.table(sumRow.AvgYxAvgY2)
-    // console.table(sumRow.YAvgYx2)
-    // console.log(sumRow.YAvgYx2, sumRow.AvgYxAvgY2)
 
     avgRow = {
       ...avgRow,
@@ -738,20 +714,12 @@ export class AnalysisService
     data[count] = sumRow;
     data[count + 1] = avgRow;
 
-
-    // for (let i = 0; i < data.length; i++)
-    // {
-    //   data[i] = this.utilsService.roundObjNums(data[i], DIGIT_ACCURACY);
-    // }
-
     header = this.utilsService.makeHeaderFromObj(data[0]);
 
     extCalcTableData = {
       data,
       header
     }
-
-    // console.log(extCalcTableData)
 
     return extCalcTableData;
   }
@@ -889,34 +857,12 @@ export class AnalysisService
       }
       case FuncTypeEnum.EXPONENTIAL:
       {
-        // a1 = Math.exp((avgRow.XlnY - (avgRow.X * avgRow.lnY))
-        //             / (avgRow.X2 - avgRow.X ** 2));
-
         a1 = Math.exp((count * sumRow.XlnY - sumRow.X * sumRow.lnY)
                     / (count * sumRow.X2 - sumRow.X ** 2));
 
-        // this.utilsService.roundNum(
-        //       (avgRow.XlnY - (avgRow.X * avgRow.lnY))
-        //       / (avgRow.X2 - avgRow.X ** 2)
-        // , DIGIT_ACCURACY);
-
         a0 = Math.exp(avgRow.lnY - Math.log(a1) * avgRow.X);
 
-        // this.utilsService.roundNum(avgRow.lnY - a1 * avgRow.X, DIGIT_ACCURACY);
-
-        // elasticity = avgRow.X * a1; 
-
         elasticity = avgRow.X * Math.log(a1); 
-
-        //  this.utilsService.roundNum(avgRow.X * a1, DIGIT_ACCURACY);
-
-        // a1 = this.utilsService.roundNum(
-        //       (count * sumRow.XlnY - sumRow.X * sumRow.lnY)
-        //       / (count * sumRow.X2 - sumRow.X ** 2)
-        // , DIGIT_ACCURACY);
-        // a0 = this.utilsService.roundNum(avgRow.lnY - a1 * avgRow.X, DIGIT_ACCURACY);
-
-        // elasticity = this.utilsService.roundNum(avgRow.X * a1, DIGIT_ACCURACY);
 
         funcParamsCount = 2;
         func = RegressionFuncEnum.EXPONENTIAL;
@@ -986,10 +932,6 @@ export class AnalysisService
         case FuncTypeEnum.EXPONENTIAL:
         {
           YxArr[i] = a0 * a1 ** X;
-          
-          // this.utilsService.roundNum(
-          //       Math.exp(a0) * Math.exp(a1) ** X
-          // , DIGIT_ACCURACY);
           break;
         }
         case FuncTypeEnum.HYPERBOLA:
@@ -1027,7 +969,7 @@ export class AnalysisService
 
   private getAvgCorrelCoefError(linearCorrCoef: number, count: number)
   {
-    const avgCorrelCoefError = count > 50 //&& !(count < 30)
+    const avgCorrelCoefError = count > 50
                             ? (1 - linearCorrCoef ** 2) / Math.sqrt(count)
                             : Math.sqrt(1 - linearCorrCoef ** 2) / Math.sqrt(count - 2);
     return avgCorrelCoefError;
@@ -1062,22 +1004,6 @@ export class AnalysisService
     return relationXY as RelationType;
   }
 
-  // getRelationXYspearman(spearmanCoeff: number): RelationType 
-  // {
-  //   let relationXYspearman: RelationType = spearmanCoeff === 0
-  //                       ? RelationTypeEnum.NONE 
-  //                     : (0 < Math.abs(spearmanCoeff) && Math.abs(spearmanCoeff) < 0.3) 
-  //                       ? RelationTypeEnum.WEAK 
-  //                     : (0.3 <= Math.abs(spearmanCoeff) && Math.abs(spearmanCoeff) <= 0.7) 
-  //                       ? RelationTypeEnum.MEDIUM : RelationTypeEnum.STRONG;
-    
-  //   relationXYspearman = spearmanCoeff > 0 ? `${RelationDirectionEnum.DIRECT} ${relationXYspearman}` as RelationType
-  //                       : spearmanCoeff < 0 ? `${RelationDirectionEnum.BACK} ${relationXYspearman}` as RelationType
-  //                       : relationXYspearman;
-
-  //   return relationXYspearman;
-  // }
-
   private coefCorrelSignificance(x: number, tTable: number)
   {
     const coefCorrelSignificance = x > tTable
@@ -1109,14 +1035,7 @@ export class AnalysisService
 
   private getCalcSumRow<T>(data: T[])
   {
-    let sumRow: any = {
-      id: 'Сумма',
-      // x: 0,
-      // y: 0,
-      // x2: 0,
-      // y2: 0,
-      // xy: 0
-    }
+    let sumRow: any = { id: 'Сумма' }
 
     if (!data[0]) return sumRow;
     const keys = Object.keys(data[0]);
@@ -1129,9 +1048,6 @@ export class AnalysisService
         sumRow[keys[j] as string] += +(data[i] as any)[keys[j] as string];
       }
     }
-
-    // sumRow = this.utilsService.roundObjNums(sumRow, DIGIT_ACCURACY);
-
     return sumRow;
   }
 
@@ -1141,14 +1057,7 @@ export class AnalysisService
 
     const rowCount: number = data.length;
 
-    let avgRow: any = {
-      id: 'Среднее',
-      // x: sumRow.x / rowCount,
-      // y: sumRow.y / rowCount,
-      // x2: sumRow.x2 / rowCount,
-      // y2: sumRow.y2 / rowCount,
-      // xy: sumRow.xy / rowCount
-    }
+    let avgRow: any = { id: 'Среднее' }
 
     if (!data[0]) return avgRow;
     const keys = Object.keys(data[0]);
@@ -1158,8 +1067,6 @@ export class AnalysisService
       if (!avgRow[keys[i] as string]) avgRow[keys[i] as string] = 0;
       avgRow[keys[i] as string] = sumRow[keys[i] as string] / rowCount;
     }
-
-    // avgRow = this.utilsService.roundObjNums(avgRow, DIGIT_ACCURACY);
 
     return avgRow;
   }
@@ -1177,43 +1084,8 @@ export class AnalysisService
       yArr.push(parseFloat(newData[i].Y));
     }
     
-
-    // let xArrSorted = [...xArr];
-    // let yArrSorted = [...yArr];
-
-    // xArrSorted.sort((a, b) => b - a);
-    // yArrSorted.sort((a, b) => b - a);
-
-    // console.log(xArrSorted, yArrSorted)
-
-    // let dublicated
-    
-    // for (let i = 0; i < xArr.length; i++)
-    // {
-    //   let xIndex: number = xArr.indexOf(xArrSorted[i]);
-    //   let yIndex: number = yArr.indexOf(yArrSorted[i]);
-
-    //   console.log(xIndex, yIndex)
-
-    //   newData[xIndex].Nx = i + 1;
-    //   newData[yIndex].Ny = i + 1;
-
-    //   // console.log(newData[xIndex].Nx, newData[yIndex].Ny)
-    //   // console.log(i, newData[i].Nx, newData[i].Ny)
-    //   // console.log(xIndex, yIndex)
-    // }
-
-    // for (let i = 0; i < xArr.length; i++)
-    // {
-    //   console.log(newData[i].Nx, newData[i].Ny)
-    // }
-
     const arrNx = this.utilsService.rankArray(xArr as number[], (a, b) => b - a);
     const arrNy = this.utilsService.rankArray(yArr as number[], (a, b) => b - a);
-
-    // this.utilsService.rankArray([1, 3, 52, 6, 100, 64, 71, 100, 100, 100])
-
-    // console.table(arrNx, arrNy)
 
     for (let i = 0; i < xArr.length; i++)
     {

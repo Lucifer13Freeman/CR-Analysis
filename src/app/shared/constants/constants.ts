@@ -2,17 +2,15 @@ import { AnalysisDataDto } from '../dto/analysis-data.dto';
 import { ChartDataDto } from '../dto/chart-data.dto';
 import { GetAnalysisDataDto } from '../dto/get-analysis-data.dto';
 import { ImageDataDto } from '../dto/image-data.dto';
-import { TableDataDto } from '../dto/table-data.dto';
-import { AnalisysDataNamesEnum, FTableSelectValueEnum, FuncTypeEnum, FuncTypeViewValuesEnum, HeaderLabelsEnum, ImageExtEnum, RegressionFuncEnum, SignificanceSelectValueEnum } from '../enums/enums';
+import { AnalisysDataNamesEnum, FTableSelectValueEnum, 
+      FuncTypeEnum, FuncTypeViewValuesEnum, 
+      HeaderLabelsEnum, ImageExtEnum, 
+      RegressionFuncEnum, SignificanceSelectValueEnum } from '../enums/enums';
 import { IAnalysisParams } from '../interfaces/analysis-params.interface';
 import { IFuncTypeValues } from '../interfaces/func-type-values.interface';
 import { ITableData } from '../interfaces/table-data.interface';
 
 export const HEADER_LABLES_FOR_KEYS_FROM_FILE = ['x', 'y'];
-
-// export const HEADER_LABLES_FROM_FILE = ['X', 'Y'];
-
-// export const HEADER_LABLES
 
 export const INITIAL_TABLE_DATA: ITableData<any> = {
   data: [],
@@ -29,10 +27,6 @@ export const INITIAL_FILE_DATA = {
   filename: undefined,
   extension: undefined,
 };
-
-// export const INPUT_TABLE_TYPE = 'input';
-// export const OUTPUT_CALC_TABLE_TYPE = 'output_calc';
-// export const OUTPUT_RANG_TABLE_TYPE = 'output_rang';
 
 export const READ_FILE_TIMOUT: number = 100;
 export const READ_FILE_INTERVAL: number = 100;
@@ -406,4 +400,27 @@ export class TCrit
     [5.719, 5.614, 5.526, 5.453, 5.39, 5.179, 4.977, 4.787],
     [4.817, 4.718, 4.637, 4.568, 4.51, 4.313, 4.126, 3.949]
   ];
+}
+
+
+
+
+export const EXAMPLE_DATA_2 = {
+  extension: "csv",
+  filename: "test-data.csv",
+  tableData: {
+  header: ["№", "X", "Y"],  
+  data: [
+    {id: 1, X: 84.42, Y: 69.5},
+    {id: 2, X: 82.46, Y: 72.9},
+    {id: 3, X: 80.13, Y: 71.4},
+    {id: 4, X: 63.42, Y: 135.1},
+    {id: 5, X: 76.17, Y: 76.3},
+    {id: 6, X: 75.13, Y: 74.7},
+    {id: 7, X: 74.84, Y: 97.4},
+    {id: 8, X: 73.03, Y: 75.1},
+    {id: 9, X: 73.41, Y: 75.5},
+    {id: 10, X: 71.34, Y: 98.2}
+    ]
+  }
 }

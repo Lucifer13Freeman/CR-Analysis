@@ -1,6 +1,4 @@
-import { ExcelExtEnum } from "../enums/enums";
 import { PossibleExtEnum } from "../types/types";
-// import { ExcelType } from "../types/types";
 import { ITableData } from "./table-data.interface";
 
 

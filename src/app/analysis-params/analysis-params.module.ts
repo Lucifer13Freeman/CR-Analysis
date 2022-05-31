@@ -4,7 +4,6 @@ import { AnalysisParamsComponent } from './components/analysis-params.component'
 import { MaterialUiModule } from '../material-ui/material-ui.module';
 
 
-
 @NgModule({
   declarations: [
     AnalysisParamsComponent

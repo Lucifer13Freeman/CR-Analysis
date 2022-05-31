@@ -28,8 +28,5 @@ export class ImageService
     {
       saveAs(data, `${filename}-${new Date().valueOf()}.${extension}`);
     }, `image/${extension}`, 1);
-
-    // const data: Blob = new Blob([HTMLCanvasElement], { type: ImageExtEnum.PNG });
-    // FileSaver.saveAs(data, `${filename}-${new Date().valueOf()}.${extension}`);
   }
 }

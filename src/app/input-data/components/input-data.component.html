@@ -11,13 +11,6 @@
         <ng-container *ngIf="!isManual">
             <app-file-reader></app-file-reader> 
         </ng-container>
-        <!-- <div> -->
-        <!-- <app-data-table 
-            [tableData]="tableData"
-            [tableType]="inputTableType"
-            [isPageble]="true"
-            [withToolbar]="true"
-        ></app-data-table> -->
 
         <ng-container *ngIf="tableData.data.length !== 0">
         <mat-card>

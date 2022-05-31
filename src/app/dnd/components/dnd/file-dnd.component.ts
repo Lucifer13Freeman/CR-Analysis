@@ -1,12 +1,11 @@
-import { Component, ElementRef, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { INITIAL_TABLE_DATA, READ_FILE_INTERVAL, READ_FILE_SPEED, READ_FILE_TIMOUT } from 'src/app/shared/constants/constants';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { READ_FILE_INTERVAL, 
+        READ_FILE_SPEED, 
+        READ_FILE_TIMOUT } from 'src/app/shared/constants/constants';
 import { AnalysisService } from 'src/app/shared/services/analysis/analysis.service';
 import { ExcelService } from 'src/app/shared/services/excel/excel.service';
 import { FileDataReadService } from 'src/app/shared/services/file-data/read/file-data-read.service';
 
-
-// export type FileEventTarget = EventTarget & { files: FileList };
 
 @Component(
 {
@@ -20,7 +19,6 @@ export class FileDndComponent implements OnInit
               private readonly fileDataReadService: FileDataReadService,
               private readonly analysisService: AnalysisService) { }
 
-  // @Output()
   files: any[] = [];
 
   @Input() 
@@ -32,18 +30,10 @@ export class FileDndComponent implements OnInit
   @ViewChild("fileDropRef", { static: false }) 
   fileDropEl!: ElementRef;
 
-  // subs?: Subscription;
-  
 
-  ngOnInit(): void 
-  { 
-    // this.subs = this.fileDataService.readFileDataSubject$.subscribe();
-  }
+  ngOnInit(): void {}
 
-  ngOnDestroy(): void
-  {
-    // this.subs?.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   /**
    * on file drop handler
@@ -68,21 +58,11 @@ export class FileDndComponent implements OnInit
     const fileData = await this.excelService.readExcel({ file: this.files[0] });
 
     if (!fileData) return;
-
-    // const isCorrect = this.analysisService.checkReadFileData(fileData);
-
-    // console.log(fileData)
     
     setTimeout(() => 
     { 
       const isCorrect = fileData ? this.analysisService.checkReadFileData(fileData) : false;
-
-      // console.log(this.analysisService.checkReadFileData(fileData))
-
-      // if (!isCorrect/* && !this.isMultiple && this.files.length > 0*/) this.deleteFile(0);
-
       if (isCorrect) this.fileDataReadService.setReadFileData<any>(fileData as any);
-      // else !this.isMultiple && this.files.length > 0 && this.deleteFile(0);
     }, READ_FILE_TIMOUT);
   }
 
@@ -102,7 +82,6 @@ export class FileDndComponent implements OnInit
     
     this.files.splice(index, 1);
 
-    // this.fileDataService.setReadFileData<any>({ tableData: { data: [], header: [] } });
     this.fileDataReadService.clearReadFileData();
   }
 
@@ -143,8 +122,6 @@ export class FileDndComponent implements OnInit
 
       item.progress = 0;
       this.files.push(item);
-
-      // console.log(files[0])
     }
 
     this.fileDropEl.nativeElement.value = "";

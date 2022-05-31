@@ -54,44 +54,10 @@ export class UtilsService
     return header;
   }
 
-  // replaceCommasInTableData<T>(tableData: ITableData<T>)
-  // {
-  //   const key = Object.keys
-  //   // return tableData.data.map(());
-  // }
-
-  // matrDeterminant([xs, ...xss]: number[][])
-  // {
-  //   const sum = (xs: number[]) =>
-  //     xs.reduce ((a, b) => a + b, 0)
-          
-  //   const excluding = (i: number) => (xs: number[]) => 
-  //     [... xs.slice (0, i), ...xs.slice (i + 1)]
-
-  //   const determinant = ([xs, ...xss]: number[][]): number => 
-  //     xs.length == 1
-  //       ? xs [0]
-  //         : sum (xs .map (
-  //           (x, i) => (-1) ** i * x * determinant(xss.map(excluding(i)))
-  //         )
-  //       )
-  // }
-
   matrDeterminant(matrix: number[][]) 
   {
-    const sum = (xs: number[]) =>
-      xs.reduce ((a, b) => a + b, 0)
+    const sum = (xs: number[]) => xs.reduce ((a, b) => a + b, 0);
         
-    // const excluding = (i: number) => (xs: number[]) => 
-    //   [... xs.slice (0, i), ...xs.slice (i + 1)]
-
-    // const determinant = ([xs, ...xss]: number[][]): number => 
-    //   xs.length == 1
-    //     ? xs [0]
-    //     : sum (xs .map (
-    //       (x, i) => (-1) ** i * x * determinant(xss.map(excluding(i)))
-    //     )
-    //   )
 
     const stripRowAndCol = (r: number, c: number) => (matrix: number[][]) =>
       matrix .filter ((_, j) => j !== r)
@@ -262,18 +228,6 @@ export class UtilsService
     return tableData;
   }
 
-  // makeHeaderFromObj<T>(obj: T): Array<string>
-  // {
-  //   const header = (Object.keys(obj) as Array<string>).map(
-  //     (str: string, index: number) => 
-  //     {
-  //       if (index === 0) return '№';
-  //       return str.charAt(0).toUpperCase() + str.slice(1);
-  //     }
-  //   );
-  //   return header;
-  // }
-
   renameObjKey(obj: any, oldKey: string, newKey: string) 
   {
     if (oldKey !== newKey) 
@@ -301,36 +255,10 @@ export class UtilsService
     return objArr.map(obj => this.objKeysToLowerCase(obj));
   }
 
-  // addIdsToObj<T>(obj: T): T
-  // {
-  //   let newObj = {...obj} 
-    
-  //   return obj;
-  // }
-
   addIdsToObjArr<T>(objArr: Array<T>): Array<T>
   {
-    // let newObjArr: Array<T> = JSON.parse(JSON.stringify(objArr));
     return objArr.map((obj: T, index: number) => { return { id: index + 1, ...obj } });
   }
-
-  // binaryToString(str: any) 
-  // {
-  //   // Removes the spaces from the binary string
-  //   str = str.replace(/\s+/g, '');
-  //   // Pretty (correct) print binary (add a space every 8 characters)
-  //   str = str.match(/.{1,8}/g).join(" ");
-
-  //   let newBinary = str.split(" ");
-  //   let binaryCode = [];
-
-  //   for (let i = 0; i < newBinary.length; i++) 
-  //   {
-  //     binaryCode.push(String.fromCharCode(parseInt(newBinary[i], 2)));
-  //   }
-    
-  //   return binaryCode.join("");
-  // }
 
   roundNum(val: any, accuracy: number = DIGIT_ACCURACY)
   {
@@ -355,52 +283,15 @@ export class UtilsService
     return newObj;
   }
 
-  // roundArrObjNums<T>(arrObj: T[], accuracy: number = DIGIT_ACCURACY)
-  // {
-  //   if (!arrObj[0]) return arrObj;
-
-  //   const keys = Object.keys(arrObj[0]);
-
-  //   console.log(arrObj)
-
-  //   const newArrObj: any = [...arrObj];
-
-  //   if (!(keys.length > 0) && !(newArrObj.length > 0)) return arrObj;
-
-  //   for (let i = 0; i < newArrObj.length; i++)
-  //   {
-  //     for (let j = 0; j < keys.length; j++)
-  //     {
-  //       const val = newArrObj[i][keys[j] as string];
-
-  //       if (!Number.isNaN(parseFloat(val))) 
-  //       {
-  //         newArrObj[i][keys[j] as string] = this.roundNum(val, accuracy);
-  //       }
-  //     }
-  //   }
-
-  //   console.log(arrObj)
-
-  //   return newArrObj;
-  // }
-  
-
   rankArray(arr: number[], 
     compareFn: ((a: number, b: number) => number) | undefined = (a, b) => b - a) 
   {
-    // const newArr: number[] = [...arr as number[]];
-
     let rankArr: any = [...arr as number[]];
     const sortedArr = [...rankArr].sort(compareFn);
 
-    // console.table(arr.slice(0).sort(compareFn))
-
     for (let i = 0; i < sortedArr.length; i++) 
     {
-      let val: number | null = parseFloat(rankArr[i]); //parseFloat(sortedArr[i]);
-
-      // console.log(val, typeof val)
+      let val: number | null = parseFloat(rankArr[i]);
 
       if (typeof val !== "number" || Number.isNaN(val)) continue;
 
@@ -448,48 +339,6 @@ export class UtilsService
 
     return rankArr;
   }
-
-  // rankArray(arr: number[], 
-  //   compareFn: ((a: number, b: number) => number) | undefined = (a, b) => b - a) 
-  // {
-  //   // STEP 1
-  //   const arrSorted = arr.slice().sort(compareFn);
-    
-  //   const ranks: any = {}; // each value from the input array will become a key here and have a rank assigned
-  //   const ranksCount: any = {}; // each value from the input array will become a key here and will count number of same elements
-    
-  //   // STEP 2
-  //   for (let i = 0; i < arrSorted.length; i++) // here we populate ranks and ranksCount
-  //   { 
-  //     const currentValue = arrSorted[i].toString();
-    
-  //     if (arrSorted[i] !== arrSorted[i - 1]) ranks[currentValue] = i + 1; // if the current value is the same as the previous one, then do not overwrite the rank that was originally assigned (in this way each unique value will have the lowest rank)
-  //     if (ranksCount[currentValue] == undefined) ranksCount[currentValue] = 1; // if this is the first time we iterate this value, then set count to 1
-  //     else ranksCount[currentValue]++; // else increment by one
-  //   }
-    
-  //   const ranked = [];
-    
-  //   // STEP 3
-  //   for (let i = arr.length - 1; i >= 0; i--) // we need to iterate backwards because ranksCount starts with maximum values and decreases
-  //   { 
-  //     const currentValue = arr[i].toString();
-    
-  //     ranksCount[currentValue]--;
-
-  //     if (ranksCount[currentValue] < 0) // a check just in case but in theory it should never fail
-  //     { 
-  //       console.error("Негативное значение количества рангов!");
-  //       // console.error("Negative rank count has been found which means something went wrong :(");
-  //       return [];
-  //     }
-
-  //     ranked[i] = ranks[currentValue]; // start with the lowest rank for that value...
-  //     ranked[i] += ranksCount[currentValue]; // ...and then add the remaining number of duplicate values
-  //   }
-    
-  //   return ranked;
-  // }
 
   getPointsArray(xArr: number[], yArr: number[])
   {

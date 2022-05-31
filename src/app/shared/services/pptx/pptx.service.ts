@@ -21,8 +21,7 @@ export class PptxService
   {
     const { readTableData, calcTableData, rangTableData, 
           extCalcTableData, analysisParams, 
-          funcType, canvasElement, 
-          extension, filename } = fullFileData;
+          canvasElement, extension, filename } = fullFileData;
 
     let pptx = new pptxgen();
 
@@ -363,7 +362,7 @@ export class PptxService
     }
   }
 
-  async saveFile(pptx: any,//PptxGenJS, 
+  async saveFile(pptx: any,
                 filename: string = FILENAME, 
                 extension: string = PPTXExtEnum.PPTX) 
   {

@@ -11,27 +11,11 @@ import { ExcelService } from 'src/app/shared/services/excel/excel.service';
 })
 export class FileReaderComponent implements OnInit 
 {
-  // subs?: Subscription;
-  
-  // @ViewChild("fileDndRef", { static: false }) 
-  // fileDndEl!: ElementRef;
-  
-  constructor(
-    // private fileDataService: FileDataService
-  ) { }
+  constructor() {}
 
-  ngOnInit(): void 
-  { 
-    // this.subs = this.fileDataService.readFileDataSubject$.subscribe();
-  }
+  ngOnInit(): void {}
 
-  ngOnDestroy(): void
-  {
-    // this.subs?.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
-  uploadExcel()
-  {
-    // this.excelService.writeExcel({ header, data: ELEMENT_DATA, extension: 'xlsx' });
-  }
+  uploadExcel() {}
 }
