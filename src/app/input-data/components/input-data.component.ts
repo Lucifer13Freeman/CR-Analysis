@@ -55,7 +55,7 @@ export class InputDataComponent implements OnInit, OnDestroy
   loadExampleData(exampleNum: 1 | 2)
   {
     this.isManual = true;
-    
+
     this.fileDataReadService.setReadFileData<any>({ 
       tableData: exampleNum === 1 
                     ? EXAMPLE_DATA_1.tableData 
@@ -67,10 +67,7 @@ export class InputDataComponent implements OnInit, OnDestroy
   {
     this.subs = this.fileDataReadService.getReadFileData().subscribe(
     {
-      next: (fileData: IFileData<any>) => {
-        this.setReadFileData(fileData) 
-        console.log(fileData)
-      },
+      next: (fileData: IFileData<any>) => this.setReadFileData(fileData),
       error: this.handleError
     });
   }
