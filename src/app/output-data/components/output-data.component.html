@@ -92,49 +92,53 @@
                 [chartData]="analysisData.chartData"
             ></app-chart>
         </div>
+        <div class="data-container">
+
         <mat-card class="download">
             <mat-card-title>Скачать полный отчёт</mat-card-title>
-                <mat-card-actions>
-                    <div class="card highlight-card">
-                        <div class="buttons-container"> 
-                            <button 
-                                mat-raised-button 
-                                color="accent" 
-                                class="button-excel" 
-                                (click)="downloadExcel()"
-                            >
-                                {{downloadButtonLabels.EXCEL}}
-                            </button>  
+            <mat-card-actions>
+                <!-- <div class="card highlight-card"> -->
+                    <!-- <div class="buttons-container">  -->
+                        <button 
+                            mat-raised-button 
+                            color="accent" 
+                            class="download-button button-excel" 
+                            (click)="downloadExcel()"
+                        >
+                            {{downloadButtonLabels.EXCEL}}
+                        </button>  
                     
-                            <button 
-                                mat-raised-button 
-                                class="button-word" 
-                                color="primary"
-                                (click)="downloadWord()"
-                            >
-                                {{downloadButtonLabels.WORD}}
-                            </button>  
+                        <button 
+                            mat-raised-button 
+                            class="download-button" 
+                            color="primary"
+                            (click)="downloadWord()"
+                        >
+                            {{downloadButtonLabels.WORD}}
+                        </button>  
 
-                            <button 
-                                mat-raised-button 
-                                class="button-word" 
-                                color="warn"
-                                (click)="downloadPdf()"
-                            >
-                                {{downloadButtonLabels.PDF}}
-                            </button>  
+                        <button 
+                            mat-raised-button 
+                            class="download-button" 
+                            color="warn"
+                            (click)="downloadPdf()"
+                        >
+                            {{downloadButtonLabels.PDF}}
+                        </button>  
 
-                            <button 
-                                mat-raised-button 
-                                class="button-word" 
-                                color="warn"
-                                (click)="downloadPPTX()"
-                            >
-                                {{downloadButtonLabels.PPTX}}
-                            </button> 
-                        </div>
-                    </div>
-                </mat-card-actions>
+                        <button 
+                            mat-raised-button 
+                            class="download-button button-pptx" 
+                            color="warn"
+                            (click)="downloadPPTX()"
+                        >
+                            {{downloadButtonLabels.PPTX}}
+                        </button> 
+                    <!-- </div> -->
+                    <!-- </div> -->
+            </mat-card-actions>
         </mat-card>
+        
+        </div>
     </ng-container>
 <!-- </div> -->
